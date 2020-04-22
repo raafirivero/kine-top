@@ -1,0 +1,38 @@
+{
+  "name": "raafirivero/kine-top",
+  "description": "Top of the KineCommunity integration",
+  "keywords": [
+    "flarum"
+  ],
+  "type": "flarum-extension",
+  "license": "MIT",
+  "require": {
+    "flarum/core": ">=0.1.0-beta.10 <0.1.0-beta.14"
+  },
+  "authors": [
+    {
+      "name": "Raafi Rivero",
+      "email": "raafi.rivero@gmail.com",
+      "role": "Developer"
+    }
+  ],
+  "autoload": {
+    "psr-4": {
+      "RaafiRivero\\KineTop\\": "src/"
+    }
+  },
+  "extra": {
+    "flarum-extension": {
+      "title": "KineCommunity Custo",
+      "icon": {
+        "name": "",
+        "backgroundColor": "",
+        "color": ""
+      }
+    },
+    "flagrow": {
+      "discuss": ""
+    },
+    "version": "0.0.1-beta"
+  }
+}
