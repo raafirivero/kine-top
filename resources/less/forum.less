@@ -1,34 +1,657 @@
+/* /////////////// General Tags
+/////////////////////////////////// */
+
+@k-yellow: #fdc22d; // burnt yellow
+@k-orange: #f05439; // orange
+@k-red: #c30a3b; // red
+@k-maroon: #8e113f; // maroon
+@k-deep: #561a44; // deep purple
+@k-deepshadow: #2c0b22; // deep purple
+
+a {
+    color: @k-maroon;
+}
+
+a:hover {
+    color: @k-orange;
+
+}
+
+.fade-out {
+    transition: opacity 1s;
+}
+
+.container-bg-out {
+    background-image: url(http://comm.site/blog/_junk/grid-4col-22-15.png);
+    background-image: url(http://comm.site/blog/_junk/grid-5col-20-15.png);
+    background-image: url(http://comm.site/blog/_junk/grid-5col-20-15-split.png);
+    //background-image: url(http://comm.site/blog/_junk/grid-6col-22-15.png);
+    //background-image: url(http://comm.site/blog/_junk/grid-8col-18-15.png);
+    //background-image: url(http://comm.site/blog/_junk/grid-10col-20-15.png);
+}
+
+
+.container {
+    // background-image: url(http://comm.site/blog/_junk/grid-5col-20-15-split.png);
+    // null
+    text-justify: none;
+}
+
+#ktoprow, #wpbrick, #showcase {
+    font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+    font-size: 16px;
+}
+
+#ktopheader {
+    // transition: 2s;
+    direction: ltr;
+}
+
+#ktopheader.shorter {
+    max-height: 120px;
+    min-height: unset;
+    background-position: 50% 64%;
+}
+
+.gonzo {
+    display: none !important;
+}
+
+.fixit {
+    position: fixed !important;
+    top: 0;
+}
+.lowscrub {
+    position: absolute !important;
+    bottom: 50px;
+}
+
+.DisscussionPage-discussion div.container {
+    // the content div of a disussion page.
+    direction: ltr;
+}
+
+/* /////////////// KN Header Stuff
+/////////////////////////////////// */
+
+#ktoprow {
+    background-color: @k-yellow;
+    margin: 0;
+    height: 50px;
+    
+}
+
+#ktoprow menu {
+    vertical-align: middle;
+    color: black;
+    height: 100%;
+    margin: 0 auto;
+}
+
+#ktoprow span, #ktoprow a {
+    vertical-align: middle;
+    color: black;
+    height: 100%;
+    line-height: 50px;
+}
+
+#ktoprow span {
+    // width: 60%;
+    display: inline-block;
+    width: 65%;
+    animation: newsfade 0.5s;
+    
+}
+
+#ktoprow a {
+    margin: 0 10px;
+    animation: newsfade 3.0s;
+}
+
+#ktoprow .Button--primary {
+    font-weight: unset;
+    margin-left: 10px;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    padding: 4px 10px;
+}
+
 #wpbrick {
-    height: 300px;
+    height: 390px;
+}
+
+#ktopheader {
+    min-height: 390px;
+    background-image: url('http://comm.site/blog/_img/kine-pic01.jpg');
+    background-size: cover;
+    background-color: @k-yellow;
+    background-position: 50% 30%;
 }
 
 #newslist {
-    width: 30%;
+    width: 38%;
     float: left;
-    padding: 40px;
-}
-.newstitle {
-    padding-left: 40px;
-}
-
-h2.newstitle, #showcase h2 {
-    margin-top: 0;
+    padding-left: 46px;
+    margin-top: 108px;
+    animation: newsfade 1.5s;
 }
 
-ul, li {
+@keyframes newsfade {
+    from {opacity:0;}
+    to {opacity:1;}
+}
+
+
+h2.newstitle, h2.shotitle {
+    font-weight: normal;
+    text-transform: uppercase;
+
+}
+h2.newstitle {
+    padding-left: 20px;
+    color: @k-orange;
+    margin-bottom: -10px;
+    font-weight: lighter;
+}
+
+#newslistul, #newslist li {
     list-style-type: none;
+    color: @k-red;
 }
+
+#newslist li {
+    margin-top: 10px;
+    margin-bottom: 10px;
+    font-size: 1em;
+}
+
+#newslist li a {
+    color: @k-orange;
+}
+
+#newslist li a:hover {
+    color: @k-yellow;
+    //background: linear-gradient(90deg,#ff8a00,#e52e71);
+    border-bottom: 2px solid @k-orange;
+    margin: -5px;
+    padding: 5px;
+    border-radius: 0;
+    text-decoration: none;
+    animation-direction: alternate;
+    animation-name: slide;
+    animation-duration: 1s; 
+    transition-timing-function: ease-out;
+    animation-fill-mode: forwards;
+    background: #561a443d;
+}
+
+@keyframes slide {
+    from {
+        border-bottom-color: @k-orange;
+        margin: -5px;
+        padding: -5px;
+    }
+    to {
+        border-bottom-color: @k-yellow;
+        margin: -3px;
+        padding: 3px;
+    }
+  }
+
+ul.listholder {
+    padding-left: 20px;
+}
+
+
+/*  //////////////////  Showcase
+///////////////////////////////////*/
 
 #showcase {
     width: 60%;
     float: left;
-    padding: 40px 40px 40px 0;
+    // padding: 40px 40px 40px 0;
+    padding: 0;
+    height: 100%;
+    position: relative;
+    // background-image: url('http://comm.site/blog/_img/bars.png');
+    background-size: 76%;
+    background-repeat: no-repeat;
+    background-position-x: 40%;
+    background-position-y: -138px;
 }
 
 .meta-item {
     display: inline-block;
-    padding: 6px;
-    margin: 6px;
-    border-radius: 8px;
-    background-color: #eee;
+    padding: 0 6px 0 0;
+}
+
+.showcasewrap {
+    background-color: @k-maroon;
+    color: @k-yellow;
+    width: 550px;
+    height: 220px;
+    padding: 12px;
+    position: relative;
+    top: 116px;
+    // box-shadow: 20px 23px 50px 5px #7a0e36 inset;
+}
+
+
+.colo {
+    width: 100px;
+    height: 344px;
+    position: absolute;
+    // box-shadow: -2px 10px 20px #000;
+}
+
+.colo:hover {
+    box-shadow: none;
+}
+
+.finger1 {background-color: @k-yellow; margin-left: 450px; box-shadow: none;}
+.finger2 {background-color: @k-orange; margin-left: 350px}
+.finger3 {background-color: @k-red; margin-left: 250px}
+.finger4 {background-color: @k-maroon; margin-left: 150px}
+.finger5 {background-color: @k-deep; margin-left: 50px}
+
+.finger1 {
+    animation: 
+        fingerfade 0.5s ease-out,
+}
+.finger2 {
+    animation: 
+        fingerfade 0.75s ease-out,
+        fingershade 1.5s ease .75s forwards;
+    ;}
+.finger3 {
+    animation: 
+        fingerfade 1.0s ease-out,
+        fingershade 1.25s ease 1.25s forwards;
+}
+.finger4 {
+    animation: 
+        fingerfade 1.25s ease-out,
+        fingershade 1.25s ease 1.5s forwards;
+    }
+.finger5 {
+    animation: 
+        fingerfade 1.5s ease-out,
+        fingershade 1.5s ease 1.75s forwards;
+}
+
+
+@keyframes fingerfade {
+    from {opacity:0; height:10px;}
+    to {opacity:1; height: 344px}
+}
+
+// @keyframes fingershade {
+//     from {box-shadow:0;}
+//     to {box-shadow: -2px 10px 20px #000;}
+// }
+
+
+
+
+
+h2.shotitle {
+    color: black;
+    margin: 0px;
+    padding: 0px 8px;
+    background-color: @k-yellow;
+    float: left;
+    font-weight: lighter;
+}
+
+.showcasewrap .showcasemeta {
+    clear: both;
+    width: 30%;
+    float: left;
+    font-size: .85em;
+    padding-left: 2px;
+    margin-top: 1.5em;
+}
+
+.showcasewrap .howtosubmit {
+    color: @k-red;
+    clear: both;
+    float: left;
+    position: absolute;
+    width: 30%;
+    bottom: 10px;
+}
+
+.showcasewrap iframe {
+    width: 60%;
+    float: right;
+    background: black;
+}
+
+#showembed {
+    position: relative;
+    top: -20px;
+}
+
+#showcase {
+    // display: flex;
+    // justify-content: center;
+    // align-items: center;
+    display: grid;
+    justify-content: center;
+}
+
+#showcase .kload {
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+    align-self: center;
+}
+
+/*  //////////////////  Forum Header
+///////////////////////////////////*/
+
+#header {
+    border-bottom: 6px solid @k-deep;
+}
+
+.Header-logo {
+    max-height: 54px;
+    position: relative;
+    top: -12px;
+}
+
+.Header-logo {
+    content:url( 'http://comm.site/blog/_img/kinecommunity-large.png')
+}
+
+header .container {
+    background-image: none;
+}
+
+.SessionDropdown .Dropdown-toggle .Avatar {
+    background-color: @k-red !important;
+}
+
+
+/* /////////////// Forum Stuff
+/////////////////////////////////// */
+
+.App-content {
+    border-top: 0;
+}
+
+.IndexPage {
+    // margin-top: 20px;
+    border: 0;
+}
+
+.Button {
+//    color: #667d99;
+   color: #838383;
+   // background-color: #e7edf3; // flarum default
+   background-color: #eeeeee;
+}
+
+.Button:hover {
+    color: #111;
+    background-color: #eae1d7;
+}
+
+.DiscussionListItem {
+    padding-top: 8px;
+    padding-bottom: 8px;
+    border-radius: 10px;
+    
+}
+
+.DiscussionListItem:hover {
+    background: #f7f7f7;
+    }
+
+.DiscussionListItem:hover {
+    background-color: #f3f6f9;
+    // box-shadow: 
+    // 6px 6px 8px 0 rgba(170, 170, 170, 0.25), 
+    // -2px -2px 6px 0 rgba(255, 255, 255, 0.3);
+    // transition-duration: 0.25s
+    transition-duration: .25s;
+}
+
+.DiscussionList:not(.DiscussionList--searchResults) .read .DiscussionListItem-title {
+    color: #222;
+}
+
+.DiscussionListItem-count {
+    margin-top: 4px;
+    color: #999;
+}
+
+.DiscussionListItem-title {
+    font-size: 18px;
+}
+
+.DiscussionListItem-info {
+    font-size: 12px;
+}
+
+.DiscussionList-loadMore {
+    text-align: unset;
+}
+.DiscussionList-loadMore .Button {
+    position: relative;
+    left: 55%;
+}
+
+.sideNav, .sideNav>ul {
+width: 198px;
+}
+
+.Button--primary {
+    background: @k-red;
+    color: white;
+}
+
+.Button--primary:hover {
+    background: @k-orange;
+    color: white;
+}
+
+
+.DiscussionListItem-controls {
+   right: 10px; 
+}
+
+.Button:active, .Button.active, .open>.Dropdown-toggle.Button {
+    background-color: #bebebe;
+}
+.Dropdown-menu>li>a:hover, .Dropdown-menu>li>button:hover {
+    background: #ddd;
+    
+}
+
+
+.sideNav .Dropdown--select .Dropdown-menu>li.active>a {
+    background: none;
+    color: @k-maroon;
+    font-weight: bold;
+}
+
+
+
+/* /////////////// Inside discussions
+/////////////////////////////////// */
+
+
+// nav.DiscussionPage-nav {
+//     overflow: auto;
+// }
+
+nav.DiscussionPage-nav ul {
+    // margin-top: subtract the height of all my added elements 390 + 50 + 60
+    // but this isn't totally right because I added height to the posts...
+    margin-top: 120px;
+    position: relative;
+    // top: -580px;
+}
+
+.Hero {
+    margin-top: -1px;
+    background: #eeeef1;
+    background: #fff !important;
+    // text-align: center;
+    color: @k-maroon;
+    // padding-left: 260px;
+
+    // background: url(http://comm.site/blog/_img/carbon3.jpg) !important;
+    // background: url(http://comm.site/blog/_img/pattern-04.jpg) !important;
+    // background: url(http://comm.site/blog/_img/pattern-05.jpg) !important;
+    //background-size: cover;
+    // box-shadow: inset 0px -80px 50px #fff;
+    box-shadow: inset 0px 60px 50px rgb(240, 240, 240) !important;
+    
+    //text-align: left;
+    color: #996679;
+    //padding-left: 256px;
+
+    
+}
+
+.DiscussionPage header + .container {
+    background: url('http://comm.site/blog/_img/bars.png') 224px -194px no-repeat !important;
+    background-size: 200px !important;
+}
+
+.App--discussion .App-content {
+    margin-top: 0;
+}
+
+.DiscussionPage-stream .PostStream {
+    margin-top: 60px;
+}
+
+.PostStream-item:not(:last-child) {
+    border-bottom: 1px solid #eee;
+    margin-bottom: 15px;
+}
+
+Article {
+    margin-top: 24px;
+    margin-bottom: 24px;
+}
+Article:hover {
+    background-color: #f6f6f6;
+    border-radius: .5rem;
+    transition-duration: .5s;
+}
+
+.Post {
+    padding-right: 85px;
+}
+.Post-body {
+    font-size: 18px;
+}
+
+@media (min-width: 768px) {
+    .Hero .container {
+    padding-top: 60px;
+    padding-bottom: 50px;
+    }
+    .Hero h2 {
+        font-size: 60px;
+        font-family: Avenir, Avenir Next, system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",Ubuntu,Cantarell,Oxygen,Roboto,Helvetica,Arial,sans-serif;
+    }
+
+    .DiscussionPage-stream {
+        margin-right: 275px;
+        margin-left: 120px;
+    }        
+}
+
+
+.Post-header a {
+    color: #666;
+}
+
+.DiscussionListItem-content {
+    position: relative;
+    color: @k-deep;
+}
+.DiscussionPage-list .DiscussionListItem.active {
+    background: #dedede;
+}
+@media (min-width: 768px){
+    .DiscussionPage-list .DiscussionListItem.active {
+        background: #dedede;
+    }
+}
+
+.Post-body blockquote {
+    // background: #f2f0e8;
+    // color: #8b8b8b;
+    // background: #efebe1;
+    background: #f3ebe88a;
+    // background: #f3f0e8;
+    color: #808080;
+    border-top: 0;
+    border-bottom: 0;
+}
+
+Article:hover blockquote {
+    //background: #efebe1;
+    background: #eae1dd8a
+}
+
+.TextEditor textarea {
+    font-size: 18px;
+}
+
+
+/* **************** fixes from that dude
+***************************************** */
+
+@media (max-width: 767px) {
+    .Post-body img {
+        margin-left: auto;
+        margin-right: auto;
+        display: block;
+    }
+    }
+    
+    @media (max-width: 767px) {
+    .Post-body img.emoji {
+        display: inline;
+    }
+}
+
+video {
+    width: 100%;
+    height: auto;
+    }
+
+@media (max-width: 767px) {
+        .Composer {
+        bottom: 0 !important;
+    }
+ }
+
+/* /////////////// Bits and Bobs
+///////////////////////////////////// */
+
+
+ Modal-body {
+    background-color: #f6f4e4;
+    padding: 25px 30px;
+    color: #996679;
+}
+
+/* /////////////// Footer
+/////////////////////////////////// */
+
+#app + footer {
+    min-height: 500px;
+    background: @k-deep;
+    color: white;
+    padding: 40px;
+    border-top: 80px solid @k-maroon;
+    box-shadow: inset 0 2px 90px @k-deepshadow;
 }

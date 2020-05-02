@@ -1,3 +1,5 @@
-app.initializers.add('raafirivero/kine-top', () => {
-  console.log('[raafirivero/kine-top] Hello, forum!');
+
+
+extend(HeaderPrimary.prototype, 'items', function(items) {
+  items.add('google', <a href="https://google.com">Google</a>);
 });
