@@ -17,7 +17,6 @@ var footerwrap = document.getElementById('bigfoot');
 var morevideos = document.getElementById('morevideos');
 var socialrow = document.getElementById('socialrow');
 var footlinks = document.getElementById('footlinks');
-var ytapi = 'AIzaSyAkGZ9uQlSM4mxT6ZjRyOyKfyUWztMNlkE'
 
 
 // some useful variables
@@ -271,17 +270,20 @@ var vCarousel = {
             for (var i=0; i< vCarousel.boxes.length; i++) {
                 box.push(
                     m(".boxwrap", [
-                        m.trust(vCarousel.boxes[i]['videolink']),
+                        m(".iframe-container",[
+                            m.trust(vCarousel.boxes[i]['videolink'])
+                        ]),
                         metarows("li","morevideos",vCarousel.boxes[i]),
-                        m("p",{class:"insidebox"},"box"+i),
+                        // m("p",{class:"insidebox"},"box"+i+1),
                     ])
                 )
             }
         return box;
     },
     view: function(vnode) {
-        return m("div", {class: "multiwrap"}, "", [
-                vCarousel.build_boxes(),
+        return m(".multiwrap", [
+            m("h5", {class:"minihead"} ,"Submitted via #kinefinity on Vimeo and YouTube"),
+            vCarousel.build_boxes(),
         ])
     }
 }

@@ -122,8 +122,7 @@ var localurl = "http://comm.site/blog/_junk/newslist.json";
 var footerwrap = document.getElementById('bigfoot');
 var morevideos = document.getElementById('morevideos');
 var socialrow = document.getElementById('socialrow');
-var footlinks = document.getElementById('footlinks');
-var ytapi = 'AIzaSyAkGZ9uQlSM4mxT6ZjRyOyKfyUWztMNlkE'; // some useful variables
+var footlinks = document.getElementById('footlinks'); // some useful variables
 
 var featurecat = 18;
 var showcasecat = 20;
@@ -376,17 +375,16 @@ var vCarousel = {
     var box = [];
 
     for (var i = 0; i < vCarousel.boxes.length; i++) {
-      box.push(m(".boxwrap", [m.trust(vCarousel.boxes[i]['videolink']), metarows("li", "morevideos", vCarousel.boxes[i]), m("p", {
-        "class": "insidebox"
-      }, "box" + i)]));
+      box.push(m(".boxwrap", [m(".iframe-container", [m.trust(vCarousel.boxes[i]['videolink'])]), metarows("li", "morevideos", vCarousel.boxes[i]) // m("p",{class:"insidebox"},"box"+i+1),
+      ]));
     }
 
     return box;
   },
   view: function view(vnode) {
-    return m("div", {
-      "class": "multiwrap"
-    }, "", [vCarousel.build_boxes()]);
+    return m(".multiwrap", [m("h5", {
+      "class": "minihead"
+    }, "Submitted via #kinefinity on Vimeo and YouTube"), vCarousel.build_boxes()]);
   }
 };
 var showClip = {

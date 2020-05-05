@@ -660,22 +660,93 @@ video {
     min-height: 500px;
     background: @k-deep;
     color: white;
-    padding: 40px;
+    padding: 40px 0;
     border-top: 80px solid @k-maroon;
     box-shadow: inset 0 2px 90px @k-deepshadow;
 }
 
 #morevideos {
-    height: 300px;
-    //background: @k-deep;
+    height: 400px;
+    //background: @k-deepshadow;
+    overflow-y: hidden;
 }
 
 #socialrow {
     height: 200px;
-    background: @k-orange;
+    background: @k-deep;
 }
 
 #footlinks {
     height: 120px;
     background: @k-maroon;
 }
+
+/* /////////////// Footer Mas
+/////////////////////////////////// */
+
+.multiwrap {
+    height: 100%;
+}
+
+.minihead {
+    color: @k-yellow;
+    font-weight: bold;
+    font-size: 1rem;
+}
+
+.boxwrap{
+    width: 30%;
+    float: left;
+    margin-left: 20px;
+    height: 340px;
+    color: #a94c51;
+    // background: @k-maroon;
+    // background: linear-gradient(180deg,@k-deep 0%, @k-maroon 100% );
+    border-radius: 20px;
+    padding: 30px;
+    margin-bottom: 50px;
+}
+
+.iframe-container {
+    overflow: hidden;
+    // Calculated from the aspect ration of the content (in case of 16:9 it is 9/16= 0.5625)
+    padding-top: 56.25%;
+    // padding-top: 7%;
+    position: relative;
+    margin-bottom: 1rem;
+  }
+   
+  .iframe-container iframe {
+     border: 0;
+     height: 100%;
+     left: 0;
+     position: absolute;
+     top: 0;
+     width: 100%;
+  }
+
+.boxwrap li {
+    list-style-type: none;
+    //background: linear-gradient(90deg, #561a44 0%, #8e113f 100%);
+    background: linear-gradient(90deg, #561a44 0%, #631b46 100%); 
+    //background: linear-gradient(90deg, #631b46 0%, #561a44 100%); 
+    display: inline-block;
+    padding: .2rem .6rem .2rem 0;
+    float: left;
+    margin: .2rem .5rem .2rem .2rem;
+    border-radius: 2px;
+    clear: both;
+}
+
+.boxwrap p {
+    clear: both;
+}
+
+
+
+
+
+
+
+/* /////////////// Absolute Bottom
+/////////////////////////////////// */
