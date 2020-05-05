@@ -1,6 +1,7 @@
 /* /////////////// General Tags
 /////////////////////////////////// */
 
+
 @k-yellow: #fdc22d; // burnt yellow
 @k-orange: #f05439; // orange
 @k-red: #c30a3b; // red
@@ -55,15 +56,6 @@ a:hover {
 
 .gonzo {
     display: none !important;
-}
-
-.fixit {
-    position: fixed !important;
-    top: 0;
-}
-.lowscrub {
-    position: absolute !important;
-    bottom: 50px;
 }
 
 .DisscussionPage-discussion div.container {
@@ -220,7 +212,13 @@ ul.listholder {
     background-position-y: -138px;
 }
 
-.meta-item {
+#showcase.flex {
+    display: flex;
+    align-items: center;
+    justify-content: center
+}
+
+.featured-item {
     display: inline-block;
     padding: 0 6px 0 0;
 }
@@ -336,15 +334,16 @@ h2.shotitle {
     // display: flex;
     // justify-content: center;
     // align-items: center;
-    display: grid;
-    justify-content: center;
+
+    direction: ltr;
 }
 
 #showcase .kload {
     display: block;
-    margin-left: auto;
-    margin-right: auto;
-    align-self: center;
+    margin: 0;
+    position: relative;
+    top: 40px;
+    opacity: .6;
 }
 
 /*  //////////////////  Forum Header
@@ -487,12 +486,22 @@ width: 198px;
 // }
 
 nav.DiscussionPage-nav ul {
-    // margin-top: subtract the height of all my added elements 390 + 50 + 60
-    // but this isn't totally right because I added height to the posts...
     margin-top: 120px;
-    position: relative;
-    // top: -580px;
+    //position: relative;
 }
+
+.fixit {
+    position: fixed !important;
+    top: 0;
+}
+.lowscrub {
+    position: absolute !important;
+    bottom: 50px;
+}
+.hiscrub {
+    position: relative !important;
+}
+
 
 .Hero {
     margin-top: -1px;
@@ -654,4 +663,19 @@ video {
     padding: 40px;
     border-top: 80px solid @k-maroon;
     box-shadow: inset 0 2px 90px @k-deepshadow;
+}
+
+#morevideos {
+    height: 300px;
+    //background: @k-deep;
+}
+
+#socialrow {
+    height: 200px;
+    background: @k-orange;
+}
+
+#footlinks {
+    height: 120px;
+    background: @k-maroon;
 }
