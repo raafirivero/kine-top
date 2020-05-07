@@ -1,7 +1,6 @@
 /* /////////////// General Tags
 /////////////////////////////////// */
 
-
 @k-yellow: #fdc22d; // burnt yellow
 @k-orange: #f05439; // orange
 @k-red: #c30a3b; // red
@@ -22,20 +21,9 @@ a:hover {
     transition: opacity 1s;
 }
 
-.container-bg-out {
-    background-image: url(http://comm.site/blog/_junk/grid-4col-22-15.png);
-    background-image: url(http://comm.site/blog/_junk/grid-5col-20-15.png);
-    background-image: url(http://comm.site/blog/_junk/grid-5col-20-15-split.png);
-    //background-image: url(http://comm.site/blog/_junk/grid-6col-22-15.png);
-    //background-image: url(http://comm.site/blog/_junk/grid-8col-18-15.png);
-    //background-image: url(http://comm.site/blog/_junk/grid-10col-20-15.png);
-}
-
-
 .container {
     // background-image: url(http://comm.site/blog/_junk/grid-5col-20-15-split.png);
-    // null
-    text-justify: none;
+    direction: ltr;
 }
 
 #ktoprow, #wpbrick, #showcase {
@@ -239,7 +227,6 @@ ul.listholder {
     width: 100px;
     height: 344px;
     position: absolute;
-    // box-shadow: -2px 10px 20px #000;
 }
 
 .colo:hover {
@@ -283,14 +270,6 @@ ul.listholder {
     to {opacity:1; height: 344px}
 }
 
-// @keyframes fingershade {
-//     from {box-shadow:0;}
-//     to {box-shadow: -2px 10px 20px #000;}
-// }
-
-
-
-
 
 h2.shotitle {
     color: black;
@@ -331,10 +310,6 @@ h2.shotitle {
 }
 
 #showcase {
-    // display: flex;
-    // justify-content: center;
-    // align-items: center;
-
     direction: ltr;
 }
 
@@ -409,10 +384,6 @@ header .container {
 
 .DiscussionListItem:hover {
     background-color: #f3f6f9;
-    // box-shadow: 
-    // 6px 6px 8px 0 rgba(170, 170, 170, 0.25), 
-    // -2px -2px 6px 0 rgba(255, 255, 255, 0.3);
-    // transition-duration: 0.25s
     transition-duration: .25s;
 }
 
@@ -481,13 +452,8 @@ width: 198px;
 /////////////////////////////////// */
 
 
-// nav.DiscussionPage-nav {
-//     overflow: auto;
-// }
-
 nav.DiscussionPage-nav ul {
     margin-top: 120px;
-    //position: relative;
 }
 
 .fixit {
@@ -502,27 +468,13 @@ nav.DiscussionPage-nav ul {
     position: relative !important;
 }
 
-
 .Hero {
     margin-top: -1px;
     background: #eeeef1;
     background: #fff !important;
-    // text-align: center;
     color: @k-maroon;
-    // padding-left: 260px;
-
-    // background: url(http://comm.site/blog/_img/carbon3.jpg) !important;
-    // background: url(http://comm.site/blog/_img/pattern-04.jpg) !important;
-    // background: url(http://comm.site/blog/_img/pattern-05.jpg) !important;
-    //background-size: cover;
-    // box-shadow: inset 0px -80px 50px #fff;
     box-shadow: inset 0px 60px 50px rgb(240, 240, 240) !important;
-    
-    //text-align: left;
     color: #996679;
-    //padding-left: 256px;
-
-    
 }
 
 .DiscussionPage header + .container {
@@ -595,18 +547,13 @@ Article:hover {
 }
 
 .Post-body blockquote {
-    // background: #f2f0e8;
-    // color: #8b8b8b;
-    // background: #efebe1;
     background: #f3ebe88a;
-    // background: #f3f0e8;
     color: #808080;
     border-top: 0;
     border-bottom: 0;
 }
 
 Article:hover blockquote {
-    //background: #efebe1;
     background: #eae1dd8a
 }
 
@@ -658,62 +605,149 @@ video {
 
 #app + footer {
     min-height: 500px;
-    background: @k-deep;
-    color: white;
-    padding: 40px 0;
-    border-top: 80px solid @k-maroon;
+    padding: 0 0 0 0;
+
+    background: #8f8fa3;
+    border-top: 30px solid #c1b8d1;
     box-shadow: inset 0 2px 90px @k-deepshadow;
 }
 
 #morevideos {
-    height: 400px;
-    //background: @k-deepshadow;
-    overflow-y: hidden;
+    height: 500px;
+    // overflow-y: hidden;
+    // padding-top: 30px;
+    background: url('http://comm.site/blog/_img/bars.png') 100px -256px no-repeat !important;
+    background-size: 272px !important; 
+    position: relative;
+}
+
+body {
+    // EXPERIMENTAL
+    background: #8f8fa3;
+    // box-shadow: inset 0 2px 90px @k-deepshadow;
 }
 
 #socialrow {
-    height: 200px;
+    height: 240px;
     background: @k-deep;
+    background: @k-deepshadow;
 }
 
 #footlinks {
-    height: 120px;
+    height: 180px;
     background: @k-maroon;
+    box-shadow: inset 0 2px 90px @k-deepshadow;
 }
 
 /* /////////////// Footer Mas
 /////////////////////////////////// */
 
 .multiwrap {
-    height: 100%;
+    // height: 100%;
+    // margin-top: 30px;
+    padding: 100px 0 40px 0;
 }
 
-.minihead {
-    color: @k-yellow;
-    font-weight: bold;
-    font-size: 1rem;
+h5.minihead {
+    color: black;
+    margin: 0px;
+    padding: 0px 8px;
+    background-color: @k-yellow;
+    font-weight: lighter;
+    display: inline-block;
+  
+    font-size: 1.25rem;
+    position: absolute;
+    left: 30px;
+    top: 40px;
+
+    z-index: 10;
+}
+
+#tns1-mw {
+    //box-shadow: inset 0px 0px 30px #838198 !important;
+    padding: 0 40px;
+
+}
+
+.slidercontrols {
+    position: absolute;
+    top: 40%;
+    width: 100%;
+    // border: 1px solid red;
+    left: 0;
+    height: 0;
+}
+
+.slidercontrols .sprev, .slidercontrols .snext {
+    width: 50px;
+    height: auto;
+}
+
+.slidercontrols .sprev:focus, .slidercontrols .snext:focus {
+    //border: 0;
+    outline: none;
+}
+
+.sprev {
+    float: left;
+    position: relative;
+    left: 10px;
+}
+
+.snext {
+    float: right;
+    position: relative;
+    left: -10px;
 }
 
 .boxwrap{
-    width: 30%;
-    float: left;
-    margin-left: 20px;
+    
     height: 340px;
     color: #a94c51;
-    // background: @k-maroon;
-    // background: linear-gradient(180deg,@k-deep 0%, @k-maroon 100% );
-    border-radius: 20px;
+    border-radius: 25px;
     padding: 30px;
     margin-bottom: 50px;
+
+    // trying to fix TinySlider
+    position: relative;
+    margin-left: 90px;
+    left: -45px;
+
+    // animation
+    transition: all .2s ease-in-out;
+}
+
+.boxwrap{
+    // neumorphism
+    color: #dddce9;
+    background: linear-gradient(145deg, #838198, #727085);
+    box-shadow:  30px 30px 60px #848598, 
+                 -30px -30px 60px #a7a7ba;
+    
+}
+
+
+.boxwrap:hover {
+    background: linear-gradient(145deg, #8e8ca0, #727085);
+    transform: scale(1.005);
+}
+
+.boxwrap:hover .iframe-container {
+    border-bottom: 4px solid @k-yellow;
 }
 
 .iframe-container {
     overflow: hidden;
     // Calculated from the aspect ration of the content (in case of 16:9 it is 9/16= 0.5625)
     padding-top: 56.25%;
+    padding-top: 75%;
     // padding-top: 7%;
     position: relative;
     margin-bottom: 1rem;
+    border-bottom: 4px solid transparent;
+    transition: all .2s ease-in-out;
+    margin: 0 -30px 1rem -30px;
   }
    
   .iframe-container iframe {
@@ -723,29 +757,24 @@ video {
      position: absolute;
      top: 0;
      width: 100%;
+     background: black;
   }
 
 .boxwrap li {
     list-style-type: none;
-    //background: linear-gradient(90deg, #561a44 0%, #8e113f 100%);
-    background: linear-gradient(90deg, #561a44 0%, #631b46 100%); 
-    //background: linear-gradient(90deg, #631b46 0%, #561a44 100%); 
-    display: inline-block;
-    padding: .2rem .6rem .2rem 0;
-    float: left;
-    margin: .2rem .5rem .2rem .2rem;
-    border-radius: 2px;
-    clear: both;
+    // display: inline-block;
 }
 
 .boxwrap p {
     clear: both;
 }
 
+/* /////////////// For Plugins
+/////////////////////////////////// */
 
-
-
-
+.fancybox-bg {
+   background: rgba(72, 71, 88, 0.9) !important;
+}
 
 
 /* /////////////// Absolute Bottom

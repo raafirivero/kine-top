@@ -4,12 +4,13 @@ import { Component } from '@flarum/core/forum';
 import HeaderPrimary from 'flarum/components/HeaderPrimary';
 import PostStreamScrubber from 'flarum/components/PostStreamScrubber';
 import DiscussionPage from 'flarum/components/DiscussionPage';
+import { tns } from "./node_modules/tiny-slider/src/tiny-slider"
 
 
 // Divs that get referenced below:
 var ktoprow = document.getElementById('ktoprow');
 var ktopheader = document.getElementById('ktopheader');
-var showcase = document.getElementById('showcase');
+//var showcase = document.getElementById('showcase');
 var newslist = document.getElementById('newslist');
 var newsurl = "http://comm.site/blog/wp-json/wp/v2/posts/?categories=19&per_page=5&_fields=title,link";
 var localurl = "http://comm.site/blog/_junk/newslist.json";
@@ -17,7 +18,7 @@ var footerwrap = document.getElementById('bigfoot');
 var morevideos = document.getElementById('morevideos');
 var socialrow = document.getElementById('socialrow');
 var footlinks = document.getElementById('footlinks');
-
+var imgdir = "http://comm.site/blog/_img/"
 
 // some useful variables
 var featurecat = 18;
@@ -26,7 +27,7 @@ var skipindex;
 
 //loading animation
 
-showcase.classList.add("flex");
+//showcase.classList.add("flex");
 
 var loadinga = {
     view: function(vnode) {  
@@ -34,7 +35,7 @@ var loadinga = {
         //return  m("p", "hello detroit!");
     }
 }
-m.mount(showcase, loadinga);
+//m.mount(showcase, loadinga);
 
 
 var kData = {
@@ -78,7 +79,7 @@ var Newscontent = {
         
     }   
 }
-m.mount(newslist, Newscontent);
+//m.mount(newslist, Newscontent);
 
 var ktoprow = document.getElementById('ktoprow');
 var toprow = {
@@ -93,7 +94,7 @@ var toprow = {
         ])
     }
 }
-m.mount(ktoprow, toprow);
+// m.mount(ktoprow, toprow);
 
 function fingaz(){
     showcase.classList.remove("flex");
@@ -122,7 +123,7 @@ var grabClips = {
             url: showcaseurl,
         })
         .then(
-            featuredVideo // get started on the first video
+            // featuredVideo // get started on the first video
         )
         .then(
             prepShowcase
@@ -192,6 +193,7 @@ var showlist = {
         })
         .then(function(data) {
             //take received JSON and send it on
+            // console.log(data.data.image.url)
             if (data['html']) {
                 showlist.content.push(data['html'])
                 vCarousel.linkback(data['html'])
@@ -244,6 +246,7 @@ function metarows(tag,section,content) {
     return metalist
 }
 
+
 var vCarousel = {
     boxes: [],
     getback: function(array){
@@ -257,9 +260,10 @@ var vCarousel = {
                 break
             }
         }
-
+        
         // once the object is filled, start building the boxes
         if (vCarousel.boxes[vCarousel.boxes.length-1]['videolink'] !== undefined) {
+            //console.log(vCarousel.boxes);
             vCarousel.view()
         }
         
@@ -269,25 +273,36 @@ var vCarousel = {
         var box = [];
             for (var i=0; i< vCarousel.boxes.length; i++) {
                 box.push(
-                    m(".boxwrap", [
-                        m(".iframe-container",[
-                            m.trust(vCarousel.boxes[i]['videolink'])
-                        ]),
-                        metarows("li","morevideos",vCarousel.boxes[i]),
-                        // m("p",{class:"insidebox"},"box"+i+1),
+                    m(".sliderbox", [
+                        m(".boxwrap", [
+                            m(".iframe-container",[
+                                m.trust(vCarousel.boxes[i]['videolink'])
+                            ]),
+                            metarows("li","morevideos",vCarousel.boxes[i]),
+                            // m("p",{class:"insidebox"},"box"+i+1),
+                        ])
                     ])
                 )
             }
         return box;
     },
+    hl: "Submitted via <strong>#kinefinity</strong> on Vimeo and YouTube",
+    oncreate: '', // tnsWrap(), // using Mithril 0.2, haha
     view: function(vnode) {
-        return m(".multiwrap", [
-            m("h5", {class:"minihead"} ,"Submitted via #kinefinity on Vimeo and YouTube"),
-            vCarousel.build_boxes(),
-        ])
+        return [
+            m("h5", {class:"minihead"} ,[
+                m.trust(vCarousel.hl)
+            ]),
+            m(".multiwrap ", {config:tnsWrap}, [      
+                vCarousel.build_boxes(),
+            ]),
+            m(".slidercontrols", [
+                m("img", {src: imgdir+"caretl.png" , class:"sprev", alt:"previous videos"}),
+                m("img", {src: imgdir+"caretr.png" , class:"snext", alt:"next videos"})
+            ])
+        ]
     }
 }
-
 
 
 var showClip = {
@@ -318,11 +333,30 @@ var showClip = {
 grabClips.fetch();
 
 
-m.mount(showcase, showClip);
+//m.mount(showcase, showClip);
 
 ////////////////////// Showcase Carousel
 
 m.mount(morevideos, vCarousel);
+// m.mount(ktopheader, vCarousel);
+
+/* 
+this function wraps the TinySlider call so that it won't run
+until it's called via {config:tnsWrap} when Mithril is finished
+creating the slider.
+*/
+
+function tnsWrap() {
+    var slider = tns({
+        container: '.multiwrap',
+        items: 3,
+        slideBy: 'page',
+        nav: false,
+        controlsPosition: 'bottom',
+        controlsContainer: '.slidercontrols',
+    });
+}
+
 
 /////////////////// work on Scrubber
 

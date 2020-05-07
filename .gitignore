@@ -1,3 +1,5 @@
 node_modules
 vendor
 composer.lock
+js/src/forum/hold.js
+resources/less/crap.less
