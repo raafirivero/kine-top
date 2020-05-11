@@ -18,16 +18,12 @@ a:hover {
 
 }
 
-ul, li {
-    list-style-type: none;
-}
-
 .fade-out {
     transition: opacity 1s;
 }
 
 .container {
-    //background-image: url(https://comm.site/blog/_junk/grid-5col-20-15-split.png);
+    background-image: url(https://comm.site/blog/_junk/grid-5col-20-15-split.png);
     direction: ltr;
 }
 
@@ -195,9 +191,14 @@ ul.listholder {
     width: 60%;
     float: left;
     // padding: 40px 40px 40px 0;
-    padding: 0 8px 0 0;
+    padding: 0;
     height: 390px;
     position: relative;
+    background-image: url('https://comm.site/blog/_img/bars.png');
+    background-size: 76%;
+    background-repeat: no-repeat;
+    background-position-x: 40%;
+    background-position-y: -138px;
 }
 
 #showcase.flex {
@@ -207,12 +208,14 @@ ul.listholder {
 }
 
 .featured-item {
+    display: inline-block;
     padding: 0 6px 0 0;
 }
 
 .showcasewrap {
     background-color: @k-maroon;
     color: @k-yellow;
+    width: 550px;
     height: 220px;
     padding: 12px;
     position: relative;
@@ -224,19 +227,18 @@ ul.listholder {
 .colo {
     width: 100px;
     height: 344px;
-    // position: absolute;
-    float: right;
+    position: absolute;
 }
 
 .colo:hover {
     box-shadow: none;
 }
 
-.finger1 {background-color: @k-yellow; box-shadow: none;}
-.finger2 {background-color: @k-orange;}
-.finger3 {background-color: @k-red;}
-.finger4 {background-color: @k-maroon;}
-.finger5 {background-color: @k-deep;}
+.finger1 {background-color: @k-yellow; margin-left: 450px; box-shadow: none;}
+.finger2 {background-color: @k-orange; margin-left: 350px}
+.finger3 {background-color: @k-red; margin-left: 250px}
+.finger4 {background-color: @k-maroon; margin-left: 150px}
+.finger5 {background-color: @k-deep; margin-left: 50px}
 
 .finger1 {
     animation: 
@@ -275,21 +277,17 @@ h2.shotitle {
     margin: 0px;
     padding: 0px 8px;
     background-color: @k-yellow;
+    float: left;
     font-weight: lighter;
-    position: absolute;
-    top: 12px;
-    left: 12px;
 }
 
 .showcasewrap .showcasemeta {
     clear: both;
-    width: 40%;
-    position: absolute;
+    width: 30%;
+    float: left;
     font-size: .85em;
+    padding-left: 2px;
     margin-top: 1.5em;
-    top: 50px;
-    left: 12px;
-
 }
 
 .showcasewrap .howtosubmit {
@@ -301,24 +299,18 @@ h2.shotitle {
     bottom: 10px;
 }
 
+.showcasewrap iframe {
+    // width: 60%;
+    // float: right;
+    // background: black;
+}
 
 #showembed {
     width: 360px;
+    position: absolute;
+    left: 220px;
     height: 270px;
-    position: absolute;
-    right: 42px;
-    overflow: hidden;
-    border-bottom: 4px solid transparent;
-}
-
-#showembed iframe {
-    border: 0;
-    height: auto;
-    left: 0;
-    position: absolute;
-    top: 0;
-    width: 100%;
-    padding: 7% 0%;
+    
 }
 
 #showcase .kload {

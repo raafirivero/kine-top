@@ -10,15 +10,15 @@ import { tns } from "./node_modules/tiny-slider/src/tiny-slider"
 // Divs that get referenced below:
 var ktoprow = document.getElementById('ktoprow');
 var ktopheader = document.getElementById('ktopheader');
-var showcase = document.getElementById('showcase');
+//var showcase = document.getElementById('showcase');
 var newslist = document.getElementById('newslist');
-var newsurl = "https://comm.site/blog/wp-json/wp/v2/posts/?categories=19&per_page=5&_fields=title,link";
-var localurl = "https://comm.site/blog/_junk/newslist.json";
+var newsurl = "http://comm.site/blog/wp-json/wp/v2/posts/?categories=19&per_page=5&_fields=title,link";
+var localurl = "http://comm.site/blog/_junk/newslist.json";
 var footerwrap = document.getElementById('bigfoot');
 var morevideos = document.getElementById('morevideos');
 var socialrow = document.getElementById('socialrow');
 var footlinks = document.getElementById('footlinks');
-var imgdir = "https://comm.site/blog/_img/"
+var imgdir = "http://comm.site/blog/_img/"
 
 // some useful variables
 var featurecat = 18;
@@ -27,15 +27,15 @@ var skipindex;
 
 //loading animation
 
-showcase.classList.add("flex");
+//showcase.classList.add("flex");
 
 var loadinga = {
     view: function(vnode) {  
-        return  m("img", {src: "https://comm.site/blog/_img/loader-thin.gif", class: "kload", alt:"loading"})
+        return  m("img", {src: "http://comm.site/blog/_img/loader-thin.gif", class: "kload", alt:"loading"})
         //return  m("p", "hello detroit!");
     }
 }
-m.mount(showcase, loadinga);
+//m.mount(showcase, loadinga);
 
 
 var kData = {
@@ -79,7 +79,7 @@ var Newscontent = {
         
     }   
 }
-m.mount(newslist, Newscontent);
+//m.mount(newslist, Newscontent);
 
 var ktoprow = document.getElementById('ktoprow');
 var toprow = {
@@ -94,7 +94,7 @@ var toprow = {
         ])
     }
 }
-m.mount(ktoprow, toprow);
+// m.mount(ktoprow, toprow);
 
 function fingaz(){
     showcase.classList.remove("flex");
@@ -106,9 +106,11 @@ function fingaz(){
     return fingerlist
 }
 
+// this grabs the metadata for featured showcase videos
+//var showcaseurl = "http://comm.site/blog/wp-json/wp/v2/videos/?_fields=id,title,meta&per_page=6"
 
 var showcaseboxes = 6;
-var showcaseurl = "https://comm.site/blog/wp-json/wp/v2/videos/?_fields=id,title,categories,meta&per_page="+showcaseboxes;
+var showcaseurl = "http://comm.site/blog/wp-json/wp/v2/videos/?_fields=id,title,categories,meta&per_page="+showcaseboxes;
 
 
 var metas = [];
@@ -121,40 +123,91 @@ var grabClips = {
             url: showcaseurl,
         })
         .then(
-            featuredVideo // get started on the first video
+            // featuredVideo // get started on the first video
         )
         .then(
             prepShowcase
         )
-        .then(
-            // not working, was attempting to store the data back in this object
-            // but it's not necessary.
-            // grabClips.content,
-            // console.log(grabClips.content)
-        )
+        .then(function(data){
+            grabClips.content = data;
+        })
     }
 }
 
 function featuredVideo(data) {
     var tempser;
     var obj = data;
-    // console.log(obj);
 
     for (var i = 0; i < obj.length; i++){
         // look for first entry in the "featured" category
         if (obj[i].categories.includes(featurecat)){
             metas = obj[i]['meta'];
             skipindex = i;
-            showClip.content = obj[i].meta;
-            // console.log(obj[i].meta);
-            showClip.view();
             break;
         }
     }
 
-    //showClip.content = data.data.iframe.html
-
+    tempser = encode(metas.videolink); // serialize the videolink
+    pullclip.fetch(tempser); // connect to API for embed code
     return data;
+}
+
+function encode(uri) {
+    // make a switch statement, then encode the uri
+    var ri = new RegExp('vimeo', 'i');
+    var vimeo = ri.test(uri);
+    var res = encodeURIComponent(uri);
+    return 'https://api.microlink.io?url='+res+'&iframe';
+    /*
+    we can go back to pinging the vimeo and youtube APIs directly later,
+    for now let's use MicroLink.io as above.
+    if (vimeo) return 'https://vimeo.com/api/oembed.json?url='+res;
+    return 'http://www.youtube.com/oembed?url='+res+'&format=json';
+    */
+}
+
+var pullclip = {
+    content:[],
+    fetch: function(url) {
+        // log: console.log('are we fetching?'),
+        m.request({
+            method: "GET",
+            url: url,
+        })
+        .then(function(data) {
+            //take received JSON and send it on
+            //showClip.content = data['html']
+            // use microlink.io wrapper instead
+            showClip.content = data.data.iframe.html
+        })
+    }
+}
+
+var showlist = {
+    content:[],
+    fetch: function(url) {
+        // log: console.log('We fetching?'),
+        m.request({
+            method: "GET",
+            url: url,
+        })
+        .then(function(data) {
+            //take received JSON and send it on
+            // console.log(data.data.image.url)
+            if (data['html']) {
+                showlist.content.push(data['html'])
+                vCarousel.linkback(data['html'])
+            } else {
+                // format the returning data from microlink
+                showlist.content.push(data.data.iframe.html)
+                vCarousel.linkback(data.data.iframe.html)
+                // console.log(showlist.content)
+            }
+            // return
+
+        })
+        //.then(vCarousel.linkback)
+    }
 }
 
 
@@ -168,13 +221,19 @@ function prepShowcase(data){
     // create a new array without the featured video
     for (var i = 0; i < obj.length; i++){
         if (i != skipindex) {
-            showcaseobj.push(obj[i]);
+            showcaseobj.push(obj[i]['meta']);
         }
     }
-    
-    vCarousel.boxes = showcaseobj;
-    vCarousel.build_boxes();
-    return data;
+    // encode all the videolinks
+    for (var i = 0; i < showcaseobj.length; i++){
+        showcaseobj[i]['videolink'] = encode(showcaseobj[i]['videolink'])
+    }
+    // fetch all the embed codes via API
+    for (var i = 0; i < showcaseobj.length; i++){
+        showcaseobj[i]['videolink'] = showlist.fetch(showcaseobj[i]['videolink'])
+       
+   }
+   vCarousel.getback(showcaseobj);
 }
 
 function metarows(tag,section,content) {
@@ -187,44 +246,43 @@ function metarows(tag,section,content) {
     return metalist
 }
 
-function firemodule(firecount) {
-    var module = [
-        m(".firewrap",[
-            m(".firebox",[
-                m(".fireball",{class:"kbutton"}),
-                m(".firenum",firecount)
-            ])
-        ])
-    ];
-    return module;
-}
-
 
 var vCarousel = {
     boxes: [],
+    getback: function(array){
+        vCarousel.boxes = array;
+    },
+    linkback: function(iframe){
+
+        for (var i = 0; i < vCarousel.boxes.length; i++){
+            if (vCarousel.boxes[i]['videolink'] === undefined ) { 
+                vCarousel.boxes[i]['videolink'] = iframe;
+                break
+            }
+        }
+        
+        // once the object is filled, start building the boxes
+        if (vCarousel.boxes[vCarousel.boxes.length-1]['videolink'] !== undefined) {
+            //console.log(vCarousel.boxes);
+            vCarousel.view()
+        }
+        
+    },
     build_boxes: function() {
         // console.log("start building")
         var box = [];
             for (var i=0; i< vCarousel.boxes.length; i++) {
-                
-                if(vCarousel.boxes[i]['meta']['upvotes']) {
-                    var firecount = vCarousel.boxes[i]['meta']['upvotes']
-                } else {
-                    var firecount = 0;
-                }
-
                 box.push(
                     m(".sliderbox", [
-                        m(".boxwrap .clip"+vCarousel.boxes[i]['id'], [
+                        m(".boxwrap", [
                             m(".iframe-container",[
-                                m.trust(vCarousel.boxes[i]['meta']['oembed'])
+                                m.trust(vCarousel.boxes[i]['videolink'])
                             ]),
-                            metarows("li","morevideos",vCarousel.boxes[i]['meta']),
-                            firemodule(firecount)
+                            metarows("li","morevideos",vCarousel.boxes[i]),
+                            // m("p",{class:"insidebox"},"box"+i+1),
                         ])
                     ])
                 )
-
             }
         return box;
     },
@@ -263,11 +321,10 @@ var showClip = {
                 m("h2",{class: "shotitle"}, "Showcase"),
                 m("p",{class:"showcasemeta"},metarows("li","featured",metas)),
                 m("p",{class:"howtosubmit"},"Submit using #Kinefinity on Vimeo or YouTube"),
-                m("div",{class: "iframe-container",ID:"showembed"}, [
-                    m.trust(this.content.oembed),
+                m("div",{class: "embedwrap",ID:"showembed"}, [
+                    m.trust(this.content),
                 ]),
-            ]),
-            // console.log(this.content.oembed)
+            ])
         ]
     }
 }
@@ -276,7 +333,7 @@ var showClip = {
 grabClips.fetch();
 
 
-m.mount(showcase, showClip);
+//m.mount(showcase, showClip);
 
 ////////////////////// Showcase Carousel
 
@@ -345,50 +402,19 @@ function scrubberClass(vnode) {
     
         var fheight = document.getElementById('bigfoot').offsetHeight;
         var docHeight = document.body.scrollHeight;
-        var stoppingPlace = docHeight - navMargin - scrubHeight - fheight - checkScrollSpeed();
-
-
+        var stoppingPlace = docHeight - navMargin - scrubHeight - fheight;
     
         window.addEventListener('scroll', holdscrub, true); 
-
-        var checkScrollSpeed = (function(settings){
-            settings = settings || {};
-          
-            var lastPos, newPos, timer, delta, 
-                delay = settings.delay || 50; // in "ms" (higher means lower fidelity )
-          
-            function clear() {
-              lastPos = null;
-              delta = 0;
-            }
-          
-            clear();
-            
-            return function(){
-              newPos = window.scrollY;
-              if ( lastPos != null ){ // && newPos < maxScroll 
-                delta = newPos -  lastPos;
-              }
-              lastPos = newPos;
-              clearTimeout(timer);
-              timer = setTimeout(clear, delay);
-              return delta;
-            };
-        })();
-        
-        
     
         function holdscrub() {
-
-            console.log(checkScrollSpeed);
     
             if (window.scrollY < sticky) {
                 qscrub.classList.remove("fixit");
                 qscrub.classList.remove("lowscrub");
-                // qscrub.classList.add("hiscrub");
+                qscrub.classList.add("hiscrub");
             }
     
-            if (window.scrollY >= sticky && window.scrollY < stoppingPlace ) {
+            if (window.scrollY >= sticky && window.scrollY < stoppingPlace) {
                 qscrub.classList.add("fixit");
                 qscrub.classList.remove("lowscrub");
                 qscrub.classList.remove("hiscrub");
@@ -396,14 +422,12 @@ function scrubberClass(vnode) {
             }
     
             if (window.scrollY >= stoppingPlace) {
-                // qscrub.classList.add("lowscrub");
+                qscrub.classList.add("lowscrub");
                 qscrub.classList.remove("fixit");
                 qscrub.classList.remove("hiscrub");
             }
         }
-
 }
-
 
 
 var scrollnum = '';

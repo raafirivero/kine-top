@@ -4,7 +4,6 @@ import { Component } from '@flarum/core/forum';
 import HeaderPrimary from 'flarum/components/HeaderPrimary';
 import PostStreamScrubber from 'flarum/components/PostStreamScrubber';
 import DiscussionPage from 'flarum/components/DiscussionPage';
-import DiscussionListItem from 'flarum/components/DiscussionListItem';
 import { tns } from "./node_modules/tiny-slider/src/tiny-slider"
 
 
@@ -47,7 +46,7 @@ var kData = {
         })
         .then(function(data) {
             kData.content = data
-            // console.log(data)
+            console.log(data)
         })
     }
 }
@@ -107,199 +106,6 @@ function fingaz(){
     return fingerlist
 }
 
-
-var showcaseboxes = 6;
-var showcaseurl = "https://comm.site/blog/wp-json/wp/v2/videos/?_fields=id,title,categories,meta&per_page="+showcaseboxes;
-
-
-var metas = [];
-
-var grabClips = {
-    content:[], // populated below
-    fetch: function() {
-        m.request({
-            method: "GET",
-            url: showcaseurl,
-        })
-        .then(
-            featuredVideo // get started on the first video
-        )
-        .then(
-            prepShowcase
-        )
-        .then(
-            // not working, was attempting to store the data back in this object
-            // but it's not necessary.
-            // grabClips.content,
-            // console.log(grabClips.content)
-        )
-    }
-}
-
-function featuredVideo(data) {
-    var tempser;
-    var obj = data;
-    // console.log(obj);
-
-    for (var i = 0; i < obj.length; i++){
-        // look for first entry in the "featured" category
-        if (obj[i].categories.includes(featurecat)){
-            metas = obj[i]['meta'];
-            skipindex = i;
-            showClip.content = obj[i].meta;
-            // console.log(obj[i].meta);
-            showClip.view();
-            break;
-        }
-    }
-
-    //showClip.content = data.data.iframe.html
-
-    return data;
-}
-
-
-function prepShowcase(data){
-    //console.log(data);
-    // get bizzy
-    var showcaseobj = [];
-    var obj = data;
-    var embedcodes = []
-
-    // create a new array without the featured video
-    for (var i = 0; i < obj.length; i++){
-        if (i != skipindex) {
-            showcaseobj.push(obj[i]);
-        }
-    }
-    
-    vCarousel.boxes = showcaseobj;
-    vCarousel.build_boxes();
-    return data;
-}
-
-function metarows(tag,section,content) {
-    // universal function for formatting metadata from videos
-    var metalist = [];
-    if(content.director) metalist.push(m(tag, {class:section+"-item"},"Director: "+content.director))
-    if(content.dp) metalist.push(m(tag, {class:section+"-item"},"DP: "+content.dp))
-    if(content.editor) metalist.push(m(tag, {class:section+"-item"},"Editor: "+content.editor))
-    if(content.kinecamera) metalist.push(m(tag, {class:section+"-item"},"Camera: "+content.kinecamera))
-    return metalist
-}
-
-function firemodule(firecount) {
-    var module = [
-        m(".firewrap",[
-            m(".firebox",[
-                m(".fireball",{class:"kbutton"}),
-                m(".firenum",firecount)
-            ])
-        ])
-    ];
-    return module;
-}
-
-
-var vCarousel = {
-    boxes: [],
-    build_boxes: function() {
-        // console.log("start building")
-        var box = [];
-            for (var i=0; i< vCarousel.boxes.length; i++) {
-                
-                if(vCarousel.boxes[i]['meta']['upvotes']) {
-                    var firecount = vCarousel.boxes[i]['meta']['upvotes']
-                } else {
-                    var firecount = 0;
-                }
-
-                box.push(
-                    m(".sliderbox", [
-                        m(".boxwrap .clip"+vCarousel.boxes[i]['id'], [
-                            m(".iframe-container",[
-                                m.trust(vCarousel.boxes[i]['meta']['oembed'])
-                            ]),
-                            metarows("li","morevideos",vCarousel.boxes[i]['meta']),
-                            firemodule(firecount)
-                        ])
-                    ])
-                )
-
-            }
-        return box;
-    },
-    hl: "Submitted via <strong>#kinefinity</strong> on Vimeo and YouTube",
-    oncreate: '', // tnsWrap(), // using Mithril 0.2, haha
-    view: function(vnode) {
-        return [
-            m("h5", {class:"minihead"} ,[
-                m.trust(vCarousel.hl)
-            ]),
-            m(".multiwrap ", {config:tnsWrap}, [      
-                vCarousel.build_boxes(),
-            ]),
-            m(".slidercontrols", [
-                m("img", {src: imgdir+"caretl.png" , class:"sprev", alt:"previous videos"}),
-                m("img", {src: imgdir+"caretr.png" , class:"snext", alt:"next videos"})
-            ])
-        ]
-    }
-}
-
-
-var showClip = {
-    oninit: '', // used to be grabClips.fetch
-    content: [],
-    onbeforeremove: function(vnode) {
-        vnode.dom.classList.add("fade-out")
-        return new Promise(function(resolve) {
-            setTimeout(resolve, 1000)
-        })
-    },
-    view: function(vnode) {
-        return [
-            fingaz(),
-            m("div", {class: "showcasewrap"}, "", [
-                m("h2",{class: "shotitle"}, "Showcase"),
-                m("p",{class:"showcasemeta"},metarows("li","featured",metas)),
-                m("p",{class:"howtosubmit"},"Submit using #Kinefinity on Vimeo or YouTube"),
-                m("div",{class: "iframe-container",ID:"showembed"}, [
-                    m.trust(this.content.oembed),
-                ]),
-            ]),
-            // console.log(this.content.oembed)
-        ]
-    }
-}
-
-// uncoupling grabbing data from the showClip object
-grabClips.fetch();
-
-
-m.mount(showcase, showClip);
-
-////////////////////// Showcase Carousel
-
-m.mount(morevideos, vCarousel);
-// m.mount(ktopheader, vCarousel);
-
-/* 
-this function wraps the TinySlider call so that it won't run
-until it's called via {config:tnsWrap} when Mithril is finished
-creating the slider.
-*/
-
-function tnsWrap() {
-    var slider = tns({
-        container: '.multiwrap',
-        items: 3,
-        slideBy: 'page',
-        nav: false,
-        controlsPosition: 'bottom',
-        controlsContainer: '.slidercontrols',
-    });
-}
 
 /////////////////// work on Scrubber
 
@@ -464,25 +270,4 @@ extend(HeaderPrimary.prototype, 'items', function(items) {
     // );
 //}
 
-//console.log("extended");
 
-extend(DiscussionListItem.prototype, 'config', function(isInitialized) {
-
-    // var fullItem = this;
-    // var itemTitle = fullItem.element.querySelector('.DiscussionListItem-title');
-    // var spanned = itemTitle.textContent;
-    // var msp = {
-    //     view: function() { 
-    //         return m("h3",{class:"DiscussionListItem-title"},
-    //                     [
-    //                         m("span",{class:"ktitlespan"},spanned)
-    //                     ]
-    //                 );
-    //         }
-    //     }
-
-    // itemTitle = msp;
-    
-    // m.mount(this.element.querySelector('.DiscussionListItem-title'), msp);
-   
-});

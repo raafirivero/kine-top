@@ -106,8 +106,11 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var flarum_components_PostStreamScrubber__WEBPACK_IMPORTED_MODULE_3___default = /*#__PURE__*/__webpack_require__.n(flarum_components_PostStreamScrubber__WEBPACK_IMPORTED_MODULE_3__);
 /* harmony import */ var flarum_components_DiscussionPage__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! flarum/components/DiscussionPage */ "flarum/components/DiscussionPage");
 /* harmony import */ var flarum_components_DiscussionPage__WEBPACK_IMPORTED_MODULE_4___default = /*#__PURE__*/__webpack_require__.n(flarum_components_DiscussionPage__WEBPACK_IMPORTED_MODULE_4__);
-/* harmony import */ var _node_modules_tiny_slider_src_tiny_slider__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./node_modules/tiny-slider/src/tiny-slider */ "./node_modules/tiny-slider/src/tiny-slider.js");
+/* harmony import */ var flarum_components_DiscussionListItem__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! flarum/components/DiscussionListItem */ "flarum/components/DiscussionListItem");
+/* harmony import */ var flarum_components_DiscussionListItem__WEBPACK_IMPORTED_MODULE_5___default = /*#__PURE__*/__webpack_require__.n(flarum_components_DiscussionListItem__WEBPACK_IMPORTED_MODULE_5__);
+/* harmony import */ var _node_modules_tiny_slider_src_tiny_slider__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ./node_modules/tiny-slider/src/tiny-slider */ "./node_modules/tiny-slider/src/tiny-slider.js");
 //export * from './src/forum';
+
 
 
 
@@ -116,32 +119,32 @@ __webpack_require__.r(__webpack_exports__);
  // Divs that get referenced below:
 
 var ktoprow = document.getElementById('ktoprow');
-var ktopheader = document.getElementById('ktopheader'); //var showcase = document.getElementById('showcase');
-
+var ktopheader = document.getElementById('ktopheader');
+var showcase = document.getElementById('showcase');
 var newslist = document.getElementById('newslist');
-var newsurl = "http://comm.site/blog/wp-json/wp/v2/posts/?categories=19&per_page=5&_fields=title,link";
-var localurl = "http://comm.site/blog/_junk/newslist.json";
+var newsurl = "https://comm.site/blog/wp-json/wp/v2/posts/?categories=19&per_page=5&_fields=title,link";
+var localurl = "https://comm.site/blog/_junk/newslist.json";
 var footerwrap = document.getElementById('bigfoot');
 var morevideos = document.getElementById('morevideos');
 var socialrow = document.getElementById('socialrow');
 var footlinks = document.getElementById('footlinks');
-var imgdir = "http://comm.site/blog/_img/"; // some useful variables
+var imgdir = "https://comm.site/blog/_img/"; // some useful variables
 
 var featurecat = 18;
 var showcasecat = 20;
 var skipindex; //loading animation
-//showcase.classList.add("flex");
 
+showcase.classList.add("flex");
 var loadinga = {
   view: function view(vnode) {
     return m("img", {
-      src: "http://comm.site/blog/_img/loader-thin.gif",
+      src: "https://comm.site/blog/_img/loader-thin.gif",
       "class": "kload",
       alt: "loading"
     }); //return  m("p", "hello detroit!");
   }
-}; //m.mount(showcase, loadinga);
-
+};
+m.mount(showcase, loadinga);
 var kData = {
   content: [],
   fetch: function fetch() {
@@ -149,7 +152,7 @@ var kData = {
       method: "GET",
       url: newsurl
     }).then(function (data) {
-      kData.content = data;
+      kData.content = data; // console.log(data)
     });
   }
 };
@@ -178,8 +181,8 @@ var Newscontent = {
       }, htmlEntities(item.title.rendered))]);
     })])];
   }
-}; //m.mount(newslist, Newscontent);
-
+};
+m.mount(newslist, Newscontent);
 var ktoprow = document.getElementById('ktoprow');
 var toprow = {
   view: function view(vnode) {
@@ -204,7 +207,8 @@ var toprow = {
       href: "/sign-up/"
     }, "Sign Up")]);
   }
-}; // m.mount(ktoprow, toprow);
+};
+m.mount(ktoprow, toprow);
 
 function fingaz() {
   showcase.classList.remove("flex");
@@ -218,12 +222,10 @@ function fingaz() {
   }
 
   return fingerlist;
-} // this grabs the metadata for featured showcase videos
-//var showcaseurl = "http://comm.site/blog/wp-json/wp/v2/videos/?_fields=id,title,meta&per_page=6"
-
+}
 
 var showcaseboxes = 6;
-var showcaseurl = "http://comm.site/blog/wp-json/wp/v2/videos/?_fields=id,title,categories,meta&per_page=" + showcaseboxes;
+var showcaseurl = "https://comm.site/blog/wp-json/wp/v2/videos/?_fields=id,title,categories,meta&per_page=" + showcaseboxes;
 var metas = [];
 var grabClips = {
   content: [],
@@ -232,83 +234,30 @@ var grabClips = {
     m.request({
       method: "GET",
       url: showcaseurl
-    }).then().then(prepShowcase).then(function (data) {
-      grabClips.content = data;
-    });
+    }).then(featuredVideo // get started on the first video
+    ).then(prepShowcase).then();
   }
 };
 
 function featuredVideo(data) {
   var tempser;
-  var obj = data;
+  var obj = data; // console.log(obj);
 
   for (var i = 0; i < obj.length; i++) {
     // look for first entry in the "featured" category
     if (obj[i].categories.includes(featurecat)) {
       metas = obj[i]['meta'];
       skipindex = i;
+      showClip.content = obj[i].meta; // console.log(obj[i].meta);
+
+      showClip.view();
       break;
     }
-  }
+  } //showClip.content = data.data.iframe.html
 
-  tempser = encode(metas.videolink); // serialize the videolink
-
-  pullclip.fetch(tempser); // connect to API for embed code
 
   return data;
 }
-
-function encode(uri) {
-  // make a switch statement, then encode the uri
-  var ri = new RegExp('vimeo', 'i');
-  var vimeo = ri.test(uri);
-  var res = encodeURIComponent(uri);
-  return 'https://api.microlink.io?url=' + res + '&iframe';
-  /*
-  we can go back to pinging the vimeo and youtube APIs directly later,
-  for now let's use MicroLink.io as above.
-  if (vimeo) return 'https://vimeo.com/api/oembed.json?url='+res;
-  return 'http://www.youtube.com/oembed?url='+res+'&format=json';
-  */
-}
-
-var pullclip = {
-  content: [],
-  fetch: function fetch(url) {
-    // log: console.log('are we fetching?'),
-    m.request({
-      method: "GET",
-      url: url
-    }).then(function (data) {
-      //take received JSON and send it on
-      //showClip.content = data['html']
-      // use microlink.io wrapper instead
-      showClip.content = data.data.iframe.html;
-    });
-  }
-};
-var showlist = {
-  content: [],
-  fetch: function fetch(url) {
-    // log: console.log('We fetching?'),
-    m.request({
-      method: "GET",
-      url: url
-    }).then(function (data) {
-      //take received JSON and send it on
-      // console.log(data.data.image.url)
-      if (data['html']) {
-        showlist.content.push(data['html']);
-        vCarousel.linkback(data['html']);
-      } else {
-        // format the returning data from microlink
-        showlist.content.push(data.data.iframe.html);
-        vCarousel.linkback(data.data.iframe.html); // console.log(showlist.content)
-      } // return
-
-    }); //.then(vCarousel.linkback)
-  }
-};
 
 function prepShowcase(data) {
   //console.log(data);
@@ -319,21 +268,13 @@ function prepShowcase(data) {
 
   for (var i = 0; i < obj.length; i++) {
     if (i != skipindex) {
-      showcaseobj.push(obj[i]['meta']);
+      showcaseobj.push(obj[i]);
     }
-  } // encode all the videolinks
-
-
-  for (var i = 0; i < showcaseobj.length; i++) {
-    showcaseobj[i]['videolink'] = encode(showcaseobj[i]['videolink']);
-  } // fetch all the embed codes via API
-
-
-  for (var i = 0; i < showcaseobj.length; i++) {
-    showcaseobj[i]['videolink'] = showlist.fetch(showcaseobj[i]['videolink']);
   }
 
-  vCarousel.getback(showcaseobj);
+  vCarousel.boxes = showcaseobj;
+  vCarousel.build_boxes();
+  return data;
 }
 
 function metarows(tag, section, content) {
@@ -354,32 +295,27 @@ function metarows(tag, section, content) {
   return metalist;
 }
 
+function firemodule(firecount) {
+  var module = [m(".firewrap", [m(".firebox", [m(".fireball", {
+    "class": "kbutton"
+  }), m(".firenum", firecount)])])];
+  return module;
+}
+
 var vCarousel = {
   boxes: [],
-  getback: function getback(array) {
-    vCarousel.boxes = array;
-  },
-  linkback: function linkback(iframe) {
-    for (var i = 0; i < vCarousel.boxes.length; i++) {
-      if (vCarousel.boxes[i]['videolink'] === undefined) {
-        vCarousel.boxes[i]['videolink'] = iframe;
-        break;
-      }
-    } // once the object is filled, start building the boxes
-
-
-    if (vCarousel.boxes[vCarousel.boxes.length - 1]['videolink'] !== undefined) {
-      //console.log(vCarousel.boxes);
-      vCarousel.view();
-    }
-  },
   build_boxes: function build_boxes() {
     // console.log("start building")
     var box = [];
 
     for (var i = 0; i < vCarousel.boxes.length; i++) {
-      box.push(m(".sliderbox", [m(".boxwrap", [m(".iframe-container", [m.trust(vCarousel.boxes[i]['videolink'])]), metarows("li", "morevideos", vCarousel.boxes[i]) // m("p",{class:"insidebox"},"box"+i+1),
-      ])]));
+      if (vCarousel.boxes[i]['meta']['upvotes']) {
+        var firecount = vCarousel.boxes[i]['meta']['upvotes'];
+      } else {
+        var firecount = 0;
+      }
+
+      box.push(m(".sliderbox", [m(".boxwrap .clip" + vCarousel.boxes[i]['id'], [m(".iframe-container", [m.trust(vCarousel.boxes[i]['meta']['oembed'])]), metarows("li", "morevideos", vCarousel.boxes[i]['meta']), firemodule(firecount)])]));
     }
 
     return box;
@@ -423,14 +359,15 @@ var showClip = {
     }, metarows("li", "featured", metas)), m("p", {
       "class": "howtosubmit"
     }, "Submit using #Kinefinity on Vimeo or YouTube"), m("div", {
-      "class": "embedwrap",
+      "class": "iframe-container",
       ID: "showembed"
-    }, [m.trust(this.content)])])];
+    }, [m.trust(this.content.oembed)])]) // console.log(this.content.oembed)
+    ];
   }
 }; // uncoupling grabbing data from the showClip object
 
-grabClips.fetch(); //m.mount(showcase, showClip);
-////////////////////// Showcase Carousel
+grabClips.fetch();
+m.mount(showcase, showClip); ////////////////////// Showcase Carousel
 
 m.mount(morevideos, vCarousel); // m.mount(ktopheader, vCarousel);
 
@@ -441,7 +378,7 @@ creating the slider.
 */
 
 function tnsWrap() {
-  var slider = Object(_node_modules_tiny_slider_src_tiny_slider__WEBPACK_IMPORTED_MODULE_5__["tns"])({
+  var slider = Object(_node_modules_tiny_slider_src_tiny_slider__WEBPACK_IMPORTED_MODULE_6__["tns"])({
     container: '.multiwrap',
     items: 3,
     slideBy: 'page',
@@ -477,18 +414,21 @@ function scrubberClass(vnode) {
   // is via its computed height in the browser, then convert it into a number
   // qscrub.scrollHeight didn't work 100% of the time, espec on tall pages
   // recalculated it a different way below
-  // var scrubHeight = parseInt(window.getComputedStyle(qscrub).getPropertyValue("height"));
 
-  var scrubHeight = qscrub.scrollHeight;
-  var navMargin = parseInt(window.getComputedStyle(qscrub).getPropertyValue("margin-top")); // set the scroll number where we want to fix the Scrubber
+  var scrubHeight = parseInt(window.getComputedStyle(qscrub).getPropertyValue("height"));
+  var scrubTop = parseInt(window.getComputedStyle(qscrub).getPropertyValue("margin-top"));
+  var scrubBottom = parseInt(window.getComputedStyle(qscrub).getPropertyValue("margin-bottom"));
+  var navMargin = scrubTop + scrubBottom; // set the scroll number where we want to fix the Scrubber
 
   var sticky = scrubHeight + headHeight - navMargin;
   var fheight = document.getElementById('bigfoot').offsetHeight;
-  var docHeight = document.body.scrollHeight;
-  var stoppingPlace = docHeight - navMargin - scrubHeight - fheight;
   window.addEventListener('scroll', holdscrub, true);
 
   function holdscrub() {
+    // recalculate height onscroll to capture changes to doc height because of replies
+    var docHeight = document.body.scrollHeight;
+    var stoppingPlace = docHeight - navMargin - scrubHeight - fheight;
+
     if (window.scrollY < sticky) {
       qscrub.classList.remove("fixit");
       qscrub.classList.remove("lowscrub");
@@ -496,15 +436,15 @@ function scrubberClass(vnode) {
     }
 
     if (window.scrollY >= sticky && window.scrollY < stoppingPlace) {
-      qscrub.classList.add("fixit");
       qscrub.classList.remove("lowscrub");
       qscrub.classList.remove("hiscrub");
+      qscrub.classList.add("fixit");
     }
 
     if (window.scrollY >= stoppingPlace) {
-      qscrub.classList.add("lowscrub");
       qscrub.classList.remove("fixit");
       qscrub.classList.remove("hiscrub");
+      qscrub.classList.add("lowscrub");
     }
   }
 }
@@ -516,25 +456,22 @@ Object(flarum_extend__WEBPACK_IMPORTED_MODULE_0__["extend"])(flarum_components_P
   Scrubber and instead has the window scroll to the header. I do this because the
   header that I've inserted is much taller and the user doesn't need to scroll to 
   the very top of the window every time.
-   THE PROBLEM with this fix is that it jumps to the top of the window instead of scrolling.
-  The original Scrubber scrolls smoothly to the top. It's just that the Scrubber scrolls
-  too far up the page. I haven't been able to modify the scrubber because it seems like
-  I'd have to duplicate the entire component just to get the functionality I want.
+   THE PROBLEM with this fix is that it _jumps_ to the top of the window instead of scrolling.
+  The scrollIntoView fix below works in Firefox and Chrome, but not Safari :/
   */
   var origpost = this.element.querySelector('.Scrubber-first');
   var headerdiv = document.getElementById("header");
   var headertotal = ktopheader.clientHeight + ktoprow.clientHeight;
-  scrollnum = headertotal; // var herodiv = this.element.ownerDocument.querySelector('.DiscussionHero-items');
+  scrollnum = headertotal;
+  var herodiv = this.element.ownerDocument.querySelector('.DiscussionHero');
 
-  origpost.onclick = function () {
-    // console.log(herodiv);
-    scrollTo(headerdiv, headertotal, 0); // herodiv.scrollIntoView(); 
+  origpost.onclick = function (e) {
+    // scrollTo(0, headertotal);
+    // smooth scrolling on Firefox, still jumps in Safari
+    herodiv.scrollIntoView({
+      behavior: "smooth"
+    });
   };
-});
-Object(flarum_extend__WEBPACK_IMPORTED_MODULE_0__["extend"])(flarum_components_PostStreamScrubber__WEBPACK_IMPORTED_MODULE_3___default.a.prototype, 'onclick', function () {// window.addEventListener('onclick', newclick, true);
-  // function newclick(e){
-  //     console.log("extended");
-  // }
 }); /////////////////// Make the header smaller
 // WORK ON THIS NEXT
 
@@ -579,6 +516,23 @@ Object(flarum_extend__WEBPACK_IMPORTED_MODULE_0__["extend"])(flarum_components_H
 //     "navMargin : " +navMargin
 // );
 //}
+//console.log("extended");
+
+Object(flarum_extend__WEBPACK_IMPORTED_MODULE_0__["extend"])(flarum_components_DiscussionListItem__WEBPACK_IMPORTED_MODULE_5___default.a.prototype, 'config', function (isInitialized) {// var fullItem = this;
+  // var itemTitle = fullItem.element.querySelector('.DiscussionListItem-title');
+  // var spanned = itemTitle.textContent;
+  // var msp = {
+  //     view: function() { 
+  //         return m("h3",{class:"DiscussionListItem-title"},
+  //                     [
+  //                         m("span",{class:"ktitlespan"},spanned)
+  //                     ]
+  //                 );
+  //         }
+  //     }
+  // itemTitle = msp;
+  // m.mount(this.element.querySelector('.DiscussionListItem-title'), msp);
+});
 
 /***/ }),
 
@@ -4433,6 +4387,17 @@ var tns = function(options) {
 /***/ (function(module, exports) {
 
 module.exports = flarum.core;
+
+/***/ }),
+
+/***/ "flarum/components/DiscussionListItem":
+/*!**********************************************************************!*\
+  !*** external "flarum.core.compat['components/DiscussionListItem']" ***!
+  \**********************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports) {
+
+module.exports = flarum.core.compat['components/DiscussionListItem'];
 
 /***/ }),
 
