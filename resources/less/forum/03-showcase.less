@@ -1,0 +1,257 @@
+.multiwrap {
+    // height: 100%;
+    // margin-top: 30px;
+    padding: 100px 0 40px 0;
+}
+
+h5.minihead {
+    color: black;
+    margin: 0px;
+    padding: 0px 8px;
+    background-color: @k-yellow;
+    font-weight: lighter;
+    display: inline-block;
+  
+    font-size: 1.25rem;
+    position: absolute;
+    left: 30px;
+    top: 40px;
+
+    z-index: 10;
+}
+
+#tns1-mw {
+    //box-shadow: inset 0px 0px 30px #838198 !important;
+    padding: 0 40px;
+    // box-shadow: 0px 0px 80px #727085;
+
+}
+
+.slidercontrols {
+    position: absolute;
+    top: 40%;
+    width: 100%;
+    // border: 1px solid red;
+    left: 0;
+    height: 0;
+}
+
+.slidercontrols .sprev, .slidercontrols .snext {
+    width: 50px;
+    height: auto;
+}
+
+.slidercontrols .sprev:focus, .slidercontrols .snext:focus {
+    //border: 0;
+    outline: none;
+}
+
+.sprev {
+    float: left;
+    position: relative;
+    left: 10px;
+}
+
+.snext {
+    float: right;
+    position: relative;
+    left: -10px;
+}
+
+.sliderbox {
+    padding: 0;
+    opacity: 1 !important;
+    transition: all .2s ease-in-out;
+}
+
+
+.boxwrap{
+    
+    height: 375px;
+    color: #a94c51;
+    border-radius: 25px;
+    padding: 30px;
+    margin-bottom: 50px;
+
+    // trying to fix TinySlider
+    position: relative;
+    margin-left: 90px;
+    left: -45px;
+
+    // animation
+    transition: all .2s ease-in-out;
+}
+
+.boxwrap{
+    // neumorphism
+    color: #dddce9;
+    background: linear-gradient(145deg, #838198, #727085);
+    box-shadow:  30px 30px 60px #848598, 
+                 -30px -30px 60px #a7a7ba;
+    
+}
+
+.boxwrap:hover {
+    background: linear-gradient(145deg, #8e8ca0, #727085);
+    transform: scale(1.005);
+    color: white;
+}
+
+.boxwrap:hover .iframe-container {
+    border-bottom: 4px solid @k-yellow;
+}
+
+.iframe-container {
+    overflow: hidden;
+    // Calculated from the aspect ration of the content (in case of 16:9 it is 9/16= 0.5625)
+    padding-top: 56.25%;
+    padding-top: 75%;
+    padding-top: 70%;
+    // padding-top: 7%;
+    position: relative;
+    border-bottom: 4px solid transparent;
+    transition: all .2s ease-in-out;
+    margin: 0 -30px 1rem -30px;
+    height: 140px;
+  }
+
+  .iframe-container.oembed {
+    display:none;
+  }
+   
+   
+.iframe-container iframe {
+     border: 0;
+     height: 100%;
+     left: 0;
+     position: absolute;
+     top: 0;
+     width: 100%;
+     background: black;
+}
+
+.iframe-container .showthumb {
+    border: 0;
+    height: auto;
+    position: absolute;
+    width: 100%;
+    background: black;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+}
+
+.boxwrap li {
+    list-style-type: none;
+    // display: inline-block;
+}
+
+
+.creds {
+    font-family: "Jost", 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+    letter-spacing: .5px;
+    text-shadow: 1px 1px 2px #444;
+    font-size: 1rem;
+}
+
+.creds .role {
+    text-transform: uppercase;
+    font-size: 75%;
+    letter-spacing: 1px;
+    color: #fdc22d;
+  /*   color: orange; */
+  }
+
+.boxwrap .flag {
+    color: #e7ddc2;
+}
+
+.boxwrap p {
+    clear: both;
+}
+
+.boxwrap .firewrap {
+    position: absolute;
+    bottom: 20px;
+    left: 20px;
+}
+
+.boxwrap .firebox {
+    min-width: 80px;
+    height: 40px;
+    background: #5e5c70;
+    display: grid;
+    grid-template-columns: 30px auto;
+    grid-template-rows: 1;
+    border-radius: 20px;
+    box-shadow: inset 10px 10px 15px rgba(0, 0, 0, 0.644);
+    padding: 0 16px 0 10px;
+    position: relative;
+
+    overflow: hidden;
+}
+
+.boxwrap .fireball {
+    width: 35px;
+    height: 40px;
+    grid-column-start: 1;
+    background: url('https://comm.site/blog/_img/fire-emoji-aapl.png') center center no-repeat;
+    background-size: 25px 25px;
+    z-index: 1;
+}
+
+.boxwrap .firenum {
+    // min-width: 35px;
+    height: 40px;
+    padding-left: 6px;
+    grid-column-start: 2;
+    text-align: left;
+    font-size: 24px;
+    font-weight: bold;
+    font-family: Calibri, 'Trebuchet MS', sans-serif;
+    line-height: 40px;
+    color: @k-yellow;
+    text-shadow: 4px 4px 8px  rgba(0, 0, 0, 0.644);
+    z-index: 1;
+}
+
+.fireglow {
+    display: none;
+    background-color: @k-orange;
+    width: 25px;
+    height: 14px;
+    border-bottom: 4px solid r@k-yellow;
+    position: absolute;
+    top: 15px;
+    left: 15px;
+    filter: blur(5px); 
+    opacity: .2;
+
+}
+
+.boxwrap .firebox:hover {
+    cursor: pointer;
+}
+
+.firebox:hover .fireglow {
+    display: block;
+}
+
+.fireglow {
+    //animation: flicker .5s ease alternate infinite;
+    animation: flicker var(--animation-time) ease alternate infinite;
+  }
+
+
+@keyframes flicker {
+    0% {
+      opacity: .3;
+      transform: scale(1);
+      background-color: @k-yellow;
+    } 100% {
+      opacity: .5;
+      transform: scale(1.05);
+      background-color: @k-orange;
+    }
+  }
+  

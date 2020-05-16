@@ -96,22 +96,16 @@ module.exports =
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony import */ var flarum_extend__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! flarum/extend */ "flarum/extend");
-/* harmony import */ var flarum_extend__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(flarum_extend__WEBPACK_IMPORTED_MODULE_0__);
-/* harmony import */ var _flarum_core_forum__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @flarum/core/forum */ "@flarum/core/forum");
-/* harmony import */ var _flarum_core_forum__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(_flarum_core_forum__WEBPACK_IMPORTED_MODULE_1__);
-/* harmony import */ var flarum_components_HeaderPrimary__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! flarum/components/HeaderPrimary */ "flarum/components/HeaderPrimary");
-/* harmony import */ var flarum_components_HeaderPrimary__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(flarum_components_HeaderPrimary__WEBPACK_IMPORTED_MODULE_2__);
-/* harmony import */ var flarum_components_PostStreamScrubber__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! flarum/components/PostStreamScrubber */ "flarum/components/PostStreamScrubber");
-/* harmony import */ var flarum_components_PostStreamScrubber__WEBPACK_IMPORTED_MODULE_3___default = /*#__PURE__*/__webpack_require__.n(flarum_components_PostStreamScrubber__WEBPACK_IMPORTED_MODULE_3__);
-/* harmony import */ var flarum_components_DiscussionPage__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! flarum/components/DiscussionPage */ "flarum/components/DiscussionPage");
-/* harmony import */ var flarum_components_DiscussionPage__WEBPACK_IMPORTED_MODULE_4___default = /*#__PURE__*/__webpack_require__.n(flarum_components_DiscussionPage__WEBPACK_IMPORTED_MODULE_4__);
-/* harmony import */ var flarum_components_Navigation__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! flarum/components/Navigation */ "flarum/components/Navigation");
-/* harmony import */ var flarum_components_Navigation__WEBPACK_IMPORTED_MODULE_5___default = /*#__PURE__*/__webpack_require__.n(flarum_components_Navigation__WEBPACK_IMPORTED_MODULE_5__);
-/* harmony import */ var _node_modules_tiny_slider_src_tiny_slider__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ./node_modules/tiny-slider/src/tiny-slider */ "./node_modules/tiny-slider/src/tiny-slider.js");
+/* harmony import */ var _src_forum_kc_scrubber_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./src/forum/kc-scrubber.js */ "./src/forum/kc-scrubber.js");
+/* empty/unused harmony star reexport *//* harmony import */ var flarum_extend__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! flarum/extend */ "flarum/extend");
+/* harmony import */ var flarum_extend__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(flarum_extend__WEBPACK_IMPORTED_MODULE_1__);
+/* harmony import */ var _flarum_core_forum__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @flarum/core/forum */ "@flarum/core/forum");
+/* harmony import */ var _flarum_core_forum__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(_flarum_core_forum__WEBPACK_IMPORTED_MODULE_2__);
+/* harmony import */ var _node_modules_tiny_slider_src_tiny_slider__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./node_modules/tiny-slider/src/tiny-slider */ "./node_modules/tiny-slider/src/tiny-slider.js");
+/* harmony import */ var _src_forum_kc_firemod_js__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./src/forum/kc-firemod.js */ "./src/forum/kc-firemod.js");
 //export * from './src/forum';
-
-
+//export * from './src/forum/kc-news.js';
+//export * from './src/forum/kc-fireanim.js';
 
 
 
@@ -122,7 +116,7 @@ var ktoprow = document.getElementById('ktoprow');
 var ktopheader = document.getElementById('ktopheader');
 var morevideos = document.getElementById('morevideos');
 var imgdir = "https://comm.site/blog/_img/";
-var showcaseboxes = 5;
+var showcaseboxes = 3;
 var showcaseurl = "https://comm.site/blog/wp-json/wp/v2/videos/?_fields=id,title,categories,meta&per_page=" + showcaseboxes; // to clear
 
 var skipindex = 0;
@@ -154,105 +148,36 @@ function metarows(tag, section, content) {
   // universal function for formatting metadata from videos
   var metalist = [];
   if (content.director) metalist.push(m(tag, {
-    "class": section + "-item"
-  }, "Director: " + content.director));
+    "class": section
+  }, [m("span", {
+    "class": "role"
+  }, "Director: ")], content.director));
   if (content.dp) metalist.push(m(tag, {
-    "class": section + "-item"
-  }, "DP: " + content.dp)); // if(content.editor) metalist.push(m(tag, {class:section+"-item"},"Editor: "+content.editor))
+    "class": section
+  }, [m("span", {
+    "class": "role"
+  }, "DP: ")], content.dp)); // if(content.editor) metalist.push(
+  //     m(tag, {class:section},
+  //         [ m("span",{class:"role"},"Editor: ") ], 
+  //             content.editor))
 
   if (content.kinecamera) metalist.push(m(tag, {
-    "class": section + "-item"
-  }, "Camera: " + content.kinecamera));
+    "class": section
+  }, [m("span", {
+    "class": "role"
+  }, "Camera: ")], content.kinecamera));
   return metalist;
 }
 
-var fireglowdot;
-var fireglow;
-
-function firemodule(firecount) {
-  fireglowdot = m(".fireglow");
-  var module = [m(".firewrap", [m(".firebox", [fireglowdot, m(".fireball", {
-    "class": "kbutton"
-  }), m(".firenum", firecount)])])];
-  startFire();
-  return module;
-}
-
-function counter(event) {
-  /*
-  TinySlider duplicates the divs and places them in the DOM so that it can make
-  a carousel. We must grab all of the elements from the wrapper with the 
-  same clip number and change them at once for the count to work.
-  */
-  // need to control for clicks on the fire module only.
-  //console.log(event);
-  var holdnum = event.srcElement.offsetParent.querySelector('.firenum');
-
-  if (holdnum === null) {
-    // get the hell out if we're not clicking on the firebox
-    return;
-  }
-
-  var clipnumber = holdnum.closest('.boxwrap').classList[1];
-  var multiwrap = event.srcElement.closest('.multiwrap');
-  var alldem = multiwrap.querySelectorAll('.' + clipnumber);
-  alldem.forEach(function (element) {
-    element.querySelector('.firenum').innerText++;
-  });
-  /*
-  Now take that same clip number, lop off the 'clip' part and use it to
-  call the WordPress API to update the upvote count in the database.
-  */
-
-  var boxid = clipnumber.substring(4);
-  setNum.fetch(boxid, holdnum);
-}
-
-ktopheader.addEventListener('click', counter, true);
-var setNum = {
-  error: [],
-  fetch: function fetch(id, holdnum) {
-    var base = 'https://comm.site/blog/wp-json/kinecom/showcase/';
-    var newnum = holdnum.innerText;
-    var querystring = base + id + '?upvotes=' + newnum; // most important thing here is the background setting, which keeps
-    // Mithril from triggering a redraw
-
-    m.request({
-      method: "PUT",
-      url: querystring,
-      background: true
-    }).then()["catch"](function (e) {
-      console.log(e.message);
-      setNum.error = e.message;
-    });
-  }
-};
-
-function setProperty(duration, fireglowdot) {
-  fireglow = document.querySelector('.fireglow');
-  fireglow.style.setProperty('background-color', 'blue');
-  fireglow.style.setProperty('--animation-time', duration + 's');
-}
-
-function changeAnimationTime() {
-  var animationDuration = Math.random();
-  setProperty(animationDuration, fireglowdot);
-}
-
-function startFire() {
-  setInterval(changeAnimationTime, 1000, fireglowdot);
-}
-
 var built = false;
+var bigjuan = [];
 var vCarousel = {
   boxes: [],
   box: [],
   content: [],
   headline: "Submitted via <strong>#kinefinity</strong> on Vimeo and YouTube",
-  build_boxes: function build_boxes(data) {
+  build_boxes: function build_boxes() {
     // console.log("start building: " boxes)
-    fireglowdot = m(".fireglow");
-
     for (var i = 0; i < vCarousel.boxes.length; i++) {
       if (vCarousel.boxes[i]['meta']['upvotes']) {
         var firecount = vCarousel.boxes[i]['meta']['upvotes'];
@@ -260,14 +185,15 @@ var vCarousel = {
         var firecount = 0;
       }
 
+      var clipid = vCarousel.boxes[i]['id'];
       vCarousel.box.push(m("div", {
         "class": "sliderbox",
         width: "250px"
-      }, [m(".boxwrap .clip" + vCarousel.boxes[i]['id'], {}, [// m(".iframe-container",[
+      }, [m(".boxwrap .clip" + clipid, {}, [// m(".iframe-container",[
       //     // new approach
       //     m.trust(vCarousel.boxes[i]['meta']['oembed'])
       // ]),
-      metarows("li", "movs", vCarousel.boxes[i]['meta']), firemodule(firecount)])]));
+      metarows("li", "creds", vCarousel.boxes[i]['meta']), Object(_src_forum_kc_firemod_js__WEBPACK_IMPORTED_MODULE_4__["firemodule"])(firecount, clipid, "wp")])]));
     }
 
     return vCarousel.box;
@@ -275,13 +201,11 @@ var vCarousel = {
   view: function view(vnode) {
     return [m("h5", {
       "class": "minihead"
-    }, [m.trust(vCarousel.headline)]), m(".multiwrap ", {
-      config: tnsWrap
-    }, [vCarousel.build_boxes()]), // turn off slider
-    // m(".multiwrap ", [
+    }, [m.trust(vCarousel.headline)]), // m(".multiwrap ", {config:tnsWrap}, [
     //     vCarousel.build_boxes()
     // ]),
-    m(".slidercontrols", [m("img", {
+    // turn off slider
+    m(".multiwrap ", [vCarousel.build_boxes()]), m(".slidercontrols", [m("img", {
       src: imgdir + "caretl.png",
       "class": "sprev",
       alt: "previous videos"
@@ -289,18 +213,18 @@ var vCarousel = {
       src: imgdir + "caretr.png",
       "class": "snext",
       alt: "next videos"
-    })])];
+    })]) //built = true,
+    ];
   }
 };
 
 if (built) {// do nothing
   // return
 } else {
-  // grabClips.fetch();
-  // m.mount(ktopheader, vCarousel);
-  // var minis = document.querySelector('firebox');
-  //console.log(vCarousel);
-  //console.log(shape);
+  grabClips.fetch(); //m.mount(morevideos, vCarousel);
+  //console.log("once");
+
+  m.mount(ktopheader, vCarousel);
   built = true;
 } // lazy load the YouTube clips in the footer if scrolled halfway down the page
 // var halfway = document.body.scrollHeight/2;
@@ -311,7 +235,7 @@ if (built) {// do nothing
 //     if(window.scrollY > halfway) {
 //         if (document.querySelector('.minihead') === null ) {
 //             m.render(morevideos, vCarousel.view());
-//             startFire();
+//             // startFire();
 //             window.removeEventListener('scroll', loadFooter);
 //         } else {
 //             // don't mount the footer if it's already there
@@ -322,7 +246,7 @@ if (built) {// do nothing
 
 
 function tnsWrap() {
-  var slider = Object(_node_modules_tiny_slider_src_tiny_slider__WEBPACK_IMPORTED_MODULE_6__["tns"])({
+  var slider = Object(_node_modules_tiny_slider_src_tiny_slider__WEBPACK_IMPORTED_MODULE_3__["tns"])({
     container: '.multiwrap',
     slideBy: 'page',
     nav: false,
@@ -339,100 +263,7 @@ function tnsWrap() {
       }
     }
   });
-} // extend(HeaderPrimary.prototype, 'config', function(isInitialized, context) {
-//     //items.add('google', <a href="https://google.com">Google</a>);
-//     console.log(context);
-//   });
-
-
-Object(flarum_extend__WEBPACK_IMPORTED_MODULE_0__["extend"])(flarum_components_Navigation__WEBPACK_IMPORTED_MODULE_5___default.a.prototype, 'config', function (isInitialized, context) {//console.log(this.element.onmouseenter);
-  //this.element.onmouseenter = null;
-}); /////////////////// work on Scrubber
-
-Object(flarum_extend__WEBPACK_IMPORTED_MODULE_0__["extend"])(flarum_components_DiscussionPage__WEBPACK_IMPORTED_MODULE_4___default.a.prototype, 'config', function () {
-  /*
-  turn off the scrubber for posts without a reply. This helps in cases
-  where the initial post is only a line or two and the scrubber would
-  fall off the screen.
-   if there is a reply turn on all the classes that calculate its 
-  place on the screen.
-   */
-  if (typeof this.stream === 'undefined') {//  undefined
-  } else {
-    if (this.stream.visibleEnd < 2) {
-      this.element.querySelector('.DiscussionPage-nav > ul').remove;
-    } else {
-      scrubberClass(this);
-    }
-  }
-});
-
-function scrubberClass(vnode) {
-  // grab the scrubber, its height, and set an offset
-  var qscrub = vnode.element.querySelector('.DiscussionPage-nav > ul');
-  var headHeight = ktopheader.scrollHeight; // since the scrubber is created via JS the only way to access its margin
-  // is via its computed height in the browser, then convert it into a number
-  // qscrub.scrollHeight didn't work 100% of the time, espec on tall pages
-  // recalculated it a different way below
-
-  var scrubHeight = parseInt(window.getComputedStyle(qscrub).getPropertyValue("height"));
-  var scrubTop = parseInt(window.getComputedStyle(qscrub).getPropertyValue("margin-top"));
-  var scrubBottom = parseInt(window.getComputedStyle(qscrub).getPropertyValue("margin-bottom"));
-  var navMargin = scrubTop + scrubBottom; // set the scroll number where we want to fix the Scrubber
-
-  var sticky = scrubHeight + headHeight - navMargin;
-  var fheight = document.getElementById('bigfoot').offsetHeight;
-  window.addEventListener('scroll', holdscrub, true);
-
-  function holdscrub() {
-    // recalculate height onscroll to capture changes to doc height because of replies
-    var docHeight = document.body.scrollHeight;
-    var stoppingPlace = docHeight - navMargin - scrubHeight - fheight;
-
-    if (window.scrollY < sticky) {
-      qscrub.classList.remove("fixit");
-      qscrub.classList.remove("lowscrub");
-      qscrub.classList.add("hiscrub");
-    }
-
-    if (window.scrollY >= sticky && window.scrollY < stoppingPlace) {
-      qscrub.classList.remove("lowscrub");
-      qscrub.classList.remove("hiscrub");
-      qscrub.classList.add("fixit");
-    }
-
-    if (window.scrollY >= stoppingPlace) {
-      qscrub.classList.remove("fixit");
-      qscrub.classList.remove("hiscrub");
-      qscrub.classList.add("lowscrub");
-    }
-  }
 }
-
-var scrollnum = '';
-Object(flarum_extend__WEBPACK_IMPORTED_MODULE_0__["extend"])(flarum_components_PostStreamScrubber__WEBPACK_IMPORTED_MODULE_3___default.a.prototype, 'config', function (isInitialized, context) {
-  /*
-  This extension replaces the onclick function of the "original post" link in the
-  Scrubber and instead has the window scroll to the header. I do this because the
-  header that I've inserted is much taller and the user doesn't need to scroll to 
-  the very top of the window every time.
-   THE PROBLEM with this fix is that it _jumps_ to the top of the window instead of scrolling.
-  The scrollIntoView fix below works in Firefox and Chrome, but not Safari :/
-  */
-  var origpost = this.element.querySelector('.Scrubber-first');
-  var headerdiv = document.getElementById("header");
-  var headertotal = ktopheader.clientHeight + ktoprow.clientHeight;
-  scrollnum = headertotal;
-  var herodiv = this.element.ownerDocument.querySelector('.DiscussionHero');
-
-  origpost.onclick = function (e) {
-    // scrollTo(0, headertotal);
-    // smooth scrolling on Firefox, still jumps in Safari
-    herodiv.scrollIntoView({
-      behavior: "smooth"
-    });
-  };
-});
 
 /***/ }),
 
@@ -4279,6 +4110,228 @@ var tns = function(options) {
 
 /***/ }),
 
+/***/ "./src/forum/kc-firemod.js":
+/*!*********************************!*\
+  !*** ./src/forum/kc-firemod.js ***!
+  \*********************************/
+/*! exports provided: firemodule */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "firemodule", function() { return firemodule; });
+//Fire Emoji module
+var ktopheader = document.getElementById('ktopheader');
+var fireglowdot;
+var fireglow;
+var fullanim = m(".boxbox", [m(".redbox"), m(".orange"), m(".yellow"), m(".mosaic")]);
+var emptyanim = m(".animation");
+var firemodule = function firemodule(firecount, id, apphost) {
+  // id and apphost are there in case I want to expand this
+  // module to flip between Flarum and WP
+  fireglowdot = m(".fireglow");
+  var fireball = m(".fireball", {
+    "class": "kbutton"
+  });
+  var module = [m(".firewrap", [emptyanim, m(".firebox", [fireglowdot, fireball, m(".firenum", firecount)])])];
+  startFire();
+  return module;
+};
+
+function counter(event) {
+  /*
+  TinySlider duplicates the divs and places them in the DOM so that it can make
+  a carousel. We must grab all of the elements from the wrapper with the 
+  same clip number and change them at once for the count to work.
+  */
+  var firebox = event.srcElement.closest('.boxwrap').querySelector('.firebox');
+  var firenum = firebox.querySelector('.firenum');
+  var fireball = firebox.querySelector('.fireball');
+  var anim = firebox.querySelector('.animation'); //console.log(anim);
+
+  if (event.srcElement.closest('.firebox') === null) {
+    // get the hell out if we're not clicking on the firebox
+    return;
+  }
+
+  var clipnumber = firebox.closest('.boxwrap').classList[1];
+  var multiwrap = event.srcElement.closest('.multiwrap');
+  var alldem = multiwrap.querySelectorAll('.' + clipnumber);
+  alldem.forEach(function (element) {
+    firenum.innerText++;
+  }); // quickly change size of fireball, then start animation
+
+  fireball.classList.add('pressed');
+  setTimeout(reaction, 320, fireball, event);
+  /*
+  Now take that same clip number, lop off the 'clip' part and use it to
+  call the WordPress API to update the upvote count in the database.
+  */
+
+  var boxid = clipnumber.substring(4);
+  setNum.fetch(boxid, firenum);
+}
+
+ktopheader.addEventListener('click', counter, true);
+var animVar;
+
+function reaction(fireball, event) {
+  fireball.classList.remove('pressed'); // render in the animation
+
+  var anim = event.srcElement.closest('.boxwrap').querySelector('.animation');
+  m.render(anim, fullanim); // can't access the boxbox via jQuery until it's part of the DOM
+
+  var boxbox = $(anim).find('.boxbox'); // dump the animation
+
+  animVar = setTimeout(killAnimation, 2000, anim);
+  $(boxbox).delay(800).fadeOut(1000);
+}
+
+function killAnimation(anim) {
+  m.render(anim, null);
+}
+
+var setNum = {
+  error: [],
+  fetch: function fetch(id, holdnum) {
+    var base = 'https://comm.site/blog/wp-json/kinecom/showcase/';
+    var newnum = holdnum.innerText;
+    var querystring = base + id + '?upvotes=' + newnum; // most important thing here is the background setting, which keeps
+    // Mithril from triggering a redraw
+
+    m.request({
+      method: "PUT",
+      url: querystring,
+      background: true
+    }).then()["catch"](function (e) {
+      console.log(e.message);
+      setNum.error = e.message;
+    });
+  }
+};
+
+function setProperty(duration, fireglowdot) {
+  fireglow = document.querySelector('.fireglow');
+  fireglow.style.setProperty('--animation-time', duration + 's');
+}
+
+function changeAnimationTime() {
+  var animationDuration = Math.random();
+  setProperty(animationDuration, fireglowdot);
+}
+
+function startFire() {
+  setInterval(changeAnimationTime, 1000, fireglowdot);
+}
+
+/***/ }),
+
+/***/ "./src/forum/kc-scrubber.js":
+/*!**********************************!*\
+  !*** ./src/forum/kc-scrubber.js ***!
+  \**********************************/
+/*! no exports provided */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var flarum_extend__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! flarum/extend */ "flarum/extend");
+/* harmony import */ var flarum_extend__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(flarum_extend__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var flarum_components_PostStreamScrubber__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! flarum/components/PostStreamScrubber */ "flarum/components/PostStreamScrubber");
+/* harmony import */ var flarum_components_PostStreamScrubber__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(flarum_components_PostStreamScrubber__WEBPACK_IMPORTED_MODULE_1__);
+/* harmony import */ var flarum_components_DiscussionPage__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! flarum/components/DiscussionPage */ "flarum/components/DiscussionPage");
+/* harmony import */ var flarum_components_DiscussionPage__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(flarum_components_DiscussionPage__WEBPACK_IMPORTED_MODULE_2__);
+
+
+ /////////////////// RR work on Scrubber
+
+Object(flarum_extend__WEBPACK_IMPORTED_MODULE_0__["extend"])(flarum_components_DiscussionPage__WEBPACK_IMPORTED_MODULE_2___default.a.prototype, 'config', function () {
+  /*
+  turn off the scrubber for posts without a reply. This helps in cases
+  where the initial post is only a line or two and the scrubber would
+  fall off the screen.
+   if there is a reply turn on all the classes that calculate its 
+  place on the screen.
+   */
+  if (typeof this.stream === 'undefined') {//  undefined
+  } else {
+    if (this.stream.visibleEnd < 2) {
+      this.element.querySelector('.DiscussionPage-nav > ul').remove;
+    } else {
+      scrubberClass(this);
+    }
+  }
+});
+
+function scrubberClass(vnode) {
+  // grab the scrubber, its height, and set an offset
+  var qscrub = vnode.element.querySelector('.DiscussionPage-nav > ul');
+  var headHeight = ktopheader.scrollHeight; // since the scrubber is created via JS the only way to access its margin
+  // is via its computed height in the browser, then convert it into a number
+  // qscrub.scrollHeight didn't work 100% of the time, espec on tall pages
+  // recalculated it a different way below
+
+  var scrubHeight = parseInt(window.getComputedStyle(qscrub).getPropertyValue("height"));
+  var scrubTop = parseInt(window.getComputedStyle(qscrub).getPropertyValue("margin-top"));
+  var scrubBottom = parseInt(window.getComputedStyle(qscrub).getPropertyValue("margin-bottom"));
+  var navMargin = scrubTop + scrubBottom; // set the scroll number where we want to fix the Scrubber
+
+  var sticky = scrubHeight + headHeight - navMargin;
+  var fheight = document.getElementById('bigfoot').offsetHeight;
+  window.addEventListener('scroll', holdscrub, true);
+
+  function holdscrub() {
+    // recalculate height onscroll to capture changes to doc height because of replies
+    var docHeight = document.body.scrollHeight;
+    var stoppingPlace = docHeight - navMargin - scrubHeight - fheight;
+
+    if (window.scrollY < sticky) {
+      qscrub.classList.remove("fixit");
+      qscrub.classList.remove("lowscrub");
+      qscrub.classList.add("hiscrub");
+    }
+
+    if (window.scrollY >= sticky && window.scrollY < stoppingPlace) {
+      qscrub.classList.remove("lowscrub");
+      qscrub.classList.remove("hiscrub");
+      qscrub.classList.add("fixit");
+    }
+
+    if (window.scrollY >= stoppingPlace) {
+      qscrub.classList.remove("fixit");
+      qscrub.classList.remove("hiscrub");
+      qscrub.classList.add("lowscrub");
+    }
+  }
+} //var scrollnum;
+
+
+Object(flarum_extend__WEBPACK_IMPORTED_MODULE_0__["extend"])(flarum_components_PostStreamScrubber__WEBPACK_IMPORTED_MODULE_1___default.a.prototype, 'config', function (isInitialized, context) {
+  /*
+  This extension replaces the onclick function of the "original post" link in the
+  Scrubber and instead has the window scroll to the header. I do this because the
+  header that I've inserted is much taller and the user doesn't need to scroll to 
+  the very top of the window every time.
+   THE PROBLEM with this fix is that it _jumps_ to the top of the window instead of scrolling.
+  The scrollIntoView fix below works in Firefox and Chrome, but not Safari :/
+  */
+  var origpost = this.element.querySelector('.Scrubber-first');
+  var headerdiv = document.getElementById("header");
+  var headertotal = ktopheader.clientHeight + ktoprow.clientHeight;
+  var scrollnum = headertotal;
+  var herodiv = this.element.ownerDocument.querySelector('.DiscussionHero');
+
+  origpost.onclick = function (e) {
+    // scrollTo(0, headertotal);
+    // smooth scrolling on Firefox, still jumps in Safari
+    herodiv.scrollIntoView({
+      behavior: "smooth"
+    });
+  };
+});
+
+/***/ }),
+
 /***/ "@flarum/core/forum":
 /*!******************************!*\
   !*** external "flarum.core" ***!
@@ -4298,28 +4351,6 @@ module.exports = flarum.core;
 /***/ (function(module, exports) {
 
 module.exports = flarum.core.compat['components/DiscussionPage'];
-
-/***/ }),
-
-/***/ "flarum/components/HeaderPrimary":
-/*!*****************************************************************!*\
-  !*** external "flarum.core.compat['components/HeaderPrimary']" ***!
-  \*****************************************************************/
-/*! no static exports found */
-/***/ (function(module, exports) {
-
-module.exports = flarum.core.compat['components/HeaderPrimary'];
-
-/***/ }),
-
-/***/ "flarum/components/Navigation":
-/*!**************************************************************!*\
-  !*** external "flarum.core.compat['components/Navigation']" ***!
-  \**************************************************************/
-/*! no static exports found */
-/***/ (function(module, exports) {
-
-module.exports = flarum.core.compat['components/Navigation'];
 
 /***/ }),
 

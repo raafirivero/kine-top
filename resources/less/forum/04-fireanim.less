@@ -1,0 +1,164 @@
+:root {
+    --animation-time: .2s; 
+}
+
+.animation {
+  position: absolute;
+  top: -34px;
+  z-index: 5;
+  left: -23px;
+  
+}
+
+.fireball.pressed {
+  transition: .1s;
+  background-size: 20px 20px;
+}
+
+.boxbox {
+/*   border: 4px solid blue; */
+  position: relative;
+  width: 100px;
+  height: 100px;
+  overflow: hidden;
+  transform: scale(.7);
+}
+.orange, .yellow, .redbox {
+  display: inherit;
+  width: 30px;
+  height: 30px;
+  position: relative;
+  top: 0;
+  left:0;
+}
+
+.mosaic {
+      background: url('https://comm.site/blog/_img/fire-emoji-aapl.png') center center no-repeat;
+      width: 100px;
+      height: 100px;
+      position: absolute;
+      top:0;
+      left:0;
+      opacity: .3;
+      background-size: 50%;
+      animation-name: zipper;
+      animation-duration: 1.2s;
+      animation-timing-function: steps(6);
+      animation-iteration-count: infinite;
+      z-index: inherit;
+}
+
+.redbox {
+  background-color: #f05439; 
+  position: absolute;
+  width: 20px;
+  height: 20px;
+  left: 40px;
+  top: 44px;
+  animation: liftoff 1.5s ease infinite;
+}
+
+.orange {
+  background-color: orange; 
+  position: relative; 
+  left: 50%;
+  top: 50%;
+  opacity: .1;
+  transform: scale(.5);
+  animation: fliporange 1s ease infinite;
+}
+
+.yellow {
+  background-color: #fdc22d; 
+  background-color: #c30a3b; 
+  animation: wobble .75s ease alternate infinite;
+  position: absolute;
+  top: 24px;
+  opacity: .05;
+  }
+
+@keyframes liftoff {
+    0% {
+      opacity: .4;
+      transform: scale(.2);
+      
+
+    } 100% {
+      opacity: .001;
+      transform: scale(4);
+     
+    }
+  }
+
+@keyframes wobble {
+  0% {
+    margin-left: 20px;
+    transform: scale(1);
+  } 30% {
+    transform: scale(.1);
+  } 40% {
+    transform: scale(1.2);
+  } 60% {
+    transform: scale(.8);
+  } 100% {
+    margin-left: 50px;
+    transform: scale(.1);
+  }
+}
+@keyframes fliporange {
+  0% {
+    width: 30px;
+    height: 30px
+  }
+  50% {
+    width: 50px;
+    height: 50px
+  }
+  70% {
+    width: 5px;
+    height: 30px;
+  }
+  100% {
+    width: 2px;
+    height: 2px;
+    left: 30%;
+  }
+}
+@keyframes zipper {
+      0% {
+      opacity: .1;
+      transform: scale(.1);
+      filter: blur(8px);
+      background-size: 300%;
+    
+      } 20% {
+      opacity: .2;
+      transform: scale(.4);
+      filter: blur(0px);
+      background-size: 500%;
+      
+      } 40% {
+      opacity: .3;
+      transform: scale(.9);
+      filter: blur(0px);
+      background-size: 100%;
+      
+      } 50% {
+      opacity: .2;
+      transform: scale(1);
+      filter: blur(0px);
+      background-size: 80%;
+      
+      } 80% {
+      opacity: .5;
+      transform: scale(1);
+      filter: blur(0px);
+      background-size: 70%;
+     
+      } 100% {
+      opacity: .1;
+      transform: scale(.1);
+      filter: blur(0px);
+      background-size: 80%;
+    }
+}
