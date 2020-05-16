@@ -8,9 +8,8 @@ Result will be faster and much, much better than current BBPress forum running a
 
 ### To Dos:
 
-**Next up:** Build a content slider for YouTube videos.
-
-Questions: build via Mithril carousel extension or using a pure JS library?
+**Next up:** 
+Logic and storage for Fire Emoji toy. (cookie or local storage)
 
 **Further down the page:** 
 
@@ -24,11 +23,22 @@ Possible solutions:
 
 **In the future:**
 
-- SSO
 - Build a WP plugin that automatically sources content from YouTube/Vimeo via Cron
 - Cache this content in the Flarum DB for less external API calls
 - Unify look/feel of WP-managed content on non-Flarum pages to frontpage look
 - Should forum posts display images on main feed a-la Facebook?
+
+
+### Dones:
+
+**DONE** Build a content slider for YouTube videos.
+integration with [TinySlider](https://github.com/ganlanyuan/tiny-slider) - smooth.
+note: TS lazy load doesn't play nice with Flarum, rolled my own.
+
+**DONE** Logic and animation for Fire Emoji toy. Huge.
+
+**DONE** SSO using [this plugin](https://kilowhat.net/flarum/extensions/wordpress) - for now. Is SSO necessary?
+
 
 
 ---
