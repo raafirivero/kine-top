@@ -16,14 +16,14 @@ extend(DiscussionPage.prototype, 'config', function() {
 
     */
 
-if (typeof this.stream === 'undefined') {
-        //  undefined
-    } else {
-        if (this.stream.visibleEnd < 2) {
-            this.element.querySelector('.DiscussionPage-nav > ul').remove;
+    if (typeof this.stream === 'undefined') {
+            //  undefined
         } else {
-            scrubberClass(this);
-        }
+            if (this.stream.visibleEnd < 2) {
+                this.element.querySelector('.DiscussionPage-nav > ul').remove;
+            } else {
+                scrubberClass(this);
+            }
     }
 
 });

@@ -110,8 +110,7 @@ __webpack_require__.r(__webpack_exports__);
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-app.initializers.add('raafirivero/kine-top', function () {
-  console.log('[raafirivero/kine-top] Hello, admin!');
+app.initializers.add('raafirivero/kine-top', function () {// console.log('[raafirivero/kine-top] Hello, admin!');
 });
 
 /***/ })

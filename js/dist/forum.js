@@ -96,30 +96,56 @@ module.exports =
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony import */ var _src_forum_kc_scrubber_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./src/forum/kc-scrubber.js */ "./src/forum/kc-scrubber.js");
-/* empty/unused harmony star reexport *//* harmony import */ var flarum_extend__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! flarum/extend */ "flarum/extend");
-/* harmony import */ var flarum_extend__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(flarum_extend__WEBPACK_IMPORTED_MODULE_1__);
-/* harmony import */ var _flarum_core_forum__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @flarum/core/forum */ "@flarum/core/forum");
-/* harmony import */ var _flarum_core_forum__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(_flarum_core_forum__WEBPACK_IMPORTED_MODULE_2__);
-/* harmony import */ var _node_modules_tiny_slider_src_tiny_slider__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./node_modules/tiny-slider/src/tiny-slider */ "./node_modules/tiny-slider/src/tiny-slider.js");
-/* harmony import */ var _src_forum_kc_firemod_js__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./src/forum/kc-firemod.js */ "./src/forum/kc-firemod.js");
+/* harmony import */ var _src_forum_kc_adsidebar_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./src/forum/kc-adsidebar.js */ "./src/forum/kc-adsidebar.js");
+/* empty/unused harmony star reexport *//* harmony import */ var _src_forum_kc_scrubber_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./src/forum/kc-scrubber.js */ "./src/forum/kc-scrubber.js");
+/* empty/unused harmony star reexport *//* harmony import */ var _node_modules_tiny_slider_src_tiny_slider__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./node_modules/tiny-slider/src/tiny-slider */ "./node_modules/tiny-slider/src/tiny-slider.js");
+/* harmony import */ var _src_forum_kc_firemod_js__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./src/forum/kc-firemod.js */ "./src/forum/kc-firemod.js");
 //export * from './src/forum';
 //export * from './src/forum/kc-news.js';
-//export * from './src/forum/kc-fireanim.js';
+
+ // import { extend } from 'flarum/extend';
+// import { Component } from '@flarum/core/forum';
 
 
 
+var featurewrap = m(".featurewrap .wipeleft");
+var fingaz = {
+  fingerlist: [],
+  view: function view(vnode) {
+    var fingerlist = [];
 
- // Divs that get referenced below:
+    for (var step = 0; step < 5; step++) {
+      var finger = m("div", {
+        "class": "colo finger" + (step + 1)
+      }, "");
+      fingerlist.push(finger);
+    }
 
-var ktoprow = document.getElementById('ktoprow');
-var ktopheader = document.getElementById('ktopheader');
+    fingerlist.push(featurewrap); // showClip.fingaz = fingerlist;
+
+    fingaz.fingerlist = fingerlist;
+    return fingerlist;
+  }
+};
+m.mount(featured, fingaz); //loading animation
+// featured.classList.add("flex");
+// var loadinga = {
+//     view: function(vnode) {  
+//         return  m("img", {src: "https://comm.site/blog/_img/loader-thin.gif", class: "kload", alt:"loading"})
+//         //return  m("p", "hello detroit!");
+//     }
+// }
+// m.mount(featured, loadinga);
+// Divs that get referenced below:
+
 var morevideos = document.getElementById('morevideos');
 var imgdir = "https://comm.site/blog/_img/";
-var showcaseboxes = 3;
-var showcaseurl = "https://comm.site/blog/wp-json/wp/v2/videos/?_fields=id,title,categories,meta&per_page=" + showcaseboxes; // to clear
-
-var skipindex = 0;
+var showcaseboxes = 7;
+var showcaseurl = "https://comm.site/blog/wp-json/wp/v2/videos/?_fields=id,title,categories,meta&per_page=" + showcaseboxes;
+var featurecat = 18;
+var showcasecat = 20;
+var skipindex;
+var metas = [];
 var grabClips = {
   content: [],
   // populated below
@@ -127,9 +153,30 @@ var grabClips = {
     m.request({
       method: "GET",
       url: showcaseurl
-    }).then(prepShowcase);
+    }).then(featuredVideo // get started on the first video
+    ).then(prepShowcase);
   }
 };
+
+function featuredVideo(data) {
+  var tempser;
+  var obj = data; // console.log(obj);
+
+  for (var i = 0; i < obj.length; i++) {
+    // look for first entry in the "featured" category
+    if (obj[i].categories.includes(featurecat)) {
+      metas = obj[i]['meta'];
+      skipindex = i;
+      showClip.content = obj[i].meta;
+      var clipid = obj[i]['id'];
+      showClip.clipid = clipid;
+      break;
+    }
+  } //showClip.content = data.data.iframe.html
+
+
+  return data;
+}
 
 function prepShowcase(data) {
   var showcaseobj = [];
@@ -142,6 +189,7 @@ function prepShowcase(data) {
   }
 
   vCarousel.boxes = showcaseobj;
+  vCarousel.build_boxes();
 }
 
 function metarows(tag, section, content) {
@@ -170,14 +218,12 @@ function metarows(tag, section, content) {
 }
 
 var built = false;
-var bigjuan = [];
 var vCarousel = {
   boxes: [],
-  box: [],
   content: [],
-  headline: "Submitted via <strong>#kinefinity</strong> on Vimeo and YouTube",
+  headline: "Use <strong>#kinefinity</strong> on Vimeo and YouTube. Or submit here.",
+  deadline: "Submitted via <strong>#kinefinity</strong> on Vimeo and YouTube",
   build_boxes: function build_boxes() {
-    // console.log("start building: " boxes)
     for (var i = 0; i < vCarousel.boxes.length; i++) {
       if (vCarousel.boxes[i]['meta']['upvotes']) {
         var firecount = vCarousel.boxes[i]['meta']['upvotes'];
@@ -186,26 +232,23 @@ var vCarousel = {
       }
 
       var clipid = vCarousel.boxes[i]['id'];
-      vCarousel.box.push(m("div", {
+      vCarousel.content.push(m("div", {
         "class": "sliderbox",
         width: "250px"
-      }, [m(".boxwrap .clip" + clipid, {}, [// m(".iframe-container",[
-      //     // new approach
-      //     m.trust(vCarousel.boxes[i]['meta']['oembed'])
-      // ]),
-      metarows("li", "creds", vCarousel.boxes[i]['meta']), Object(_src_forum_kc_firemod_js__WEBPACK_IMPORTED_MODULE_4__["firemodule"])(firecount, clipid, "wp")])]));
+      }, [m(".boxwrap .clip" + clipid, {}, [m(".iframe-container", [// new approach
+      m.trust(vCarousel.boxes[i]['meta']['oembed'])]), metarows("li", "creds", vCarousel.boxes[i]['meta']), Object(_src_forum_kc_firemod_js__WEBPACK_IMPORTED_MODULE_3__["firemodule"])(firecount, clipid, "wp")])]));
     }
 
-    return vCarousel.box;
+    return vCarousel.content;
   },
   view: function view(vnode) {
     return [m("h5", {
       "class": "minihead"
-    }, [m.trust(vCarousel.headline)]), // m(".multiwrap ", {config:tnsWrap}, [
-    //     vCarousel.build_boxes()
-    // ]),
-    // turn off slider
-    m(".multiwrap ", [vCarousel.build_boxes()]), m(".slidercontrols", [m("img", {
+    }, [m.trust(vCarousel.headline)]), // the `config` method below is from version 0.2.5 of Mithril
+    // change to `oninit` once Flarum updates to 1.0
+    m(".multiwrap ", {
+      config: tnsWrap
+    }, [vCarousel.content]), m(".slidercontrols", [m("img", {
       src: imgdir + "caretl.png",
       "class": "sprev",
       alt: "previous videos"
@@ -213,56 +256,78 @@ var vCarousel = {
       src: imgdir + "caretr.png",
       "class": "snext",
       alt: "next videos"
-    })]) //built = true,
-    ];
+    })])];
   }
 };
+var showClip = {
+  content: [],
+  clipid: '',
+  fingaz: [],
+  view: function view(vnode) {
+    var firecount = this.content.upvotes; //console.log(featurewrap.classList);
 
-if (built) {// do nothing
-  // return
-} else {
-  grabClips.fetch(); //m.mount(morevideos, vCarousel);
-  //console.log("once");
+    return [fingaz.view(), m(".featurewrap .clip" + showClip.clipid, [m("h2", {
+      "class": "shotitle"
+    }, "Showcase"), m("p", {
+      "class": "featuremeta"
+    }, metarows("li", "featured", metas)), Object(_src_forum_kc_firemod_js__WEBPACK_IMPORTED_MODULE_3__["firemodule"])(firecount, showClip.clipid, "wp"), // m("p",{class:"howtosubmit"},"Submit using #Kinefinity on Vimeo or YouTube"),
+    //m("p",{class:"howtosubmit"},"Use #Kinefinity on Vimeo or YouTube or submit below."),
+    m("div", {
+      "class": "iframe-container",
+      ID: "featembed"
+    }, [m.trust(this.content.oembed)])])];
+  }
+}; //grabClips.fetch();
+//m.mount(featured, showClip);
+// m.mount(ktopheader, vCarousel); // testing location
+//m.mount(morevideos, vCarousel);
 
-  m.mount(ktopheader, vCarousel);
+function build_true() {
   built = true;
 } // lazy load the YouTube clips in the footer if scrolled halfway down the page
-// var halfway = document.body.scrollHeight/2;
-// window.addEventListener('scroll', loadFooter, true); 
-// function loadFooter(){
-//     // check to see if footer has been loaded
-//     // console.log ("called");
-//     if(window.scrollY > halfway) {
-//         if (document.querySelector('.minihead') === null ) {
-//             m.render(morevideos, vCarousel.view());
-//             // startFire();
-//             window.removeEventListener('scroll', loadFooter);
-//         } else {
-//             // don't mount the footer if it's already there
-//         }
-//     }
-// }
-// lazy loading on the TinySlider caused memory leaks. Let's try it by hand above
+
+
+var halfway = document.body.scrollHeight / 3;
+window.addEventListener('scroll', loadFooter, true);
+
+function loadFooter() {
+  // check to see if footer has been loaded
+  // console.log ("called");
+  if (window.scrollY > halfway) {
+    if (document.querySelector('.minihead') === null) {
+      m.render(morevideos, vCarousel.view()); //m.mount(morevideos, vCarousel);
+      // startFire();
+
+      window.removeEventListener('scroll', loadFooter);
+    } else {// don't mount the footer if it's already there
+    }
+  }
+} // lazy loading on the TinySlider caused memory leaks. Let's try it by hand above
 
 
 function tnsWrap() {
-  var slider = Object(_node_modules_tiny_slider_src_tiny_slider__WEBPACK_IMPORTED_MODULE_3__["tns"])({
-    container: '.multiwrap',
-    slideBy: 'page',
-    nav: false,
-    controlsPosition: 'bottom',
-    controlsContainer: '.slidercontrols',
-    lazyload: false,
-    items: 1,
-    responsive: {
-      640: {
-        items: 2
-      },
-      900: {
-        items: 3
+  // was experiencing redraw issue because TNS is not created by
+  // Flarum. Zombies vnodes. Don't redraw TNS once built.
+  if (built === false) {
+    var slider = Object(_node_modules_tiny_slider_src_tiny_slider__WEBPACK_IMPORTED_MODULE_2__["tns"])({
+      container: '.multiwrap',
+      slideBy: 'page',
+      nav: false,
+      controlsPosition: 'bottom',
+      controlsContainer: '.slidercontrols',
+      lazyload: false,
+      onInit: build_true,
+      items: 1,
+      responsive: {
+        640: {
+          items: 2
+        },
+        900: {
+          items: 3
+        }
       }
-    }
-  });
+    });
+  }
 }
 
 /***/ }),
@@ -4110,6 +4175,33 @@ var tns = function(options) {
 
 /***/ }),
 
+/***/ "./src/forum/kc-adsidebar.js":
+/*!***********************************!*\
+  !*** ./src/forum/kc-adsidebar.js ***!
+  \***********************************/
+/*! no exports provided */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var flarum_extend__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! flarum/extend */ "flarum/extend");
+/* harmony import */ var flarum_extend__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(flarum_extend__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var flarum_components_IndexPage__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! flarum/components/IndexPage */ "flarum/components/IndexPage");
+/* harmony import */ var flarum_components_IndexPage__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(flarum_components_IndexPage__WEBPACK_IMPORTED_MODULE_1__);
+
+
+Object(flarum_extend__WEBPACK_IMPORTED_MODULE_0__["extend"])(flarum_components_IndexPage__WEBPACK_IMPORTED_MODULE_1___default.a.prototype, 'sidebarItems', function (items) {
+  // console.log(items.items);
+  var sideAd = m(".kc-adunit", [m("a", {
+    href: '#'
+  }, [m("img", {
+    src: '/blog/_img/adunit-side.png'
+  })]), m(".adcopy", "The Square Small Business Hackathon — Hack to help small businesses adapt, recover, and innovate.")]);
+  items.add('sideAdkoa', sideAd); // items.add('google', <a href="https://google.com">Google</a>);
+});
+
+/***/ }),
+
 /***/ "./src/forum/kc-firemod.js":
 /*!*********************************!*\
   !*** ./src/forum/kc-firemod.js ***!
@@ -4122,44 +4214,57 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "firemodule", function() { return firemodule; });
 //Fire Emoji module
 var ktopheader = document.getElementById('ktopheader');
+var morevideos = document.getElementById('morevideos');
 var fireglowdot;
 var fireglow;
 var fullanim = m(".boxbox", [m(".redbox"), m(".orange"), m(".yellow"), m(".mosaic")]);
 var emptyanim = m(".animation");
-var firemodule = function firemodule(firecount, id, apphost) {
+var firemodule = function firemodule(firecount, clipid, apphost) {
   // id and apphost are there in case I want to expand this
   // module to flip between Flarum and WP
   fireglowdot = m(".fireglow");
   var fireball = m(".fireball", {
     "class": "kbutton"
   });
-  var module = [m(".firewrap", [emptyanim, m(".firebox", [fireglowdot, fireball, m(".firenum", firecount)])])];
-  startFire();
+  var clipclass = JSON.stringify(clipid);
+  clipclass = "clip" + clipclass;
+  var fireclasses = clipclass + " db-" + apphost;
+  var module = [m(".firewrap", [emptyanim, m(".firebox", {
+    onclick: counter,
+    "class": fireclasses
+  }, [fireglowdot, fireball, m(".firenum", firecount)])])]; // startFire();
+
   return module;
 };
 
 function counter(event) {
   /*
+  Take the click, pull out the .firebox element - this is the most important thing.
+  Do math on the number and make note of the ID number of the clip we're adjusting.
+  */
+  // console.log(event);
+  var firebox = event.srcElement.closest('.firebox');
+  var firenum = firebox.querySelector('.firenum');
+  var fireball = firebox.querySelector('.fireball');
+  var newnum = parseInt(firenum.innerText) + 1;
+  var clipnumber = firebox.classList[1];
+  var multiwrap = event.srcElement.closest('.multiwrap'); // console.log("multiwrap : " + multiwrap);
+
+  /*
   TinySlider duplicates the divs and places them in the DOM so that it can make
   a carousel. We must grab all of the elements from the wrapper with the 
   same clip number and change them at once for the count to work.
   */
-  var firebox = event.srcElement.closest('.boxwrap').querySelector('.firebox');
-  var firenum = firebox.querySelector('.firenum');
-  var fireball = firebox.querySelector('.fireball');
-  var anim = firebox.querySelector('.animation'); //console.log(anim);
 
-  if (event.srcElement.closest('.firebox') === null) {
-    // get the hell out if we're not clicking on the firebox
-    return;
-  }
+  if (null != multiwrap) {
+    var alldem = multiwrap.querySelectorAll('.' + clipnumber);
+    alldem.forEach(function (element) {
+      element.querySelector('.firenum').innerText = newnum;
+    });
+  } else {
+    firenum.innerText = newnum;
+  } // quickly change size of fireball, then start animation
 
-  var clipnumber = firebox.closest('.boxwrap').classList[1];
-  var multiwrap = event.srcElement.closest('.multiwrap');
-  var alldem = multiwrap.querySelectorAll('.' + clipnumber);
-  alldem.forEach(function (element) {
-    firenum.innerText++;
-  }); // quickly change size of fireball, then start animation
 
   fireball.classList.add('pressed');
   setTimeout(reaction, 320, fireball, event);
@@ -4169,16 +4274,15 @@ function counter(event) {
   */
 
   var boxid = clipnumber.substring(4);
-  setNum.fetch(boxid, firenum);
+  setNum.fetch(boxid, newnum);
 }
 
-ktopheader.addEventListener('click', counter, true);
 var animVar;
 
 function reaction(fireball, event) {
   fireball.classList.remove('pressed'); // render in the animation
 
-  var anim = event.srcElement.closest('.boxwrap').querySelector('.animation');
+  var anim = event.srcElement.closest('.firewrap').querySelector('.animation');
   m.render(anim, fullanim); // can't access the boxbox via jQuery until it's part of the DOM
 
   var boxbox = $(anim).find('.boxbox'); // dump the animation
@@ -4193,9 +4297,8 @@ function killAnimation(anim) {
 
 var setNum = {
   error: [],
-  fetch: function fetch(id, holdnum) {
+  fetch: function fetch(id, newnum) {
     var base = 'https://comm.site/blog/wp-json/kinecom/showcase/';
-    var newnum = holdnum.innerText;
     var querystring = base + id + '?upvotes=' + newnum; // most important thing here is the background setting, which keeps
     // Mithril from triggering a redraw
 
@@ -4332,17 +4435,6 @@ Object(flarum_extend__WEBPACK_IMPORTED_MODULE_0__["extend"])(flarum_components_P
 
 /***/ }),
 
-/***/ "@flarum/core/forum":
-/*!******************************!*\
-  !*** external "flarum.core" ***!
-  \******************************/
-/*! no static exports found */
-/***/ (function(module, exports) {
-
-module.exports = flarum.core;
-
-/***/ }),
-
 /***/ "flarum/components/DiscussionPage":
 /*!******************************************************************!*\
   !*** external "flarum.core.compat['components/DiscussionPage']" ***!
@@ -4351,6 +4443,17 @@ module.exports = flarum.core;
 /***/ (function(module, exports) {
 
 module.exports = flarum.core.compat['components/DiscussionPage'];
+
+/***/ }),
+
+/***/ "flarum/components/IndexPage":
+/*!*************************************************************!*\
+  !*** external "flarum.core.compat['components/IndexPage']" ***!
+  \*************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports) {
+
+module.exports = flarum.core.compat['components/IndexPage'];
 
 /***/ }),
 

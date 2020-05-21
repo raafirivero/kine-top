@@ -4,21 +4,36 @@
     padding: 100px 0 40px 0;
 }
 
+// h5.minihead {
+//     color: black;
+//     margin: 0px;
+//     padding: 0px 8px;
+//     background-color: @k-yellow;
+//     font-weight: lighter;
+//     display: inline-block;
+  
+//     font-size: 1.25rem;
+//     position: absolute;
+//     left: 30px;
+//     top: 40px;
+
+//     z-index: 10;
+// }
+
 h5.minihead {
     color: black;
     margin: 0px;
     padding: 0px 8px;
-    background-color: @k-yellow;
+    background-color: #fdc22d;
     font-weight: lighter;
     display: inline-block;
-  
     font-size: 1.25rem;
     position: absolute;
     left: 30px;
     top: 40px;
-
     z-index: 10;
-}
+    }
+
 
 #tns1-mw {
     //box-shadow: inset 0px 0px 30px #838198 !important;
@@ -66,11 +81,11 @@ h5.minihead {
 
 
 .boxwrap{
-    
     height: 375px;
+    height: 340px;
     color: #a94c51;
     border-radius: 25px;
-    padding: 30px;
+    padding: 20px;
     margin-bottom: 50px;
 
     // trying to fix TinySlider
@@ -94,7 +109,7 @@ h5.minihead {
 .boxwrap:hover {
     background: linear-gradient(145deg, #8e8ca0, #727085);
     transform: scale(1.005);
-    color: white;
+    color: whitesmoke;
 }
 
 .boxwrap:hover .iframe-container {
@@ -106,12 +121,12 @@ h5.minihead {
     // Calculated from the aspect ration of the content (in case of 16:9 it is 9/16= 0.5625)
     padding-top: 56.25%;
     padding-top: 75%;
-    padding-top: 70%;
+    // padding-top: 70%;
     // padding-top: 7%;
     position: relative;
     border-bottom: 4px solid transparent;
     transition: all .2s ease-in-out;
-    margin: 0 -30px 1rem -30px;
+    margin: 0 -20px 1rem -20px;
     height: 140px;
   }
 
@@ -150,7 +165,7 @@ h5.minihead {
 .creds {
     font-family: "Jost", 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
     letter-spacing: .5px;
-    text-shadow: 1px 1px 2px #444;
+    text-shadow: 1px 1px 2px #555;
     font-size: 1rem;
 }
 
@@ -170,13 +185,19 @@ h5.minihead {
     clear: both;
 }
 
-.boxwrap .firewrap {
+
+.firewrap {
     position: absolute;
     bottom: 20px;
     left: 20px;
 }
 
-.boxwrap .firebox {
+.featurewrap .firewrap {
+    bottom: 15px;
+    left: 15px;
+}
+
+.firebox {
     min-width: 80px;
     height: 40px;
     background: #5e5c70;
@@ -191,7 +212,11 @@ h5.minihead {
     overflow: hidden;
 }
 
-.boxwrap .fireball {
+.featurewrap .firebox {
+    background-color: @k-deep;
+}
+
+.fireball {
     width: 35px;
     height: 40px;
     grid-column-start: 1;
@@ -200,7 +225,7 @@ h5.minihead {
     z-index: 1;
 }
 
-.boxwrap .firenum {
+.firenum {
     // min-width: 35px;
     height: 40px;
     padding-left: 6px;
@@ -229,7 +254,7 @@ h5.minihead {
 
 }
 
-.boxwrap .firebox:hover {
+.boxwrap .firebox:hover, .featurewrap .firebox:hover {
     cursor: pointer;
 }
 

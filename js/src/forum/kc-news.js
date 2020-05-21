@@ -1,3 +1,18 @@
+var ktoprow = document.getElementById('ktoprow');
+var toprow = {
+    view: function(vnode) {
+        return m("menu", {class: "container"}, [
+            m("span",{class:"slogan"},"KineCommunity was made by Kinefinity camera owners for Kinefinity camera owners."),
+            m("a",{class:"toplink",href:"#header"},"Forum"),
+            m("a",{class:"toplink",href:"/showcase/"},"Showcase"),
+            m("a",{class:"toplink",href:"/blog/"},"Blog"),
+            m("a",{class:"toplink",href:"/store/"},"Store"),
+            m("button",{class:"toplink Button Button--primary",href:"/sign-up/"},"Sign Up"),
+        ])
+    }
+}
+m.mount(ktoprow, toprow);
+
 // news at the top of the site
 var newsurl = "https://comm.site/blog/wp-json/wp/v2/posts/?categories=19&per_page=5&_fields=title,link";
 
@@ -44,18 +59,3 @@ var Newscontent = {
     }   
 }
 m.mount(newslist, Newscontent);
-
-var ktoprow = document.getElementById('ktoprow');
-var toprow = {
-    view: function(vnode) {
-        return m("menu", {class: "container"}, [
-            m("span",{class:"slogan"},"KineCommunity was made by Kinefinity camera owners for Kinefinity camera owners."),
-            m("a",{class:"toplink",href:"#header"},"Forum"),
-            m("a",{class:"toplink",href:"/showcase/"},"Showcase"),
-            m("a",{class:"toplink",href:"/blog/"},"Blog"),
-            m("a",{class:"toplink",href:"/store/"},"Store"),
-            m("button",{class:"toplink Button Button--primary",href:"/sign-up/"},"Sign Up"),
-        ])
-    }
-}
-m.mount(ktoprow, toprow);

@@ -32,7 +32,7 @@ ul, li {
 }
 
 #ktoprow, #wpbrick, #featured {
-    font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+    font-family:  "Jost", 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
     font-size: 16px;
 }
 
@@ -210,14 +210,29 @@ ul.listholder {
     padding: 0 6px 0 0;
 }
 
-.showcasewrap {
+.featurewrap {
     background-color: @k-maroon;
     color: @k-yellow;
     height: 220px;
     padding: 12px;
     position: relative;
     top: 116px;
+    // border-radius: 0 0 0 32px;
+    // border-radius: 0 0 0 18px;
     // box-shadow: 20px 23px 50px 5px #7a0e36 inset;
+    //animation: wipefade 1.5s ease-out;
+}
+
+.wipeleft {
+    position: absolute;
+    right: 8px;
+    width: 0;
+    animation-fill-mode: forwards;
+}
+
+@keyframes wipefade {
+    from {opacity:0; width:0%;}
+    to {opacity:1; width: 100%}
 }
 
 
@@ -281,32 +296,43 @@ h2.shotitle {
     left: 12px;
 }
 
-.showcasewrap .showcasemeta {
+.featurewrap .featuremeta {
     clear: both;
-    width: 40%;
+    width: 38%;
     position: absolute;
     font-size: .85em;
     margin-top: 1.5em;
     top: 50px;
     left: 12px;
-
+    padding-left: 8px;
 }
 
-.showcasewrap .howtosubmit {
-    color: @k-red;
-    clear: both;
-    float: left;
+// .featurewrap .howtosubmit {
+//     color: @k-red;
+//     clear: both;
+//     float: left;
+//     position: absolute;
+//     width: 30%;
+//     bottom: 10px;
+// }
+
+.featurewrap .howtosubmit {
+    color: #c30a3b;
     position: absolute;
-    width: 30%;
-    bottom: 10px;
-}
+    width: 19%;
+    font-size: 1rem;
+    top: 158px;
+    left: 129px;
+    padding: 2px 8px;
+    font-size: 0.85em;
+    }
 
 
 #featembed {
     width: 360px;
     height: 270px;
     position: absolute;
-    right: 42px;
+    right: 30px;
     overflow: hidden;
     border-bottom: 4px solid transparent;
 }
@@ -324,8 +350,9 @@ h2.shotitle {
 #featured .kload {
     display: block;
     margin: 0;
-    position: relative;
-    top: 40px;
+    position: absolute;
+    top: 50%;
+    left: 40%;
     opacity: .6;
 }
 
@@ -692,17 +719,6 @@ body {
 /////////////////////////////////// */
 
 
-
-#ktoprow { display: none; }
-#ktopheader { 
-    background-image: none; 
-    min-height: 500px;
-    padding: 0 0 0 0;
-
-    background: #8f8fa3;
-    border-top: 30px solid #c1b8d1;
-    box-shadow: inset 0 2px 90px @k-deepshadow;
-}
 
 /* /////////////// Absolute Bottom
 /////////////////////////////////// */

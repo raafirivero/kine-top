@@ -1,6 +1,7 @@
 //Fire Emoji module
 
 var ktopheader = document.getElementById('ktopheader');
+var morevideos = document.getElementById('morevideos');
 var fireglowdot;
 var fireglow;
 
@@ -15,17 +16,22 @@ var fullanim = m(".boxbox",
 var emptyanim = m(".animation");
         
 
-export var firemodule = function(firecount, id, apphost) {
+export var firemodule = function(firecount, clipid, apphost) {
     // id and apphost are there in case I want to expand this
     // module to flip between Flarum and WP
 
     fireglowdot = m(".fireglow");
     var fireball = m(".fireball",{class:"kbutton"});
 
+    var clipclass = JSON.stringify(clipid);
+    clipclass = "clip" + clipclass;
+    
+    var fireclasses = clipclass + " db-"+apphost;
+
     var module = [
         m(".firewrap",[
             emptyanim, 
-            m(".firebox",[
+            m(".firebox",{ onclick:counter, class:fireclasses },[
                 fireglowdot,
                 fireball,
                 m(".firenum",firecount),     
@@ -33,35 +39,44 @@ export var firemodule = function(firecount, id, apphost) {
         ])
     ];
 
-    startFire();
+    
+    // startFire();
     return module;
 }
 
 
 function counter(event){
     /*
+    Take the click, pull out the .firebox element - this is the most important thing.
+    Do math on the number and make note of the ID number of the clip we're adjusting.
+    */
+
+    // console.log(event);
+
+    var firebox = event.srcElement.closest('.firebox');
+    var firenum = firebox.querySelector('.firenum');
+    var fireball = firebox.querySelector('.fireball');
+    var newnum = parseInt(firenum.innerText) + 1;
+
+    var clipnumber = firebox.classList[1];
+    var multiwrap = event.srcElement.closest('.multiwrap');
+
+    // console.log("multiwrap : " + multiwrap);
+
+    /*
     TinySlider duplicates the divs and places them in the DOM so that it can make
     a carousel. We must grab all of the elements from the wrapper with the 
     same clip number and change them at once for the count to work.
     */
-
-    var firebox = event.srcElement.closest('.boxwrap').querySelector('.firebox');
-    var firenum = firebox.querySelector('.firenum');
-    var fireball = firebox.querySelector('.fireball');
-    var anim = firebox.querySelector('.animation');
-    //console.log(anim);
-
-    if (event.srcElement.closest('.firebox') === null) {
-        // get the hell out if we're not clicking on the firebox
-        return;
-    }
-    var clipnumber = firebox.closest('.boxwrap').classList[1];
-    var multiwrap = event.srcElement.closest('.multiwrap');
     
-    var alldem = multiwrap.querySelectorAll('.'+clipnumber);
-    alldem.forEach((element) => { 
-        firenum.innerText ++; 
-    });
+    if ( null != multiwrap ) {
+        var alldem = multiwrap.querySelectorAll('.'+clipnumber);
+        alldem.forEach((element) => { 
+            element.querySelector('.firenum').innerText = newnum;
+        });
+    } else {
+        firenum.innerText = newnum;
+    }
 
     // quickly change size of fireball, then start animation
     fireball.classList.add('pressed');
@@ -73,9 +88,8 @@ function counter(event){
     */
     
     var boxid = clipnumber.substring(4);
-    setNum.fetch(boxid,firenum);
+    setNum.fetch(boxid,newnum);
 }
-ktopheader.addEventListener('click', counter, true); 
 
 
 var animVar;
@@ -84,7 +98,7 @@ function reaction(fireball, event){
     fireball.classList.remove('pressed');
 
     // render in the animation
-    var anim = event.srcElement.closest('.boxwrap').querySelector('.animation');
+    var anim = event.srcElement.closest('.firewrap').querySelector('.animation');
     m.render(anim, fullanim);
 
     // can't access the boxbox via jQuery until it's part of the DOM
@@ -102,10 +116,9 @@ function killAnimation(anim) {
 
 var setNum = {
     error: [],
-    fetch: function(id,holdnum) {
+    fetch: function(id,newnum) {
         
         var base = 'https://comm.site/blog/wp-json/kinecom/showcase/';
-        var newnum = holdnum.innerText;
         var querystring = base + id +'?upvotes=' + newnum;
 
         // most important thing here is the background setting, which keeps
