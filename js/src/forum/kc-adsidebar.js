@@ -9,10 +9,10 @@ extend(IndexPage.prototype, 'sidebarItems', function(items) {
         m("a", {href:'#'},[
             m("img",{src:'/blog/_img/adunit-side.png'})
             ]),
-        m(".adcopy","The Square Small Business Hackathon — Hack to help small businesses adapt, recover, and innovate.")
+        m(".kcadcopy","The Square Small Business Hackathon — Hack to help small businesses adapt, recover, and innovate.")
     ]);
 
-    items.add('sideAdkoa', sideAd);
+    items.add('sideAdkc', sideAd);
 
     // items.add('google', <a href="https://google.com">Google</a>);
 

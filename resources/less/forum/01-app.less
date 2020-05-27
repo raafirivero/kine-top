@@ -8,6 +8,31 @@
 @k-deep: #561a44; // deep purple
 @k-deepshadow: #2c0b22; // deep purple
 
+// font-family:  "Jost", 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+
+// Chivo
+
+
+:root {
+    font-size: 62.5%; /* (62.5/100) * 16px = 10px */
+    --font-size--small: 1.4rem; /* 14px */
+    --font-size--default: 1.6rem; /* 16px */
+    --font-size--large: 2.4rem; /* 24px */
+  }
+  
+  .font-size--small {
+    font-size: var(--font-size--small);
+  }
+  
+  .font-size--default {
+    font-size: var(--font-size--default);
+  }
+  
+  .font-size--large {
+    font-size: var(--font-size--large);
+  }
+
+
 a {
     color: @k-maroon;
 }
@@ -17,6 +42,25 @@ a:hover {
 
 }
 
+body {
+    font-family:  "Jost", 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+}
+
+p {
+    margin: 0 0 1rem;
+}
+
+.Post-body {
+    font-size: 2rem !important;
+}
+
+.Post:before, .Post:after {
+    display: none;
+}
+
+h1,h2,h3, .Hero h2 {
+    font-family: 'Chivo';
+}
 
 ul, li {
     list-style-type: none;
@@ -26,6 +70,22 @@ ul, li {
     transition: opacity 1s;
 }
 
+.IndexPage-results .sideNavOffset {
+   font-family: "Jost", Gill Sans, 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+   font-size: 2rem;
+}
+
+.IndexPage-results {
+    direction: ltr;
+}
+
+nav.IndexPage-nav {
+    direction: ltr
+    // background-color: #eee;
+}
+
+
+
 .container {
     //background-image: url(https://comm.site/blog/_junk/grid-5col-20-15-split.png);
     direction: ltr;
@@ -33,25 +93,15 @@ ul, li {
 
 #ktoprow, #wpbrick, #featured {
     font-family:  "Jost", 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
-    font-size: 16px;
+    font-size: 1.6rem;
 }
 
-#ktopheader {
-    // transition: 2s;
-    direction: ltr;
-}
-
-#ktopheader.shorter {
-    max-height: 120px;
-    min-height: unset;
-    background-position: 50% 64%;
-}
 
 .gonzo {
     display: none !important;
 }
 
-.DisscussionPage-discussion div.container {
+.DiscussionPage-discussion div.container {
     // the content div of a disussion page.
     direction: ltr;
 }
@@ -112,6 +162,26 @@ ul, li {
     background-color: @k-yellow;
     background-position: 50% 30%;
 }
+
+#ktoprow.slim {
+    height: 0px;
+    transition-duration: .5s;
+    transition-timing-function: ease;
+}
+
+#ktopheader.slim {
+    min-height: 0px;
+    height: 0px;
+    transition-duration: .75s;
+    transition-timing-function: ease;
+}
+
+#ktopheader.min {
+    margin-bottom: -390px;
+    transition-duration: .75s;
+    transition-timing-function: ease;
+}
+
 
 #newslist {
     width: 38%;
@@ -220,7 +290,7 @@ ul.listholder {
     // border-radius: 0 0 0 32px;
     // border-radius: 0 0 0 18px;
     // box-shadow: 20px 23px 50px 5px #7a0e36 inset;
-    //animation: wipefade 1.5s ease-out;
+    animation: wipefade 1.5s ease-out;
 }
 
 .wipeleft {
@@ -360,7 +430,7 @@ h2.shotitle {
 ///////////////////////////////////*/
 
 #header {
-    border-bottom: 6px solid @k-deep;
+    border-bottom: 5px solid @k-deep;
 }
 
 .Header-logo {
@@ -397,6 +467,11 @@ header .container {
     border: 0;
 }
 
+.sideNavContainer {
+    font-family: Jost, "Jost", Gill Sans, 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+    position: relative;
+}
+
 .Button {
    color: #838383;
    // background-color: #e7edf3; // flarum default
@@ -405,24 +480,219 @@ header .container {
 
 .Button:hover {
     color: #111;
-    background-color: #eae1d7;
+    background-color: #e7e7e7;
+}
+
+.IndexPage-toolbar {
+    margin-bottom: 30px;
+    }
+
+.Dropdown--split:hover + button, .ButtonGroup .Dropdown--split:hover + button {
+    background-color: #f05439;
+}
+
+.Dropdown--split .SplitDropdown-button {
+    border-right-width: 0;
+}
+
+.Dropdown--split .Dropdown-toggle {
+    border-left-width: 0;
+    left: -1px;
+}
+
+
+
+.App-nav .AdminNav .Dropdown-menu>li>a, 
+.App-nav .AdminNav .Dropdown-menu>li>a:hover, 
+.App-nav .AdminNav .Dropdown-menu>li.active>a {
+    color: #878787;
+}
+
+.App-nav .AdminNav .Dropdown-menu>li>a, 
+.App-nav .AdminNav .Dropdown-menu>li>a:hover, 
+.App-nav .AdminNav .Dropdown-menu>li.active>a {
+    background: #f5ecdb;
+    color: #878787;
+}
+
+.DashboardPage {
+    background: #f5ecdb !important;
+    color: #878787;
+}
+
+.kc-divider {
+    position: absolute;
+    left: 199px;
+    top: 0px;
+    opacity: .3;
+    overflow: hidden;
+}
+.kc-divider img {
+    position: relative;
+    top: -50%;
+}
+
+@media (max-width: 960px){ 
+    .kc-divider {
+        display: none;
+    }
+}
+
+
+
+.FormControl {
+    color: @k-deep;
+    background-color: #f5f5f5;
+}
+
+.DiscussionListItem-count::before, .unread .DiscussionListItem-count:before {
+    // font-stretch: ultra-expanded !important;
+    content: '\f27a';
+    // content: url('/blog/_img/kc-comment-36.png');
 }
 
 .DiscussionListItem {
     padding-top: 8px;
     padding-bottom: 8px;
-    border-radius: 10px;
-    
+    // border-radius: 10px;
+
 }
 
 .DiscussionListItem:hover {
-    background: #f7f7f7;
+    background-color: #f3f6f9 !important;
+    transition-duration: .4s;
+
+}
+
+@media (min-width: 768px){
+    .IndexPage-toolbar-view .Dropdown-toggle {
+        left: 78px;
     }
 
-.DiscussionListItem:hover {
-    background-color: #f3f6f9;
-    transition-duration: .25s;
+    .DiscussionListItem {
+        background-image: url('/blog/_img/bottom-corner-ang.png');
+        background-position: -20px 82px;
+        background-repeat: no-repeat;
+
+        // experimental
+        height: 87px;
+        // border-top: 1px solid rgb(247, 240, 240);
+        // border-top: 1px solid #ddd;
+    }
+
+    .DiscussionListItem:hover {
+        // background: initial !important;
+        background-image: url('/blog/_img/bottom-corner-ang.png') !important;
+        background-position: -10px 62px !important;
+        background-repeat: no-repeat !important;
+        border-radius: 10px;
+        // border-top: 1px solid transparent;
+        // border-bottom: 1px solid rgb(247, 240, 240);
+    }
+
+    li:hover + li .DiscussionListItem {
+        // border-top: 1px solid transparent;
+    }
+
+
+    .DiscussionListItem-author {
+        margin-left: -60px;
+    }
+
+    .DiscussionListItem-content {
+        padding-left: 80px;
+        padding-right: 90px;
+    }
+
+    .IndexPage .DiscussionListItem-info>.item-tags, .UserPage .DiscussionListItem-info>.item-tags {
+        right: 170px;
+        font-size: 1.3rem;
+        top: 20px;
+    }
+
+    .IndexPage-results .DiscussionListItem-count {
+        margin: unset;
+        color: #777;
+        // color: #ddd;
+
+        font-weight: 900;
+        font-family: Chivo;
+        font-size: 4rem;
+        background-image: url('/blog/_img/edgefade-40.png');
+        background-position: left center;
+        background-size: 2px 40px;
+        background-repeat: no-repeat;
+
+        position: absolute;
+        width: initial;
+        padding-left: 2rem;
+        top: 2px;
+
+    }
+
+    .IndexPage-results .DiscussionListItem-count::before {
+        position: relative;
+        font-size: 1.5rem;
+        float: right;
+        left: 20px;
+        top: 12px;
+        
+    }
+
+
+    .DiscussionListItem-controls {
+        width: 42px;
+        height: 42px;
+        margin-top: auto;
+        margin-bottom: auto;
+        background-color: white;
+        right: 0 !important;
+        top: 20px;
+        border-radius: 8px 0 0 20px;
+    }
+
+    // discussion idems in the floading panel
+
+
+    .DiscussionPage-list .DiscussionListItem {
+        padding: 6px 0 0 0;
+        background-image: none !important;
+    }
+
+    .DiscussionPage-list .DiscussionListItem-title {
+        margin-bottom: .75rem;
+    }
+
+
 }
+
+.DiscussionPage-list .Dropdown-toggle.Button.Button--icon, .DiscussionPage-list .DiscussionListItem-controls {
+    display: none;
+}
+
+.DiscussionPage-list .DiscussionListItem.active, .DiscussionPage-list .DiscussionListItem.active:hover {
+    background-image: none !important;
+}
+
+
+
+@media (max-width: 767px){ 
+    .DiscussionListItem {
+        border-radius: 0;
+        height: initial;
+    }
+
+    .DiscussionList .DiscussionListItem-count:before {
+        font-family: 'Font Awesome 5 Free';
+        font-family: 'Font Awesome 5 Free';
+        position: relative;
+        top: 1px;
+        margin-right: 4px;
+    }
+
+}
+
+
 .DiscussionListItem-content:hover .DiscussionListItem-title  {
     text-decoration: underline;
 }
@@ -431,17 +701,170 @@ header .container {
     color: #222;
 }
 
-.DiscussionListItem-count {
-    margin-top: 4px;
+.DiscussionListItem-title {
+    font-size: 2rem;
+    font-family: 'Chivo', sans-serif;
+    font-weight: lighter;
+    transition-property: font-size;
+
+    position: absolute;
+}
+
+
+.DiscussionListItem-info {
+    font-size: 1.2rem;
+    margin-top: 30px;
+}
+
+.DiscussionListItem .username, .item-terminalPost .fas {
     color: #999;
 }
 
-.DiscussionListItem-title {
-    font-size: 18px;
+.DiscussionListItem .Dropdown-toggle.Button.Button--icon {
+    background-color: #f3f6f9;
 }
 
-.DiscussionListItem-info {
-    font-size: 12px;
+@media (max-width: 767px){ 
+
+    .DiscussionListItem-content:hover .DiscussionListItem-title  {
+        
+    }
+
+    .DiscussionListItem-title, .DiscussionListItem-info {
+        position: relative;
+    }
+
+    .DiscussionListItem-info {
+        margin-top: unset;
+    }
+}
+
+
+@media (min-width: 768px){
+
+        .IndexPage-results .DiscussionListItem:hover .DiscussionListItem-title {
+            font-size: 2.05rem;
+            // transition: 2s ease;
+        }
+
+        .IndexPage-results .DiscussionListItem .Dropdown-toggle.Button.Button--icon {
+            top: 3px;
+            left: 5px;
+            background-color: #f3f6f9;
+        }
+
+        .IndexPage-results .DiscussionListItem .Dropdown-toggle.Button.Button--icon:hover {
+            top: 3px;
+            left: 5px;
+            background-color: #eaedf0;
+        }
+
+        .DiscussionListItem .TagsLabel {
+            padding: 0px;
+            border-radius: 8px;
+        }
+
+        .DiscussionListItem .TagLabel {
+            background: initial;
+            padding: 0px 8px;
+            border: 1px solid #ddd;
+            background-color: transparent !important;
+            background-color: #f3f6f9 !important;
+        }
+
+        .DiscussionListItem .TagsLabel .TagLabel:first-child:last-child,
+        .DiscussionListItem .TagsLabel .TagLabel:first-child,
+        .DiscussionListItem .TagsLabel .TagLabel:last-child {
+            border-radius: 8px;
+        }
+
+        .DiscussionList .DiscussionListItem .TagLabel-text {
+            font-size: 1.2rem;
+            color: #999 !important;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            
+
+        }
+
+        .DiscussionListItem .TagLabel-text .icon {
+            height: 100%;
+            padding: 6px 5px 6px 7px;
+            border-radius: 6px 0 0 6px;
+            position: relative;
+            left: -8px;
+            margin-right: -8px;
+        }
+        .DiscussionListItem:hover .TagLabel-text .icon {
+            transition-duration: .5s;
+            background: @k-orange;
+            // background: @k-deep;
+            opacity: .8;
+            color: white !important;
+        }
+
+        .DiscussionListItem:hover .TagLabel {
+            border: 1px solid #ccc;
+            background-color: unset !important;
+            background-color: #ddd !important;
+            background-color: #fff !important;
+
+        }
+
+        .DiscussionList .DiscussionListItem:hover .TagLabel-text {
+            // color: white !important;
+            color: #333 !important;
+            // color: @k-maroon !important;
+        }
+
+
+    }
+
+
+    .DiscussionPage-list .DiscussionListItem-count, .DiscussionList .DiscussionListItem-count {
+        font-family: 'Chivo', sans-serif;
+        font-weight: bolder;;
+    }
+
+
+
+// styles for side
+
+@media (min-width: 768px){
+
+    .item-topQuotes {
+        position: absolute;
+        left: 326px
+    }
+
+    .DiscussionPage-list .DiscussionList .DiscussionListItem .TagLabel-text {
+        font-size: .75rem;
+    }
+
+    .DiscussionPage-list .DiscussionListItem .TagLabel {
+        border-width: 1px;
+        padding: 0 8px 8 4px;
+    }
+
+
+    .DiscussionPage-list .DiscussionListItem-count {
+        font-weight: bolder;
+        margin-right: -80px;
+    }
+
+    .DiscussionListItem:hover .DiscussionListItem-count {
+        color: #333;
+        opacity: 1;
+    }
+
+    .DiscussionListItem .read .DiscussionListItem-count {
+        opacity: .45;
+    }
+
+    .DiscussionListItem:hover .read .DiscussionListItem-count {
+        opacity: .75;
+    }
+
 }
 
 .DiscussionList-loadMore {
@@ -459,13 +882,25 @@ width: 198px;
 .Button--primary {
     background: @k-red;
     color: white;
+    font-size: 1.6rem;
+    // letter-spacing: .1rem;
 }
 
-.Button--primary:hover {
-    background: @k-orange;
-    color: white;
-}
 
+
+
+@media (min-width: 768px){
+    .Button--primary {
+        border: 6px solid whitesmoke;
+        border-radius: 12px;
+    }
+
+    .Button--primary:hover {
+        background: @k-orange;
+        color: white;
+        border-color: rgb(230, 230, 230);
+    }
+}
 
 .DiscussionListItem-controls {
    right: 10px; 
@@ -486,127 +921,6 @@ width: 198px;
     font-weight: bold;
 }
 
-
-
-/* /////////////// Inside discussions
-/////////////////////////////////// */
-
-
-nav.DiscussionPage-nav ul {
-    margin-top: 120px;
-    margin-bottom: 40px;
-    position: sticky;
-}
-
-.fixit {
-    position: fixed !important;
-    top: 0;
-}
-.hiscrub {
-    position: relative !important;
-}
-.lowscrub {
-    top: unset;
-    position: absolute !important;
-    bottom: 0;
-}
-
-.Hero {
-    margin-top: -1px;
-    background: #eeeef1;
-    background: #fff !important;
-    color: @k-maroon;
-    box-shadow: inset 0px 60px 50px rgb(240, 240, 240) !important;
-    color: #996679;
-}
-
-.DiscussionHero-title {
-    color: @k-maroon;
-}
-
-.DiscussionPage header + .container {
-    background: url('https://comm.site/blog/_img/bars.png') 224px -194px no-repeat !important;
-    background-size: 200px !important;
-}
-
-.App--discussion .App-content {
-    margin-top: 0;
-}
-
-.DiscussionPage-stream .PostStream {
-    margin-top: 60px;
-}
-
-.PostStream-item:not(:last-child) {
-    border-bottom: 1px solid #eee;
-    margin-bottom: 15px;
-}
-
-Article {
-    margin-top: 24px;
-    margin-bottom: 24px;
-}
-Article:hover {
-    background-color: #f6f6f6;
-    border-radius: .5rem;
-    transition-duration: .5s;
-}
-
-.Post {
-    padding-right: 85px;
-}
-.Post-body {
-    font-size: 18px;
-}
-
-@media (min-width: 768px) {
-    .Hero .container {
-    padding-top: 60px;
-    padding-bottom: 50px;
-    }
-    .Hero h2 {
-        font-size: 60px;
-        font-family: Avenir, Avenir Next, system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",Ubuntu,Cantarell,Oxygen,Roboto,Helvetica,Arial,sans-serif;
-    }
-
-    .DiscussionPage-stream {
-        margin-right: 275px;
-        margin-left: 120px;
-    }        
-}
-
-
-.Post-header a {
-    color: #666;
-}
-
-.DiscussionListItem-content {
-    position: relative;
-    color: @k-deep;
-}
-.DiscussionPage-list .DiscussionListItem.active {
-    background: #dedede;
-}
-@media (min-width: 768px){
-    .DiscussionPage-list .DiscussionListItem.active {
-        background: #dedede;
-    }
-}
-
-.Post-body blockquote {
-    background: #f3ebe88a;
-    color: #808080;
-    border-top: 0;
-    border-bottom: 0;
-}
-
-Article:hover blockquote {
-    background: #eae1dd8a
-}
-
-.TextEditor textarea {
-    font-size: 18px;
-}
 
 
 /* **************** fixes from that dude

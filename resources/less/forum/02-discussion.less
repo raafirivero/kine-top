@@ -1,0 +1,182 @@
+@k-yellow: #fdc22d; // burnt yellow
+@k-orange: #f05439; // orange
+@k-red: #c30a3b; // red
+@k-maroon: #8e113f; // maroon
+@k-deep: #561a44; // deep purple
+@k-deepshadow: #2c0b22; // deep purple
+
+/* /////////////// Inside discussions
+/////////////////////////////////// */
+
+
+nav.DiscussionPage-nav ul {
+    margin-top: 120px;
+    margin-bottom: 40px;
+    position: sticky;
+}
+
+.fixit {
+    position: fixed !important;
+    top: 0;
+}
+.hiscrub {
+    position: relative !important;
+}
+.lowscrub {
+    top: unset;
+    position: absolute !important;
+    bottom: 0;
+}
+
+.Hero {
+    margin-top: -1px;
+    background: #eeeef1;
+    background: #fff !important;
+    color: @k-maroon;
+    box-shadow: inset 0px 60px 50px rgb(240, 240, 240) !important;
+    color: #996679;
+}
+
+.DiscussionHero-title {
+    color: @k-maroon;
+}
+
+.DiscussionPage header + .container {
+    background: url('https://comm.site/blog/_img/bars.png') 224px -194px no-repeat !important;
+    background-size: 200px !important;
+}
+
+.App--discussion .App-content {
+    margin-top: 0;
+}
+
+.DiscussionPage-stream .PostStream {
+    margin-top: 60px;
+}
+
+.PostStream-item:not(:last-child) {
+    border-bottom: 1px solid #eee;
+    margin-bottom: 15px;
+}
+
+Article {
+    margin-top: 24px;
+    margin-bottom: 24px;
+}
+// Article:hover {
+//     background-color: #f6f6f6;
+//     border-radius: .5rem;
+//     transition-duration: .5s;
+// }
+
+.ReplyPlaceholder:hover {
+    background-color: #f6f6f6;
+    transition-duration: .5s;
+    // border-style: solid;
+}
+
+blockquote {
+    // background: #f3ebe88a;
+    // background: #f2eee58a;
+    // background: #f2eee5;
+    color: #777777;
+    border: 0 !important;
+    border-radius: 8px !important;
+    padding: 2rem 2rem 2rem 4rem !important;
+    position: relative;
+}
+
+blockquote:before {
+    font-family: 'Font Awesome 5 Free';
+    content: '\f10d';
+    color: rgb(243, 176, 53);
+    position: absolute;
+    top: 1rem;
+    background: #ededed;
+    padding: .5rem;
+    left: 2.1rem;
+    opacity: 1;
+}
+
+blockquote p {
+    padding-left: 3rem;
+    border-left: 5px solid rgb(243, 176, 53);
+    }
+
+@media (max-width: 767px) {
+    .DiscussionPage-stream {
+        padding: 0 4rem;
+        }
+}
+
+
+@media (min-width: 768px) {
+    .Hero .container {
+    padding-top: 60px;
+    padding-bottom: 50px;
+    }
+    .Hero h2 {
+        font-size: 60px;
+        // font-family: Avenir, Avenir Next, system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",Ubuntu,Cantarell,Oxygen,Roboto,Helvetica,Arial,sans-serif;
+    }
+
+    // .DiscussionPage-stream {
+    //     margin-right: 275px;
+    //     margin-left: 100px;
+    // }
+    .sideNavOffset {
+        margin-top: 36px;
+    }
+
+}
+
+
+@media (max-width: 991px) and (min-width: 768px) {
+    .DiscussionPage-stream {
+        margin: 0;
+        margin-right: 220px;
+        padding-right: 15px;
+    }
+
+    .container {
+        width: 820px;
+    }
+}
+
+@media (min-width: 992px) {
+
+    .DiscussionPage-stream {
+
+        max-width: 768px;
+        margin-left: auto;
+        margin-right: 225px;
+    }
+
+    .Post {
+        padding-right: 85px;
+    }
+}
+
+
+.Post-header a {
+    color: #666;
+}
+
+.DiscussionListItem-content {
+    position: relative;
+    color: @k-deep;
+}
+.DiscussionPage-list .DiscussionListItem.active {
+    background: #dedede;
+}
+@media (min-width: 768px){
+    .DiscussionPage-list .DiscussionListItem.active {
+        background: #dedede;
+    }
+
+}
+
+
+.TextEditor textarea {
+    font-size: 18px;
+}

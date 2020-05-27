@@ -91,17 +91,25 @@ module.exports =
 /*!******************!*\
   !*** ./forum.js ***!
   \******************/
-/*! no exports provided */
+/*! exports provided: scrubberClass */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _src_forum_kc_adsidebar_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./src/forum/kc-adsidebar.js */ "./src/forum/kc-adsidebar.js");
-/* empty/unused harmony star reexport *//* harmony import */ var _src_forum_kc_scrubber_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./src/forum/kc-scrubber.js */ "./src/forum/kc-scrubber.js");
-/* empty/unused harmony star reexport *//* harmony import */ var _node_modules_tiny_slider_src_tiny_slider__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./node_modules/tiny-slider/src/tiny-slider */ "./node_modules/tiny-slider/src/tiny-slider.js");
-/* harmony import */ var _src_forum_kc_firemod_js__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./src/forum/kc-firemod.js */ "./src/forum/kc-firemod.js");
+/* empty/unused harmony star reexport *//* harmony import */ var _src_forum_kc_discussion_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./src/forum/kc-discussion.js */ "./src/forum/kc-discussion.js");
+/* empty/unused harmony star reexport *//* harmony import */ var _src_forum_kc_scrubber_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./src/forum/kc-scrubber.js */ "./src/forum/kc-scrubber.js");
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "scrubberClass", function() { return _src_forum_kc_scrubber_js__WEBPACK_IMPORTED_MODULE_2__["scrubberClass"]; });
+
+/* harmony import */ var _src_forum_kc_sidenav_js__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./src/forum/kc-sidenav.js */ "./src/forum/kc-sidenav.js");
+/* empty/unused harmony star reexport *//* harmony import */ var _src_forum_kc_slimhead_js__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./src/forum/kc-slimhead.js */ "./src/forum/kc-slimhead.js");
+/* empty/unused harmony star reexport *//* harmony import */ var _node_modules_tiny_slider_src_tiny_slider__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./node_modules/tiny-slider/src/tiny-slider */ "./node_modules/tiny-slider/src/tiny-slider.js");
+/* harmony import */ var _src_forum_kc_firemod_js__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ./src/forum/kc-firemod.js */ "./src/forum/kc-firemod.js");
 //export * from './src/forum';
 //export * from './src/forum/kc-news.js';
+
+
+
 
  // import { extend } from 'flarum/extend';
 // import { Component } from '@flarum/core/forum';
@@ -236,7 +244,7 @@ var vCarousel = {
         "class": "sliderbox",
         width: "250px"
       }, [m(".boxwrap .clip" + clipid, {}, [m(".iframe-container", [// new approach
-      m.trust(vCarousel.boxes[i]['meta']['oembed'])]), metarows("li", "creds", vCarousel.boxes[i]['meta']), Object(_src_forum_kc_firemod_js__WEBPACK_IMPORTED_MODULE_3__["firemodule"])(firecount, clipid, "wp")])]));
+      m.trust(vCarousel.boxes[i]['meta']['oembed'])]), metarows("li", "creds", vCarousel.boxes[i]['meta']), Object(_src_forum_kc_firemod_js__WEBPACK_IMPORTED_MODULE_6__["firemodule"])(firecount, clipid, "wp")])]));
     }
 
     return vCarousel.content;
@@ -246,9 +254,8 @@ var vCarousel = {
       "class": "minihead"
     }, [m.trust(vCarousel.headline)]), // the `config` method below is from version 0.2.5 of Mithril
     // change to `oninit` once Flarum updates to 1.0
-    m(".multiwrap ", {
-      config: tnsWrap
-    }, [vCarousel.content]), m(".slidercontrols", [m("img", {
+    //m(".multiwrap ", {config:tnsWrap}, [
+    m(".multiwrap ", [vCarousel.content]), m(".slidercontrols", [m("img", {
       src: imgdir + "caretl.png",
       "class": "sprev",
       alt: "previous videos"
@@ -270,7 +277,7 @@ var showClip = {
       "class": "shotitle"
     }, "Showcase"), m("p", {
       "class": "featuremeta"
-    }, metarows("li", "featured", metas)), Object(_src_forum_kc_firemod_js__WEBPACK_IMPORTED_MODULE_3__["firemodule"])(firecount, showClip.clipid, "wp"), // m("p",{class:"howtosubmit"},"Submit using #Kinefinity on Vimeo or YouTube"),
+    }, metarows("li", "featured", metas)), Object(_src_forum_kc_firemod_js__WEBPACK_IMPORTED_MODULE_6__["firemodule"])(firecount, showClip.clipid, "wp"), // m("p",{class:"howtosubmit"},"Submit using #Kinefinity on Vimeo or YouTube"),
     //m("p",{class:"howtosubmit"},"Use #Kinefinity on Vimeo or YouTube or submit below."),
     m("div", {
       "class": "iframe-container",
@@ -303,32 +310,30 @@ function loadFooter() {
     }
   }
 } // lazy loading on the TinySlider caused memory leaks. Let's try it by hand above
-
-
-function tnsWrap() {
-  // was experiencing redraw issue because TNS is not created by
-  // Flarum. Zombies vnodes. Don't redraw TNS once built.
-  if (built === false) {
-    var slider = Object(_node_modules_tiny_slider_src_tiny_slider__WEBPACK_IMPORTED_MODULE_2__["tns"])({
-      container: '.multiwrap',
-      slideBy: 'page',
-      nav: false,
-      controlsPosition: 'bottom',
-      controlsContainer: '.slidercontrols',
-      lazyload: false,
-      onInit: build_true,
-      items: 1,
-      responsive: {
-        640: {
-          items: 2
-        },
-        900: {
-          items: 3
-        }
-      }
-    });
-  }
-}
+// function tnsWrap() {
+//     // was experiencing redraw issue because TNS is not created by
+//     // Flarum. Zombies vnodes. Don't redraw TNS once built.
+//     if (built === false ) {
+//         var slider = tns({
+//             container: '.multiwrap',
+//             slideBy: 'page',
+//             nav: false,
+//             controlsPosition: 'bottom',
+//             controlsContainer: '.slidercontrols',
+//             lazyload: false,
+//             onInit: build_true,
+//             items: 1,
+//             responsive: {
+//                 640: {
+//                     items: 2
+//                 },
+//                 900: {
+//                     items: 3
+//                 }
+//             }
+//         });
+//     }
+// }
 
 /***/ }),
 
@@ -4196,9 +4201,48 @@ Object(flarum_extend__WEBPACK_IMPORTED_MODULE_0__["extend"])(flarum_components_I
     href: '#'
   }, [m("img", {
     src: '/blog/_img/adunit-side.png'
-  })]), m(".adcopy", "The Square Small Business Hackathon — Hack to help small businesses adapt, recover, and innovate.")]);
-  items.add('sideAdkoa', sideAd); // items.add('google', <a href="https://google.com">Google</a>);
+  })]), m(".kcadcopy", "The Square Small Business Hackathon — Hack to help small businesses adapt, recover, and innovate.")]);
+  items.add('sideAdkc', sideAd); // items.add('google', <a href="https://google.com">Google</a>);
 });
+
+/***/ }),
+
+/***/ "./src/forum/kc-discussion.js":
+/*!************************************!*\
+  !*** ./src/forum/kc-discussion.js ***!
+  \************************************/
+/*! no exports provided */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var flarum_extend__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! flarum/extend */ "flarum/extend");
+/* harmony import */ var flarum_extend__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(flarum_extend__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var flarum_components_IndexPage__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! flarum/components/IndexPage */ "flarum/components/IndexPage");
+/* harmony import */ var flarum_components_IndexPage__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(flarum_components_IndexPage__WEBPACK_IMPORTED_MODULE_1__);
+
+
+app.initializers.add('kinefixes', function () {
+  // console.log("big extend");
+  Object(flarum_extend__WEBPACK_IMPORTED_MODULE_0__["extend"])(flarum_components_IndexPage__WEBPACK_IMPORTED_MODULE_1___default.a.prototype, 'init', function () {
+    // console.log(this);
+    this.bodyClass = 'App--index kc';
+  });
+  Object(flarum_extend__WEBPACK_IMPORTED_MODULE_0__["extend"])(flarum_components_IndexPage__WEBPACK_IMPORTED_MODULE_1___default.a.prototype, 'viewItems', function (items) {
+    // remove the "Latest" button from the front page
+    if (items.has('sort')) {
+      items.remove('sort');
+    }
+
+    items.add('topQuotes', randomQuote());
+  });
+});
+var topQuotes = [m('.chewbacca', "'Auuurrllllghgghghghh!' - Chewbacca"), m('.jaws', '"You\'re gonna need a bigger boat." - Sheriff Brody'), m('.rivero', '"Big Naturales." - Rivero'), m('.ander', '"Anything for the shot." - P.T. Anderson'), m('.cop', '"It\'s the ones you get that matter." - Francis Ford Coppola'), m('.spike', '"We\'re not gonna fall for the okeydoke." - Spike Lee'), m('.deakins', '"People confuse \'pretty\' with good cinematography." - Roger Deakins')];
+
+function randomQuote() {
+  var randomItem = topQuotes[Math.floor(Math.random() * topQuotes.length)];
+  return randomItem;
+}
 
 /***/ }),
 
@@ -4333,11 +4377,12 @@ function startFire() {
 /*!**********************************!*\
   !*** ./src/forum/kc-scrubber.js ***!
   \**********************************/
-/*! no exports provided */
+/*! exports provided: scrubberClass */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "scrubberClass", function() { return scrubberClass; });
 /* harmony import */ var flarum_extend__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! flarum/extend */ "flarum/extend");
 /* harmony import */ var flarum_extend__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(flarum_extend__WEBPACK_IMPORTED_MODULE_0__);
 /* harmony import */ var flarum_components_PostStreamScrubber__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! flarum/components/PostStreamScrubber */ "flarum/components/PostStreamScrubber");
@@ -4365,11 +4410,13 @@ Object(flarum_extend__WEBPACK_IMPORTED_MODULE_0__["extend"])(flarum_components_D
     }
   }
 });
-
 function scrubberClass(vnode) {
+  // function scrubberClass(vnode) {
   // grab the scrubber, its height, and set an offset
   var qscrub = vnode.element.querySelector('.DiscussionPage-nav > ul');
-  var headHeight = ktopheader.scrollHeight; // since the scrubber is created via JS the only way to access its margin
+  var ktopHeight = ktopheader.scrollHeight;
+  var krowHeight = ktoprow.scrollHeight;
+  var headHeight = ktopHeight + krowHeight; // since the scrubber is created via JS the only way to access its margin
   // is via its computed height in the browser, then convert it into a number
   // qscrub.scrollHeight didn't work 100% of the time, espec on tall pages
   // recalculated it a different way below
@@ -4407,31 +4454,108 @@ function scrubberClass(vnode) {
     }
   }
 } //var scrollnum;
+// extend(PostStreamScrubber.prototype, 'config', function(isInitialized, context) {
+//     /*
+//     This extension replaces the onclick function of the "original post" link in the
+//     Scrubber and instead has the window scroll to the header. I do this because the
+//     header that I've inserted is much taller and the user doesn't need to scroll to 
+//     the very top of the window every time.
+//     THE PROBLEM with this fix is that it _jumps_ to the top of the window instead of scrolling.
+//     The scrollIntoView fix below works in Firefox and Chrome, but not Safari :/
+//     */
+//     var origpost = this.element.querySelector('.Scrubber-first');
+//     var headerdiv = document.getElementById("header");
+//     var headertotal = ktopheader.clientHeight + ktoprow.clientHeight;
+//     var scrollnum = headertotal;
+//     var herodiv = this.element.ownerDocument.querySelector('.DiscussionHero');
+//     origpost.onclick = function(e){
+//         // // scrollTo(0, headertotal);
+//         // smooth scrolling on Firefox, still jumps in Safari
+//         herodiv.scrollIntoView({behavior: "smooth"});
+//     }
+// });
 
+/***/ }),
 
-Object(flarum_extend__WEBPACK_IMPORTED_MODULE_0__["extend"])(flarum_components_PostStreamScrubber__WEBPACK_IMPORTED_MODULE_1___default.a.prototype, 'config', function (isInitialized, context) {
-  /*
-  This extension replaces the onclick function of the "original post" link in the
-  Scrubber and instead has the window scroll to the header. I do this because the
-  header that I've inserted is much taller and the user doesn't need to scroll to 
-  the very top of the window every time.
-   THE PROBLEM with this fix is that it _jumps_ to the top of the window instead of scrolling.
-  The scrollIntoView fix below works in Firefox and Chrome, but not Safari :/
-  */
-  var origpost = this.element.querySelector('.Scrubber-first');
-  var headerdiv = document.getElementById("header");
-  var headertotal = ktopheader.clientHeight + ktoprow.clientHeight;
-  var scrollnum = headertotal;
-  var herodiv = this.element.ownerDocument.querySelector('.DiscussionHero');
+/***/ "./src/forum/kc-sidenav.js":
+/*!*********************************!*\
+  !*** ./src/forum/kc-sidenav.js ***!
+  \*********************************/
+/*! no exports provided */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
 
-  origpost.onclick = function (e) {
-    // scrollTo(0, headertotal);
-    // smooth scrolling on Firefox, still jumps in Safari
-    herodiv.scrollIntoView({
-      behavior: "smooth"
-    });
-  };
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var flarum_extend__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! flarum/extend */ "flarum/extend");
+/* harmony import */ var flarum_extend__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(flarum_extend__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var flarum_components_IndexPage__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! flarum/components/IndexPage */ "flarum/components/IndexPage");
+/* harmony import */ var flarum_components_IndexPage__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(flarum_components_IndexPage__WEBPACK_IMPORTED_MODULE_1__);
+
+ /////////////////// SideNav shadow
+
+Object(flarum_extend__WEBPACK_IMPORTED_MODULE_0__["extend"])(flarum_components_IndexPage__WEBPACK_IMPORTED_MODULE_1___default.a.prototype, 'sidebarItems', function (items) {
+  // console.log(items);
+  var divider = m(".kc-divider", [m("img", {
+    src: '/blog/_img/edgefade-40.png'
+  })]);
+  items.add('divider', divider);
 });
+
+/***/ }),
+
+/***/ "./src/forum/kc-slimhead.js":
+/*!**********************************!*\
+  !*** ./src/forum/kc-slimhead.js ***!
+  \**********************************/
+/*! no exports provided */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var flarum_app__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! flarum/app */ "flarum/app");
+/* harmony import */ var flarum_app__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(flarum_app__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var flarum_components_PostStreamScrubber__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! flarum/components/PostStreamScrubber */ "flarum/components/PostStreamScrubber");
+/* harmony import */ var flarum_components_PostStreamScrubber__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(flarum_components_PostStreamScrubber__WEBPACK_IMPORTED_MODULE_1__);
+/* harmony import */ var _kc_scrubber_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./kc-scrubber.js */ "./src/forum/kc-scrubber.js");
+
+
+ // small program to remove the big header after interaction
+
+var ktoprow = document.getElementById('ktoprow');
+var ktopheader = document.getElementById('ktopheader');
+var bigfoot = document.getElementById('bigfoot');
+var appJS = document.getElementById('app');
+appJS.addEventListener('click', smallHeader, true); //console.log(app);
+
+function smallHeader(e) {
+  var wholeApp = e.srcElement.closest('#app');
+
+  if (wholeApp.classList[1] == 'App--index') {
+    // leave the big header up until the user has clicked once on the app itself
+    m.render(ktoprow, null);
+    m.render(ktopheader, null);
+    $('#ktoprow').slideUp('slow');
+    $('#ktopheader').fadeTo('fast', .5).addClass('slim'); // tried creating a negative margin to hide the ktopheader, but that didn't work either
+    // my guess is that the scrubber just looks at the overall height of the page
+
+    appJS.removeEventListener('click', smallHeader); // try importing the init function from PostStreamScrubber
+    // and triggering it here.
+    // PostStreamScrubber;
+    // didn't work.
+    //scrubberClass(app.current);
+  }
+}
+
+/***/ }),
+
+/***/ "flarum/app":
+/*!********************************************!*\
+  !*** external "flarum.core.compat['app']" ***!
+  \********************************************/
+/*! no static exports found */
+/***/ (function(module, exports) {
+
+module.exports = flarum.core.compat['app'];
 
 /***/ }),
 

@@ -28,10 +28,16 @@ extend(DiscussionPage.prototype, 'config', function() {
 
 });
 
-function scrubberClass(vnode) {
+
+export function scrubberClass(vnode) {
+
+    
+// function scrubberClass(vnode) {
     // grab the scrubber, its height, and set an offset
     var qscrub = vnode.element.querySelector('.DiscussionPage-nav > ul');
-    var headHeight = ktopheader.scrollHeight;
+    var ktopHeight = ktopheader.scrollHeight;
+    var krowHeight = ktoprow.scrollHeight;
+    var headHeight = ktopHeight + krowHeight;
 
     // since the scrubber is created via JS the only way to access its margin
     // is via its computed height in the browser, then convert it into a number
@@ -79,29 +85,29 @@ function scrubberClass(vnode) {
 
 
 //var scrollnum;
-extend(PostStreamScrubber.prototype, 'config', function(isInitialized, context) {
-    /*
-    This extension replaces the onclick function of the "original post" link in the
-    Scrubber and instead has the window scroll to the header. I do this because the
-    header that I've inserted is much taller and the user doesn't need to scroll to 
-    the very top of the window every time.
+// extend(PostStreamScrubber.prototype, 'config', function(isInitialized, context) {
+//     /*
+//     This extension replaces the onclick function of the "original post" link in the
+//     Scrubber and instead has the window scroll to the header. I do this because the
+//     header that I've inserted is much taller and the user doesn't need to scroll to 
+//     the very top of the window every time.
 
-    THE PROBLEM with this fix is that it _jumps_ to the top of the window instead of scrolling.
-    The scrollIntoView fix below works in Firefox and Chrome, but not Safari :/
-    */
+//     THE PROBLEM with this fix is that it _jumps_ to the top of the window instead of scrolling.
+//     The scrollIntoView fix below works in Firefox and Chrome, but not Safari :/
+//     */
 
-    var origpost = this.element.querySelector('.Scrubber-first');
-    var headerdiv = document.getElementById("header");
-    var headertotal = ktopheader.clientHeight + ktoprow.clientHeight;
-    var scrollnum = headertotal;
-    var herodiv = this.element.ownerDocument.querySelector('.DiscussionHero');
+//     var origpost = this.element.querySelector('.Scrubber-first');
+//     var headerdiv = document.getElementById("header");
+//     var headertotal = ktopheader.clientHeight + ktoprow.clientHeight;
+//     var scrollnum = headertotal;
+//     var herodiv = this.element.ownerDocument.querySelector('.DiscussionHero');
 
-    origpost.onclick = function(e){
+//     origpost.onclick = function(e){
 
-        // scrollTo(0, headertotal);
-        // smooth scrolling on Firefox, still jumps in Safari
-        herodiv.scrollIntoView({behavior: "smooth"});
-    }
+//         // // scrollTo(0, headertotal);
+//         // smooth scrolling on Firefox, still jumps in Safari
+//         herodiv.scrollIntoView({behavior: "smooth"});
+//     }
 
-});
+// });
 

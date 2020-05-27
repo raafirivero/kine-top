@@ -1,7 +1,10 @@
 //export * from './src/forum';
 //export * from './src/forum/kc-news.js';
 export * from './src/forum/kc-adsidebar.js';
+export * from './src/forum/kc-discussion.js';
 export * from './src/forum/kc-scrubber.js';
+export * from './src/forum/kc-sidenav.js';
+export * from './src/forum/kc-slimhead.js';
 // import { extend } from 'flarum/extend';
 // import { Component } from '@flarum/core/forum';
 import { tns } from "./node_modules/tiny-slider/src/tiny-slider";
@@ -178,7 +181,8 @@ var vCarousel = {
 
             // the `config` method below is from version 0.2.5 of Mithril
             // change to `oninit` once Flarum updates to 1.0
-            m(".multiwrap ", {config:tnsWrap}, [
+            //m(".multiwrap ", {config:tnsWrap}, [
+            m(".multiwrap ", [
                 vCarousel.content
             ]),
 
@@ -254,32 +258,32 @@ function loadFooter(){
 
 // lazy loading on the TinySlider caused memory leaks. Let's try it by hand above
 
-function tnsWrap() {
+// function tnsWrap() {
 
-    // was experiencing redraw issue because TNS is not created by
-    // Flarum. Zombies vnodes. Don't redraw TNS once built.
+//     // was experiencing redraw issue because TNS is not created by
+//     // Flarum. Zombies vnodes. Don't redraw TNS once built.
 
-    if (built === false ) {
+//     if (built === false ) {
 
-        var slider = tns({
-            container: '.multiwrap',
-            slideBy: 'page',
-            nav: false,
-            controlsPosition: 'bottom',
-            controlsContainer: '.slidercontrols',
-            lazyload: false,
-            onInit: build_true,
-            items: 1,
-            responsive: {
-                640: {
-                    items: 2
-                },
-                900: {
-                    items: 3
-                }
-            }
-        });
+//         var slider = tns({
+//             container: '.multiwrap',
+//             slideBy: 'page',
+//             nav: false,
+//             controlsPosition: 'bottom',
+//             controlsContainer: '.slidercontrols',
+//             lazyload: false,
+//             onInit: build_true,
+//             items: 1,
+//             responsive: {
+//                 640: {
+//                     items: 2
+//                 },
+//                 900: {
+//                     items: 3
+//                 }
+//             }
+//         });
 
-    }
-}
+//     }
+// }
 
