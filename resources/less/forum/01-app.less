@@ -483,6 +483,12 @@ header .container {
     background-color: #e7e7e7;
 }
 
+// this effects the signup and rename buttons, but hopefully not others!
+.Form--centered .FormControl[type=text], .Form--centered .FormControl[type=email], .Form--centered .FormControl[type=password], .Form--centered .Button {
+    padding: unset;
+}
+
+
 .IndexPage-toolbar {
     margin-bottom: 30px;
     }
@@ -610,7 +616,7 @@ header .container {
         top: 20px;
     }
 
-    .IndexPage-results .DiscussionListItem-count {
+    .IndexPage-results .DiscussionListItem-count, .UserPage .DiscussionListItem-count {
         margin: unset;
         color: #777;
         // color: #ddd;
@@ -630,7 +636,7 @@ header .container {
 
     }
 
-    .IndexPage-results .DiscussionListItem-count::before {
+    .IndexPage-results .DiscussionListItem-count::before, .UserPage .DiscussionListItem-count::before {
         position: relative;
         font-size: 1.5rem;
         float: right;
@@ -747,13 +753,13 @@ header .container {
             // transition: 2s ease;
         }
 
-        .IndexPage-results .DiscussionListItem .Dropdown-toggle.Button.Button--icon {
+        .IndexPage-results .DiscussionListItem .Dropdown-toggle.Button.Button--icon, .UserPage .DiscussionListItem .Dropdown-toggle.Button.Button--icon {
             top: 3px;
             left: 5px;
             background-color: #f3f6f9;
         }
 
-        .IndexPage-results .DiscussionListItem .Dropdown-toggle.Button.Button--icon:hover {
+        .IndexPage-results .DiscussionListItem .Dropdown-toggle.Button.Button--icon:hover, .UserPage .DiscussionListItem .Dropdown-toggle.Button.Button--icon:hover {
             top: 3px;
             left: 5px;
             background-color: #eaedf0;

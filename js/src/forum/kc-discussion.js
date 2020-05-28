@@ -1,3 +1,4 @@
+import app from 'flarum/app';
 import { extend, override } from 'flarum/extend';
 import IndexPage from 'flarum/components/IndexPage';
 
@@ -15,7 +16,16 @@ app.initializers.add('kinefixes', () => {
     if (items.has('sort')) {
         items.remove('sort');
     }
-    items.add('topQuotes', randomQuote());
+
+    if (app.current.props.routeName == "index" && app.composer.active == true || app.current.props.routeName == "index" && app.search.hasFocus == true ) { 
+      // don't flip through quotes if someone types in the search bar or composer.
+      let oldQuote = this.element.querySelector('.item-topQuotes').innerHTML;
+      let mquote = m.trust(oldQuote);
+      items.add('topQuotes', mquote );
+    } else {
+      items.add('topQuotes', randomQuote() );
+    }
+
   })
 
 })
@@ -32,8 +42,10 @@ var topQuotes = [
 
 
 function randomQuote () {
-  let randomItem = topQuotes[Math.floor(Math.random()*topQuotes.length)];
-  return randomItem;
+
+    let randomItem = topQuotes[Math.floor(Math.random()*topQuotes.length)];
+    return randomItem;
+
 }
 
 

@@ -4216,25 +4216,35 @@ Object(flarum_extend__WEBPACK_IMPORTED_MODULE_0__["extend"])(flarum_components_I
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony import */ var flarum_extend__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! flarum/extend */ "flarum/extend");
-/* harmony import */ var flarum_extend__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(flarum_extend__WEBPACK_IMPORTED_MODULE_0__);
-/* harmony import */ var flarum_components_IndexPage__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! flarum/components/IndexPage */ "flarum/components/IndexPage");
-/* harmony import */ var flarum_components_IndexPage__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(flarum_components_IndexPage__WEBPACK_IMPORTED_MODULE_1__);
+/* harmony import */ var flarum_app__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! flarum/app */ "flarum/app");
+/* harmony import */ var flarum_app__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(flarum_app__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var flarum_extend__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! flarum/extend */ "flarum/extend");
+/* harmony import */ var flarum_extend__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(flarum_extend__WEBPACK_IMPORTED_MODULE_1__);
+/* harmony import */ var flarum_components_IndexPage__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! flarum/components/IndexPage */ "flarum/components/IndexPage");
+/* harmony import */ var flarum_components_IndexPage__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(flarum_components_IndexPage__WEBPACK_IMPORTED_MODULE_2__);
 
 
-app.initializers.add('kinefixes', function () {
+
+flarum_app__WEBPACK_IMPORTED_MODULE_0___default.a.initializers.add('kinefixes', function () {
   // console.log("big extend");
-  Object(flarum_extend__WEBPACK_IMPORTED_MODULE_0__["extend"])(flarum_components_IndexPage__WEBPACK_IMPORTED_MODULE_1___default.a.prototype, 'init', function () {
+  Object(flarum_extend__WEBPACK_IMPORTED_MODULE_1__["extend"])(flarum_components_IndexPage__WEBPACK_IMPORTED_MODULE_2___default.a.prototype, 'init', function () {
     // console.log(this);
     this.bodyClass = 'App--index kc';
   });
-  Object(flarum_extend__WEBPACK_IMPORTED_MODULE_0__["extend"])(flarum_components_IndexPage__WEBPACK_IMPORTED_MODULE_1___default.a.prototype, 'viewItems', function (items) {
+  Object(flarum_extend__WEBPACK_IMPORTED_MODULE_1__["extend"])(flarum_components_IndexPage__WEBPACK_IMPORTED_MODULE_2___default.a.prototype, 'viewItems', function (items) {
     // remove the "Latest" button from the front page
     if (items.has('sort')) {
       items.remove('sort');
     }
 
-    items.add('topQuotes', randomQuote());
+    if (flarum_app__WEBPACK_IMPORTED_MODULE_0___default.a.current.props.routeName == "index" && flarum_app__WEBPACK_IMPORTED_MODULE_0___default.a.composer.active == true || flarum_app__WEBPACK_IMPORTED_MODULE_0___default.a.current.props.routeName == "index" && flarum_app__WEBPACK_IMPORTED_MODULE_0___default.a.search.hasFocus == true) {
+      // don't flip through quotes if someone types in the search bar or composer.
+      var oldQuote = this.element.querySelector('.item-topQuotes').innerHTML;
+      var mquote = m.trust(oldQuote);
+      items.add('topQuotes', mquote);
+    } else {
+      items.add('topQuotes', randomQuote());
+    }
   });
 });
 var topQuotes = [m('.chewbacca', "'Auuurrllllghgghghghh!' - Chewbacca"), m('.jaws', '"You\'re gonna need a bigger boat." - Sheriff Brody'), m('.rivero', '"Big Naturales." - Rivero'), m('.ander', '"Anything for the shot." - P.T. Anderson'), m('.cop', '"It\'s the ones you get that matter." - Francis Ford Coppola'), m('.spike', '"We\'re not gonna fall for the okeydoke." - Spike Lee'), m('.deakins', '"People confuse \'pretty\' with good cinematography." - Roger Deakins')];
