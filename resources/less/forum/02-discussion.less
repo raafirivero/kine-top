@@ -42,7 +42,7 @@ nav.DiscussionPage-nav ul {
 }
 
 .DiscussionPage header + .container {
-    background: url('https://comm.site/blog/_img/bars.png') 224px -194px no-repeat !important;
+    background: url('https://comm.site/blog/_img/bars.png') 240px -194px no-repeat !important;
     background-size: 200px !important;
 }
 
@@ -79,7 +79,8 @@ blockquote {
     // background: #f3ebe88a;
     // background: #f2eee58a;
     // background: #f2eee5;
-    color: #777777;
+    // color: #777777;
+    color: rgb(88, 88, 88);
     border: 0 !important;
     border-radius: 8px !important;
     padding: 2rem 2rem 2rem 4rem !important;
@@ -89,10 +90,12 @@ blockquote {
 blockquote:before {
     font-family: 'Font Awesome 5 Free';
     content: '\f10d';
-    color: rgb(243, 176, 53);
+    // color: rgb(243, 176, 53);
+    color: @k-yellow;
     position: absolute;
     top: 1rem;
-    background: #ededed;
+    // background: #ededed;
+    background: #eeeeee;
     padding: .5rem;
     left: 2.1rem;
     opacity: 1;
@@ -100,7 +103,8 @@ blockquote:before {
 
 blockquote p {
     padding-left: 3rem;
-    border-left: 5px solid rgb(243, 176, 53);
+    // border-left: 5px solid rgb(243, 176, 53);
+    border-left: 5px solid @k-yellow;
     }
 
 @media (max-width: 767px) {

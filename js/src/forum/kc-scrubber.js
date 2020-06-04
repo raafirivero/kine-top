@@ -1,6 +1,8 @@
-import { extend } from 'flarum/extend';
+import { extend, override } from 'flarum/extend';
 import PostStreamScrubber from 'flarum/components/PostStreamScrubber';
 import DiscussionPage from 'flarum/components/DiscussionPage';
+import PostStream from 'flarum/components/PostStream';
+
 
 /////////////////// RR work on Scrubber
 
@@ -31,8 +33,6 @@ extend(DiscussionPage.prototype, 'config', function() {
 
 export function scrubberClass(vnode) {
 
-    
-// function scrubberClass(vnode) {
     // grab the scrubber, its height, and set an offset
     var qscrub = vnode.element.querySelector('.DiscussionPage-nav > ul');
     var ktopHeight = ktopheader.scrollHeight;
@@ -83,31 +83,81 @@ export function scrubberClass(vnode) {
 
 }
 
+override(PostStreamScrubber.prototype, 'onresize', function() {
 
-//var scrollnum;
-// extend(PostStreamScrubber.prototype, 'config', function(isInitialized, context) {
-//     /*
-//     This extension replaces the onclick function of the "original post" link in the
-//     Scrubber and instead has the window scroll to the header. I do this because the
-//     header that I've inserted is much taller and the user doesn't need to scroll to 
-//     the very top of the window every time.
+    this.scrollListener.update();
 
-//     THE PROBLEM with this fix is that it _jumps_ to the top of the window instead of scrolling.
-//     The scrollIntoView fix below works in Firefox and Chrome, but not Safari :/
-//     */
+    // Manually set the height of the scrollbar:
 
-//     var origpost = this.element.querySelector('.Scrubber-first');
-//     var headerdiv = document.getElementById("header");
-//     var headertotal = ktopheader.clientHeight + ktoprow.clientHeight;
-//     var scrollnum = headertotal;
-//     var herodiv = this.element.ownerDocument.querySelector('.DiscussionHero');
+    const scrubber = this.$();
+    const scrollbar = this.$('.Scrubber-scrollbar');
+    const kcScrubberHeight = 400;
 
-//     origpost.onclick = function(e){
+    /*
+    is the amount of space where the Scrubber should fit less than the height setting
+    we're creating above? If so, hide the scrubber.
 
-//         // // scrollTo(0, headertotal);
-//         // smooth scrolling on Firefox, still jumps in Safari
-//         herodiv.scrollIntoView({behavior: "smooth"});
-//     }
+    note: the scrubber's actual height should be the number above PLUS its css margin
+    */
 
-// });
+    let roomForScrubber = $('.PostStream').outerHeight() - parseInt($('.PostStream').css('margin-top'));
+    let scrubberTotalHeight = kcScrubberHeight + parseInt(scrubber.css('margin-top'));
+
+    if ( roomForScrubber < scrubberTotalHeight ) {
+        $('.PostStreamScrubber').css(
+            'display',
+            'none'
+          );
+    } else {
+        $('.PostStreamScrubber').css(
+            'display',
+            'block'
+          );
+        scrollbar.css(
+            'max-height',
+            kcScrubberHeight
+        );
+    }
+    
+    /* 
+    Old calculation of the Scrubber height is too reliant on the height of the
+    viewport and breaks. Calculation above is simpler and works better for my purposes.
+    However, if I wanted to calculate the height of the scrubber dynamically, then
+    there is still some room for tweaking here.
+    */
+
+})
+
+
+extend(PostStream.prototype, 'goToNumber', function(fn, number, noAnimation) {
+    // make it so that the app scrolls to the last post and not the bottom of the page
+    // when the composer is opened. The 360 number represents the programmed height
+    // of the scrubber. Should probably grab this number programatically.
+
+    let bottomPosition = $(document).height() - $('#bigfoot').height();
+    let composerHeight = app.composer.height;
+
+    if (number === 'reply') {
+        return this.goToLast().then(() => {
+            $('html,body')
+            .stop(true)
+            .animate(
+            {
+                
+                scrollTop: bottomPosition - composerHeight - 360,
+
+            },
+            'fast',
+            () => {
+                this.flashItem(this.$('.PostStream-item:last-child'));
+            }
+            );
+        });
+    }
+
+    // last piece of this will be to grab the Composer hide() function and scroll
+    // back up to bottomPosition - veiwportHeight when it's all over.
+
+})
+
 

@@ -4220,39 +4220,174 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var flarum_app__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(flarum_app__WEBPACK_IMPORTED_MODULE_0__);
 /* harmony import */ var flarum_extend__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! flarum/extend */ "flarum/extend");
 /* harmony import */ var flarum_extend__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(flarum_extend__WEBPACK_IMPORTED_MODULE_1__);
-/* harmony import */ var flarum_components_IndexPage__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! flarum/components/IndexPage */ "flarum/components/IndexPage");
-/* harmony import */ var flarum_components_IndexPage__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(flarum_components_IndexPage__WEBPACK_IMPORTED_MODULE_2__);
+/* harmony import */ var flarum_helpers_avatar__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! flarum/helpers/avatar */ "flarum/helpers/avatar");
+/* harmony import */ var flarum_helpers_avatar__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(flarum_helpers_avatar__WEBPACK_IMPORTED_MODULE_2__);
+/* harmony import */ var flarum_components_IndexPage__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! flarum/components/IndexPage */ "flarum/components/IndexPage");
+/* harmony import */ var flarum_components_IndexPage__WEBPACK_IMPORTED_MODULE_3___default = /*#__PURE__*/__webpack_require__.n(flarum_components_IndexPage__WEBPACK_IMPORTED_MODULE_3__);
+/* harmony import */ var flarum_components_Dropdown__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! flarum/components/Dropdown */ "flarum/components/Dropdown");
+/* harmony import */ var flarum_components_Dropdown__WEBPACK_IMPORTED_MODULE_4___default = /*#__PURE__*/__webpack_require__.n(flarum_components_Dropdown__WEBPACK_IMPORTED_MODULE_4__);
+/* harmony import */ var flarum_components_Button__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! flarum/components/Button */ "flarum/components/Button");
+/* harmony import */ var flarum_components_Button__WEBPACK_IMPORTED_MODULE_5___default = /*#__PURE__*/__webpack_require__.n(flarum_components_Button__WEBPACK_IMPORTED_MODULE_5__);
+/* harmony import */ var flarum_helpers_listItems__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! flarum/helpers/listItems */ "flarum/helpers/listItems");
+/* harmony import */ var flarum_helpers_listItems__WEBPACK_IMPORTED_MODULE_6___default = /*#__PURE__*/__webpack_require__.n(flarum_helpers_listItems__WEBPACK_IMPORTED_MODULE_6__);
+/* harmony import */ var flarum_components_DiscussionComposer__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! flarum/components/DiscussionComposer */ "flarum/components/DiscussionComposer");
+/* harmony import */ var flarum_components_DiscussionComposer__WEBPACK_IMPORTED_MODULE_7___default = /*#__PURE__*/__webpack_require__.n(flarum_components_DiscussionComposer__WEBPACK_IMPORTED_MODULE_7__);
+/* harmony import */ var flarum_components_Composer__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! flarum/components/Composer */ "flarum/components/Composer");
+/* harmony import */ var flarum_components_Composer__WEBPACK_IMPORTED_MODULE_8___default = /*#__PURE__*/__webpack_require__.n(flarum_components_Composer__WEBPACK_IMPORTED_MODULE_8__);
+/* harmony import */ var flarum_components_LogInModal__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! flarum/components/LogInModal */ "flarum/components/LogInModal");
+/* harmony import */ var flarum_components_LogInModal__WEBPACK_IMPORTED_MODULE_9___default = /*#__PURE__*/__webpack_require__.n(flarum_components_LogInModal__WEBPACK_IMPORTED_MODULE_9__);
+/* harmony import */ var flarum_components_PostStream__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! flarum/components/PostStream */ "flarum/components/PostStream");
+/* harmony import */ var flarum_components_PostStream__WEBPACK_IMPORTED_MODULE_10___default = /*#__PURE__*/__webpack_require__.n(flarum_components_PostStream__WEBPACK_IMPORTED_MODULE_10__);
+
+
+
+
+
+
+
+
 
 
 
 flarum_app__WEBPACK_IMPORTED_MODULE_0___default.a.initializers.add('kinefixes', function () {
   // console.log("big extend");
-  Object(flarum_extend__WEBPACK_IMPORTED_MODULE_1__["extend"])(flarum_components_IndexPage__WEBPACK_IMPORTED_MODULE_2___default.a.prototype, 'init', function () {
-    // console.log(this);
+  Object(flarum_extend__WEBPACK_IMPORTED_MODULE_1__["extend"])(flarum_components_IndexPage__WEBPACK_IMPORTED_MODULE_3___default.a.prototype, 'init', function () {
     this.bodyClass = 'App--index kc';
   });
-  Object(flarum_extend__WEBPACK_IMPORTED_MODULE_1__["extend"])(flarum_components_IndexPage__WEBPACK_IMPORTED_MODULE_2___default.a.prototype, 'viewItems', function (items) {
-    // remove the "Latest" button from the front page
+  Object(flarum_extend__WEBPACK_IMPORTED_MODULE_1__["extend"])(flarum_components_IndexPage__WEBPACK_IMPORTED_MODULE_3___default.a.prototype, 'actionItems', function (items) {
+    var _this = this;
+
+    // moves the "Latest" sort button over to the action items on the right
+    var sortMap = flarum_app__WEBPACK_IMPORTED_MODULE_0___default.a.cache.discussionList.sortMap();
+    var sortOptions = {};
+
+    for (var i in sortMap) {
+      sortOptions[i] = flarum_app__WEBPACK_IMPORTED_MODULE_0___default.a.translator.trans('core.forum.index_sort.' + i + '_button');
+    }
+
+    items.add('sort', flarum_components_Dropdown__WEBPACK_IMPORTED_MODULE_4___default.a.component({
+      buttonClassName: 'Button',
+      label: sortOptions[this.params().sort] || Object.keys(sortMap).map(function (key) {
+        return sortOptions[key];
+      })[0],
+      children: Object.keys(sortOptions).map(function (value) {
+        var label = sortOptions[value];
+        var active = (_this.params().sort || Object.keys(sortMap)[0]) === value;
+        return flarum_components_Button__WEBPACK_IMPORTED_MODULE_5___default.a.component({
+          children: label,
+          icon: active ? 'fas fa-check' : true,
+          onclick: _this.changeSort.bind(_this, value),
+          active: active
+        });
+      })
+    }));
+  });
+  Object(flarum_extend__WEBPACK_IMPORTED_MODULE_1__["extend"])(flarum_components_IndexPage__WEBPACK_IMPORTED_MODULE_3___default.a.prototype, 'viewItems', function (items) {
+    // remove the "Latest" button from the middle of the front page
     if (items.has('sort')) {
       items.remove('sort');
     }
 
     if (flarum_app__WEBPACK_IMPORTED_MODULE_0___default.a.current.props.routeName == "index" && flarum_app__WEBPACK_IMPORTED_MODULE_0___default.a.composer.active == true || flarum_app__WEBPACK_IMPORTED_MODULE_0___default.a.current.props.routeName == "index" && flarum_app__WEBPACK_IMPORTED_MODULE_0___default.a.search.hasFocus == true) {
       // don't flip through quotes if someone types in the search bar or composer.
-      var oldQuote = this.element.querySelector('.item-topQuotes').innerHTML;
-      var mquote = m.trust(oldQuote);
-      items.add('topQuotes', mquote);
+      if (this.element == null) {// 
+      } else {
+        // console.log(this);
+        var oldQuote = this.element.querySelector('.item-topQuotes').innerHTML;
+        var mquote = m.trust(oldQuote);
+        items.add('topQuotes', mquote);
+      }
     } else {
       items.add('topQuotes', randomQuote());
     }
   });
-});
-var topQuotes = [m('.chewbacca', "'Auuurrllllghgghghghh!' - Chewbacca"), m('.jaws', '"You\'re gonna need a bigger boat." - Sheriff Brody'), m('.rivero', '"Big Naturales." - Rivero'), m('.ander', '"Anything for the shot." - P.T. Anderson'), m('.cop', '"It\'s the ones you get that matter." - Francis Ford Coppola'), m('.spike', '"We\'re not gonna fall for the okeydoke." - Spike Lee'), m('.deakins', '"People confuse \'pretty\' with good cinematography." - Roger Deakins')];
+  Object(flarum_extend__WEBPACK_IMPORTED_MODULE_1__["override"])(flarum_components_IndexPage__WEBPACK_IMPORTED_MODULE_3___default.a.prototype, 'view', function (vdom) {
+    /*
+    Let's add a big social media-style comment form at the top of the DiscussionList.
+    We'll have to insert it by overriding the IdexPage's view:
+    */
+    //let myComposer = new Composer;
+    var appUser = flarum_app__WEBPACK_IMPORTED_MODULE_0___default.a.session.user;
+    var avatarDisc = flarum_helpers_avatar__WEBPACK_IMPORTED_MODULE_2___default()(appUser);
+    var promoText = '<div class="promote-pro">PRO</div> \
+		<div class="promote-copy">Downloads &amp; Bragging Rights</div> \
+		<div class="promote-price"><div class="big">$8</div><div class="yearly">/yr</div></div> \
+		<div class="promote-link"><a href="#">Join Now</a></div>';
+    var composeTop = [m('div', {
+      "class": 'altDisc'
+    }, [avatarDisc, m('.fakeform', {
+      onclick: startComp
+    }, 'create new topic'), m('img', {
+      src: '/blog/_img/kc-comment.png',
+      "class": 'kc-comment'
+    })]), m('.PromoteBlock', [m.trust(promoText)])];
 
-function randomQuote() {
+    function startComp() {
+      var deferred = m.deferred();
+
+      if (flarum_app__WEBPACK_IMPORTED_MODULE_0___default.a.session.user) {
+        var component = new flarum_components_DiscussionComposer__WEBPACK_IMPORTED_MODULE_7___default.a({
+          user: flarum_app__WEBPACK_IMPORTED_MODULE_0___default.a.session.user
+        });
+        flarum_app__WEBPACK_IMPORTED_MODULE_0___default.a.composer.load(component);
+        flarum_app__WEBPACK_IMPORTED_MODULE_0___default.a.composer.show();
+        deferred.resolve(component);
+      } else {
+        deferred.reject();
+        flarum_app__WEBPACK_IMPORTED_MODULE_0___default.a.modal.show(new flarum_components_LogInModal__WEBPACK_IMPORTED_MODULE_9___default.a());
+      }
+
+      return deferred.promise;
+    }
+
+    return m("div", {
+      className: "IndexPage"
+    }, this.hero(), m("div", {
+      className: "container"
+    }, m("div", {
+      className: "sideNavContainer"
+    }, m("nav", {
+      className: "IndexPage-nav sideNav"
+    }, m("ul", null, flarum_helpers_listItems__WEBPACK_IMPORTED_MODULE_6___default()(this.sidebarItems().toArray()))), m("div", {
+      className: "IndexPage-results sideNavOffset"
+    }, m("div", {
+      className: "IndexPage-toolbar"
+    }, m("ul", {
+      className: "IndexPage-toolbar-view"
+    }, flarum_helpers_listItems__WEBPACK_IMPORTED_MODULE_6___default()(this.viewItems().toArray())), m("ul", {
+      className: "IndexPage-toolbar-action"
+    }, flarum_helpers_listItems__WEBPACK_IMPORTED_MODULE_6___default()(this.actionItems().toArray()))), m("div", {
+      className: "ComposeTop"
+    }, composeTop), flarum_app__WEBPACK_IMPORTED_MODULE_0___default.a.cache.discussionList.render()))));
+  });
+  Object(flarum_extend__WEBPACK_IMPORTED_MODULE_1__["extend"])(flarum_components_Composer__WEBPACK_IMPORTED_MODULE_8___default.a.prototype, 'hide', function () {
+    // scroll up just a tiny bit after we hide the composer so that 
+    // the scrubber won't overlap the footer
+    var composerHeight = flarum_app__WEBPACK_IMPORTED_MODULE_0___default.a.composer.height;
+    $('html,body').stop(true).animate({
+      scrollTop: window.scrollY - composerHeight
+    });
+  });
+});
+var topQuotes = [m('.chewbacca', "'Auuurrllllghgghghghh!' - Chewbacca"), m('.jaws', '"You\'re gonna need a bigger boat." - Sheriff Brody'), m('.rivero', '"Eyes on." - Rivero'), m('.ander', '"Anything for the shot." - P.T. Anderson'), m('.cop', '"It\'s the ones you get that matter." - Francis Ford Coppola'), m('.spike', '"We\'re not gonna fall for the okeydoke." - Spike Lee'), m('.deakins', '"People confuse \'pretty\' with good cinematography." - Roger Deakins'), m('.ozu', '"I formulated my own directing style in my own head, proceeding without any unnecessary imitation of others…for me there was no such thing as a teacher. I have relied entirely on my own strength." - Yasujiro Ozu'), m('.fincher', '"The fact is, you don\'t know what directing is until the sun is setting and you\'ve got to get five shots and you\'re only going to get two." - David Fincher')]; // work on randomizer for CSV file below:
+
+function randomQuote(data) {
   var randomItem = topQuotes[Math.floor(Math.random() * topQuotes.length)];
   return randomItem;
-}
+} // m.request({
+//   method: "GET",
+//   url: "/blog/_junk/film-quotes.csv",
+//   // deserialize: parseCSV
+// })
+// .then(function(data) {
+//   randomQuote(data);
+// })
+// function parseCSV(data) {
+//   // naive implementation for the sake of keeping example simple
+//   return data.split("\n").map(function(row) {
+//       return row.split(",")
+//   })
+// }
 
 /***/ }),
 
@@ -4399,6 +4534,9 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var flarum_components_PostStreamScrubber__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(flarum_components_PostStreamScrubber__WEBPACK_IMPORTED_MODULE_1__);
 /* harmony import */ var flarum_components_DiscussionPage__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! flarum/components/DiscussionPage */ "flarum/components/DiscussionPage");
 /* harmony import */ var flarum_components_DiscussionPage__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(flarum_components_DiscussionPage__WEBPACK_IMPORTED_MODULE_2__);
+/* harmony import */ var flarum_components_PostStream__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! flarum/components/PostStream */ "flarum/components/PostStream");
+/* harmony import */ var flarum_components_PostStream__WEBPACK_IMPORTED_MODULE_3___default = /*#__PURE__*/__webpack_require__.n(flarum_components_PostStream__WEBPACK_IMPORTED_MODULE_3__);
+
 
 
  /////////////////// RR work on Scrubber
@@ -4421,7 +4559,6 @@ Object(flarum_extend__WEBPACK_IMPORTED_MODULE_0__["extend"])(flarum_components_D
   }
 });
 function scrubberClass(vnode) {
-  // function scrubberClass(vnode) {
   // grab the scrubber, its height, and set an offset
   var qscrub = vnode.element.querySelector('.DiscussionPage-nav > ul');
   var ktopHeight = ktopheader.scrollHeight;
@@ -4463,27 +4600,57 @@ function scrubberClass(vnode) {
       qscrub.classList.add("lowscrub");
     }
   }
-} //var scrollnum;
-// extend(PostStreamScrubber.prototype, 'config', function(isInitialized, context) {
-//     /*
-//     This extension replaces the onclick function of the "original post" link in the
-//     Scrubber and instead has the window scroll to the header. I do this because the
-//     header that I've inserted is much taller and the user doesn't need to scroll to 
-//     the very top of the window every time.
-//     THE PROBLEM with this fix is that it _jumps_ to the top of the window instead of scrolling.
-//     The scrollIntoView fix below works in Firefox and Chrome, but not Safari :/
-//     */
-//     var origpost = this.element.querySelector('.Scrubber-first');
-//     var headerdiv = document.getElementById("header");
-//     var headertotal = ktopheader.clientHeight + ktoprow.clientHeight;
-//     var scrollnum = headertotal;
-//     var herodiv = this.element.ownerDocument.querySelector('.DiscussionHero');
-//     origpost.onclick = function(e){
-//         // // scrollTo(0, headertotal);
-//         // smooth scrolling on Firefox, still jumps in Safari
-//         herodiv.scrollIntoView({behavior: "smooth"});
-//     }
-// });
+}
+Object(flarum_extend__WEBPACK_IMPORTED_MODULE_0__["override"])(flarum_components_PostStreamScrubber__WEBPACK_IMPORTED_MODULE_1___default.a.prototype, 'onresize', function () {
+  this.scrollListener.update(); // Manually set the height of the scrollbar:
+
+  var scrubber = this.$();
+  var scrollbar = this.$('.Scrubber-scrollbar');
+  var kcScrubberHeight = 400;
+  /*
+  is the amount of space where the Scrubber should fit less than the height setting
+  we're creating above? If so, hide the scrubber.
+   note: the scrubber's actual height should be the number above PLUS its css margin
+  */
+
+  var roomForScrubber = $('.PostStream').outerHeight() - parseInt($('.PostStream').css('margin-top'));
+  var scrubberTotalHeight = kcScrubberHeight + parseInt(scrubber.css('margin-top'));
+
+  if (roomForScrubber < scrubberTotalHeight) {
+    $('.PostStreamScrubber').css('display', 'none');
+  } else {
+    $('.PostStreamScrubber').css('display', 'block');
+    scrollbar.css('max-height', kcScrubberHeight);
+  }
+  /* 
+  Old calculation of the Scrubber height is too reliant on the height of the
+  viewport and breaks. Calculation above is simpler and works better for my purposes.
+  However, if I wanted to calculate the height of the scrubber dynamically, then
+  there is still some room for tweaking here.
+  */
+
+});
+Object(flarum_extend__WEBPACK_IMPORTED_MODULE_0__["extend"])(flarum_components_PostStream__WEBPACK_IMPORTED_MODULE_3___default.a.prototype, 'goToNumber', function (fn, number, noAnimation) {
+  var _this = this;
+
+  // make it so that the app scrolls to the last post and not the bottom of the page
+  // when the composer is opened. The 360 number represents the programmed height
+  // of the scrubber. Should probably grab this number programatically.
+  var bottomPosition = $(document).height() - $('#bigfoot').height();
+  var composerHeight = app.composer.height;
+
+  if (number === 'reply') {
+    return this.goToLast().then(function () {
+      $('html,body').stop(true).animate({
+        scrollTop: bottomPosition - composerHeight - 360
+      }, 'fast', function () {
+        _this.flashItem(_this.$('.PostStream-item:last-child'));
+      });
+    });
+  } // last piece of this will be to grab the Composer hide() function and scroll
+  // back up to bottomPosition - veiwportHeight when it's all over.
+
+});
 
 /***/ }),
 
@@ -4569,6 +4736,39 @@ module.exports = flarum.core.compat['app'];
 
 /***/ }),
 
+/***/ "flarum/components/Button":
+/*!**********************************************************!*\
+  !*** external "flarum.core.compat['components/Button']" ***!
+  \**********************************************************/
+/*! no static exports found */
+/***/ (function(module, exports) {
+
+module.exports = flarum.core.compat['components/Button'];
+
+/***/ }),
+
+/***/ "flarum/components/Composer":
+/*!************************************************************!*\
+  !*** external "flarum.core.compat['components/Composer']" ***!
+  \************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports) {
+
+module.exports = flarum.core.compat['components/Composer'];
+
+/***/ }),
+
+/***/ "flarum/components/DiscussionComposer":
+/*!**********************************************************************!*\
+  !*** external "flarum.core.compat['components/DiscussionComposer']" ***!
+  \**********************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports) {
+
+module.exports = flarum.core.compat['components/DiscussionComposer'];
+
+/***/ }),
+
 /***/ "flarum/components/DiscussionPage":
 /*!******************************************************************!*\
   !*** external "flarum.core.compat['components/DiscussionPage']" ***!
@@ -4580,6 +4780,17 @@ module.exports = flarum.core.compat['components/DiscussionPage'];
 
 /***/ }),
 
+/***/ "flarum/components/Dropdown":
+/*!************************************************************!*\
+  !*** external "flarum.core.compat['components/Dropdown']" ***!
+  \************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports) {
+
+module.exports = flarum.core.compat['components/Dropdown'];
+
+/***/ }),
+
 /***/ "flarum/components/IndexPage":
 /*!*************************************************************!*\
   !*** external "flarum.core.compat['components/IndexPage']" ***!
@@ -4588,6 +4799,28 @@ module.exports = flarum.core.compat['components/DiscussionPage'];
 /***/ (function(module, exports) {
 
 module.exports = flarum.core.compat['components/IndexPage'];
+
+/***/ }),
+
+/***/ "flarum/components/LogInModal":
+/*!**************************************************************!*\
+  !*** external "flarum.core.compat['components/LogInModal']" ***!
+  \**************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports) {
+
+module.exports = flarum.core.compat['components/LogInModal'];
+
+/***/ }),
+
+/***/ "flarum/components/PostStream":
+/*!**************************************************************!*\
+  !*** external "flarum.core.compat['components/PostStream']" ***!
+  \**************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports) {
+
+module.exports = flarum.core.compat['components/PostStream'];
 
 /***/ }),
 
@@ -4610,6 +4843,28 @@ module.exports = flarum.core.compat['components/PostStreamScrubber'];
 /***/ (function(module, exports) {
 
 module.exports = flarum.core.compat['extend'];
+
+/***/ }),
+
+/***/ "flarum/helpers/avatar":
+/*!*******************************************************!*\
+  !*** external "flarum.core.compat['helpers/avatar']" ***!
+  \*******************************************************/
+/*! no static exports found */
+/***/ (function(module, exports) {
+
+module.exports = flarum.core.compat['helpers/avatar'];
+
+/***/ }),
+
+/***/ "flarum/helpers/listItems":
+/*!**********************************************************!*\
+  !*** external "flarum.core.compat['helpers/listItems']" ***!
+  \**********************************************************/
+/*! no static exports found */
+/***/ (function(module, exports) {
+
+module.exports = flarum.core.compat['helpers/listItems'];
 
 /***/ })
 

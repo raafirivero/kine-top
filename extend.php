@@ -14,6 +14,7 @@ namespace RaafiRivero\KineTop;
 use Flarum\Extend;
 use Flarum\Frontend\Document;
 use Psr\Http\Message\ServerRequestInterface as Request;
+use Illuminate\Contracts\Config\Repository as ConfigRepository;
 
 return [
     (new Extend\Frontend('forum'))
@@ -24,9 +25,10 @@ return [
             $document->head[] = '<link href="https://fonts.googleapis.com/css2?family=Jost:ital,wght@0,400;0,500;1,400&display=swap" rel="stylesheet">';
             $document->head[] = '<link href="https://fonts.googleapis.com/css2?family=Chivo:wght@400;700;900&display=swap" rel="stylesheet">';
         }),
+        new Extend\Compat(function(ConfigRepository $config) {
+            $config->set('session.lifetime', 240); // In minutes. Default is 120
+        }),
     (new Extend\Frontend('admin'))
         ->js(__DIR__.'/js/dist/admin.js')
         ->css(__DIR__.'/resources/less/admin.less')
 ];
-
-

@@ -490,7 +490,7 @@ header .container {
 
 
 .IndexPage-toolbar {
-    margin-bottom: 30px;
+    direction: ltr;
     }
 
 .Dropdown--split:hover + button, .ButtonGroup .Dropdown--split:hover + button {
@@ -542,6 +542,209 @@ header .container {
     .kc-divider {
         display: none;
     }
+}
+
+@media (min-width: 768px){ 
+
+    .item-topQuotes {
+        position: relative;
+        padding-left: 80px;
+        height: 54px;
+        top: 0;
+    }
+
+    .ComposeTop {
+        margin-bottom: .75rem;
+    }
+
+    .altDisc {
+        width: 660px;
+        // background-color: #f9f6f3;
+        display: inline-block;
+        // background-image: url('/blog/_img/bottom-corner-ang.png');
+
+        background-image: url('/blog/_img/list-item-edge.svg');
+        background-position: 0px 0px;
+        background-repeat: no-repeat;
+        height: 87px;
+        border-radius: 10px;
+        margin-right: 12px;
+        margin-left: -15px;
+        padding: 16px;
+        transition: .5s;
+        // border: 1px solid #ddd;
+    }
+
+    .altDisc:hover {
+        // background-color: rgb(245, 241, 230);
+        background-image: url('/blog/_img/list-item-hover.svg');
+    }
+
+    .altDisc .Avatar {
+        position: relative;
+        left: 20px;
+        top: 4px;
+        width: 36px;
+        height: 36px;
+        border-radius: 36px;
+        font-size: 18px;
+        line-height: 36px;
+        
+    }
+
+    .altDisc .fakeform {
+        display: inline-block;
+        width: 480px;
+        border: 1px solid #ddd;
+        background-color: rgb(250, 250, 250);
+        color: #ccc;
+        border-radius: 6px;
+
+        font-size: 1.6rem;
+        padding: 0 1rem;
+        margin-left: 36px;
+        margin-top: 4px;
+        height: 44px;
+        line-height: 44px;
+        text-transform: capitalize;
+        font-family: Chivo;
+
+        box-shadow: inset 1px 1px 4px #eee;
+    }
+
+    .altDisc .fakeform:hover {
+        border: 1px solid @k-yellow;
+        background-color: #fff;
+        cursor: text;
+        color: #aaa;
+    }
+
+    .altDisc .kc-comment {
+        float: right;
+        width: 44px;
+        height: auto;
+        position: relative;
+        top: 4px;
+        margin-right: 10px;
+    }
+
+    .PromoteBlock {
+        float: right;
+        background-image: url('/blog/_img/bottom-corner-rev.png');
+        background-position: 10px 56px;
+        background-repeat: no-repeat;
+        background-color: #f3f6f9;
+        margin-right: -15px;
+        height: 87px;
+        width: 180px;
+        border-radius: 10px;
+        font-family: Chivo;
+        display: grid;
+        padding: 8px;
+        
+        grid-template-columns:  62px 85px;
+        grid-template-rows:  30px 35px;
+        column-gap: 15px;
+        row-gap: 8px;
+
+        transition: .5s;
+        color: #ccc;
+          
+    }
+
+    .promote-pro {
+        padding: 0 8px;
+        line-height: 30px;
+        font-size: 24px;
+        border-radius: 6px;
+        color: white;
+        background-color: #ccc;
+    }
+
+    .promote-copy {
+        font-size: 1rem;
+    }
+
+    .promote-price {
+        position: relative;
+        margin-left: 8px;
+    }
+
+    .promote-price .big {
+        font-weight: bolder;
+        font-size: 30px;
+        line-height: 30px;
+        display: inline-block;
+    }
+
+    .promote-price .yearly {
+        font-weight: light;
+        font-size: 10px;
+        position: absolute;
+        display: inline;
+        top: 0px;
+    }
+
+    .promote-link {
+        text-transform: uppercase;
+    }
+
+    .promote-link a {
+        padding: 2px 6px;
+        position: relative;
+        left: -4px;
+        top: 0px;
+        display: inline-block;
+        color: #ccc;
+        border-radius: 4px;
+    }
+
+    .PromoteBlock:hover {
+        background-color: #909ba7;
+    }
+
+    .PromoteBlock:hover .promote-link a {
+        color: @k-red;
+        background: white;
+        
+       
+    }
+
+    .PromoteBlock .promote-link a:hover {
+        // background: @k-red;
+        // color: white;
+    }
+
+    .PromoteBlock:hover .promote-price, .PromoteBlock:hover .promote-copy {
+        color: white;
+    }
+
+    .PromoteBlock:hover .promote-pro {
+        background-color: @k-deep;
+    }
+
+}
+
+.item-topQuotes:before {
+    font-family: 'Font Awesome 5 Free';
+    content: '\f10d';
+    position: relative;
+    left: -50px;
+    font-size: 2rem;
+    color: @k-yellow;
+    top: -3px;
+    display: table-cell;
+    // vertical-align: middle;
+}
+
+.item-topQuotes {
+    max-width: 600px;
+    display: table;
+}
+
+.item-topQuotes div {
+    display: table-cell;
+    vertical-align: middle;
 }
 
 
@@ -730,6 +933,14 @@ header .container {
     background-color: #f3f6f9;
 }
 
+.IndexPage-toolbar-action button {
+    background-color: #f3f6f9;
+    border-radius: 4px;
+}
+.IndexPage-toolbar-action button:hover {
+    background-color: #eaedf0;
+}
+
 @media (max-width: 767px){ 
 
     .DiscussionListItem-content:hover .DiscussionListItem-title  {
@@ -832,16 +1043,9 @@ header .container {
         font-weight: bolder;;
     }
 
-
-
 // styles for side
 
 @media (min-width: 768px){
-
-    .item-topQuotes {
-        position: absolute;
-        left: 326px
-    }
 
     .DiscussionPage-list .DiscussionList .DiscussionListItem .TagLabel-text {
         font-size: .75rem;
@@ -905,6 +1109,25 @@ width: 198px;
         background: @k-orange;
         color: white;
         border-color: rgb(230, 230, 230);
+    }
+
+    .Composer .TagLabel-text, .TagDiscussionModal-form .TagLabel-text {
+        text-transform: uppercase;
+        letter-spacing: 1px;
+        font-size: 1.2rem;
+    }
+
+    .Composer .TagLabel {
+        font-size: 1.2rem;
+        letter-spacing: 1px;
+    }
+
+    .TagDiscussionModal-form .TagLabel-text {
+        font-size: 1.4rem;
+    }
+
+    .ComposerBody-header h3 input {
+        font-size: 2rem;
     }
 }
 
